@@ -27,6 +27,16 @@
   const urlFor = (value) => {
     try { return new URL(value, location.href); } catch { return null; }
   };
+  // The canonical page URL omits queries. Preserve the documented acquisition
+  // fields separately so sanitization does not turn campaign visits into Direct.
+  const campaign = Object.fromEntries([
+    ['utm_source', 'campaign_source'], ['utm_medium', 'campaign_medium'],
+    ['utm_campaign', 'campaign_name'], ['utm_id', 'campaign_id'],
+    ['utm_content', 'campaign_content'], ['utm_term', 'campaign_term'],
+  ].flatMap(([query, field]) => {
+    const value = new URL(location.href).searchParams.get(query);
+    return value ? [[field, value]] : [];
+  }));
   const sdkFor = (url) => url?.origin === settings.siteOrigin
     ? sdks.find(({ id }) => url.pathname.startsWith(`${settings.siteBase}${id}/`))
     : undefined;
@@ -230,7 +240,7 @@
   current = contextFor(location.href, initialMissing);
   window.gtag('js', new Date());
   // The shared stream measures browser history. Never emit manual page_view.
-  window.gtag('config', settings.measurementId, clean(current));
+  window.gtag('config', settings.measurementId, { ...clean(current), ...campaign });
   pageReady(initialMissing);
   const script = document.createElement('script');
   script.id = 'siebly-google-tag';

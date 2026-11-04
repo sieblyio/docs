@@ -89,6 +89,20 @@ test('preview builds and wrong production paths do not initialize or install lis
   }
 });
 
+test('campaign acquisition survives canonical URL sanitization without arbitrary query values', () => {
+  const app = browser(siteUrl + 'bybit/?utm_source=release-notes&utm_medium=email&utm_campaign=sdk-docs&utm_id=launch-1&utm_content=header&utm_term=websocket&private=do-not-send');
+  app.run();
+  const config = app.window.dataLayer.find((entry) => entry[0] === 'config' && !entry[2].update)[2];
+  assert.equal(config.page_location, siteUrl + 'bybit/');
+  assert.equal(config.campaign_source, 'release-notes');
+  assert.equal(config.campaign_medium, 'email');
+  assert.equal(config.campaign_name, 'sdk-docs');
+  assert.equal(config.campaign_id, 'launch-1');
+  assert.equal(config.campaign_content, 'header');
+  assert.equal(config.campaign_term, 'websocket');
+  assert.equal(JSON.stringify(app.window.dataLayer).includes('do-not-send'), false);
+});
+
 test('router and back navigation change automatic pageview context without emitting page_view', () => {
   const app = browser(siteUrl + 'bybit/'); app.run();
   app.window.sieblyDocsAnalytics.beforeNavigate(siteUrl + 'binance/api/classes/MainClient.html?secret=removed');
