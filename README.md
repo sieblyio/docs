@@ -131,6 +131,34 @@ To compare the sites in GA4 reports or Explorations, filter by **Hostname**:
 
 Docs events also carry the built-in **Content group** value `Documentation`. No custom dimension is needed. In the shared stream's **Configure tag settings > Configure your domains**, include `siebly.io` and `sieblyio.github.io` to preserve journeys between the sites.
 
+### Interaction events
+
+`shared/public/analytics.js` owns event names, parameter allowlisting, context and the GA transport. `shared/site-services.mjs` supplies its build settings from the existing SDK catalogue. The shared theme connects the supported VitePress router hooks to that controller. Portal pages load the same controller. New pages and SDKs inherit this integration without page-specific tracking.
+
+| Event | Meaning |
+| --- | --- |
+| `content_copy` | A code or install-command copy operation finished. `copy_result` is `success` or `failure`; count only successes for adoption intent. |
+| `content_select` | An SDK, code tab or search result was selected. `selection_type` is `exchange`, `code_tab` or `search_result`. |
+| `navigation_click` | A link was activated, including middle clicks and keyboard activation. Destinations distinguish guides, references, tutorials, sections, packages, repositories and support. This records intent, not arrival. |
+| `docs_search` | A local-search query settled for 600 ms, or its result was selected earlier. `search_result` is `results` or `no_results`. |
+| `page_not_found` | A missing page was shown, once per missing-page arrival. |
+
+The names and meanings of copy, selection and navigation events match the main website's interaction contract. Successful copying uses the actual clipboard operation outcome, including the browser fallback's boolean result. Analytics errors do not change the copy result. Ordinary text selection and system clipboard shortcuts are outside the copy-button measurement.
+
+All events and pageviews receive `exchange` from the SDK catalogue ID (`all` on the portal), plus `page_family`: `docs_portal`, `docs_overview`, `docs_quickstart`, `docs_guide`, `docs_reference`, `docs_compatibility` or `docs_not_found`. Supported router hooks set destination context before the stream's automatic history pageview. Interaction events retain their source page until the destination renders. No manual pageview is emitted.
+
+Copy context includes `section_id`, `content_id` and `content_type` (`code` or `install_command`). A snippet's ID combines its nearest heading anchor and code-block position in that section. Code-group selections use the heading and group position, with the source-defined tab title in `option_id`. These positional IDs can change when blocks are inserted; interpret them with the page and deployment period. There are no content hashes or independently maintained SDK lists.
+
+Search collects outcomes and destinations, never the entered term. `search_result_count` means the number of rendered results, capped at 16 by VitePress; it is not the total number of matching documents. `search_result_position` is the selected result's one-based position. Repeated settled refinements count as separate searches, so use sessions or users when measuring whether a visitor found a result. A result selection also emits its normal navigation event; do not add those event totals together.
+
+Payloads exclude copied text, search terms, URL queries and arbitrary external URL paths. External destinations carry their host and category; known SDK destinations and first-party pages also carry the destination path. Section links carry an existing heading ID. Custom events use `send_to` for the production stream so another destination on the shared Google tag cannot receive them accidentally. Preview origins cannot install the interaction handlers or collect events.
+
+The main property's registered event dimensions already cover `page_family`, `section_id`, `exchange`, `content_id`, `content_type`, `copy_result`, `selection_type`, `option_id` and destination fields. Add the event dimension `search_result` for search outcomes. Optional custom metrics `search_result_count` and `search_result_position` describe the rendered list and selection position.
+
+Useful saved reports compare views and engaged sessions across SDKs, successful copies by page/snippet, search results and selections, destination categories, and missing pages or failed copies. Filter to **Content group = Documentation**, the production stream and docs hostname/path. Use users or sessions with at least one successful copy for conversion rates; repeated copies are not additional adopters. Copy and package-link activity indicate adoption intent, not confirmed installation or successful SDK/API usage. Collection starts when this instrumentation is deployed and cannot recover earlier interactions.
+
+`npm run check:site-tests` covers initialization, context changes, clipboard outcomes, navigation, search and payload exclusion. Browser verification must route the production origin to a local build and intercept Google requests so test interactions do not enter production reports.
+
 The Google verification file is maintained unchanged in `shared/verification/` and copied to the site's root. After deployment, verify the URL-prefix property `https://sieblyio.github.io/docs/` in Search Console and submit `https://sieblyio.github.io/docs/sitemap.xml`. Keep the verification file in subsequent deployments.
 
 ## Compatibility checks
