@@ -83,7 +83,7 @@ The [publishing workflow](.github/workflows/publish.yml):
 
 - Builds and validates the exact proposed SDK releases for pull requests.
 - Builds and deploys every change to `main` after checks pass.
-- Uses GitHub's temporary credentials, with no stored secrets or SDK repository access.
+- Uses GitHub's temporary credentials, with no stored secrets or SDK repository write access.
 
 The [release-update workflow](.github/workflows/release-update.yml) automatically merges successful Dependabot PRs that change only SDK versions, then dispatches publication. It validates the current head, base and manifest before merging. Privileged code comes from `main`, never the PR. Protect `main` with the required **build** check from **GitHub Actions**, require up-to-date branches, and allow squash merges.
 
