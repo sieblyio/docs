@@ -69,9 +69,9 @@ test('production pages initialize once, with catalogue-derived page context and 
     assert.equal(app.scripts[0].async, true);
     assert.equal(app.window.dataLayer[0][0], 'existing-event');
     const configs = app.window.dataLayer.filter((entry) => entry[0] === 'config');
-    assert.equal(configs.length, 1);
+    assert.equal(configs.filter((entry) => !entry[2].update).length, 1);
     assert.equal(configs[0][2].send_page_view, undefined);
-    const context = app.window.dataLayer.find((entry) => entry[0] === 'set')[1];
+    const context = configs[0][2];
     assert.equal(context.exchange, exchange);
     assert.equal(context.page_family, family);
     assert.equal(context.page_location, siteUrl + page);
@@ -92,11 +92,12 @@ test('preview builds and wrong production paths do not initialize or install lis
 test('router and back navigation change automatic pageview context without emitting page_view', () => {
   const app = browser(siteUrl + 'bybit/'); app.run();
   app.window.sieblyDocsAnalytics.beforeNavigate(siteUrl + 'binance/api/classes/MainClient.html?secret=removed');
-  assert.equal(app.window.dataLayer.at(-1)[1].exchange, 'binance');
-  assert.equal(app.window.dataLayer.at(-1)[1].page_family, 'docs_reference');
+  assert.equal(app.window.dataLayer.at(-1)[2].exchange, 'binance');
+  assert.equal(app.window.dataLayer.at(-1)[2].page_family, 'docs_reference');
+  assert.equal(app.window.dataLayer.at(-1)[2].update, true);
   app.location.href = siteUrl + 'hyperliquid/getting-started.html';
   app.listeners.get('window:popstate')();
-  assert.equal(app.window.dataLayer.at(-1)[1].exchange, 'hyperliquid');
+  assert.equal(app.window.dataLayer.at(-1)[2].exchange, 'hyperliquid');
   assert.equal(app.events('page_view').length, 0);
 });
 

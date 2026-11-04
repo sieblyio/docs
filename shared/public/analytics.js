@@ -47,17 +47,17 @@
   function beforeNavigate(href) {
     const next = contextFor(href);
     if (!next) return;
-    // Global fields remain changeable for the automatic history pageview.
-    // Config-scoped fields would override later global context updates.
+    // Custom parameters must be configured on the stream. Google's documented
+    // SPA update merges context without sending another initial pageview.
     // Keep interaction context on the rendered source until pageReady: the
     // VitePress window-capture router runs before our document-capture click.
-    try { window.gtag('set', clean(next)); } catch { /* Keep navigation working. */ }
+    try { window.gtag('config', settings.measurementId, { ...clean(next), update: true }); } catch { /* Keep navigation working. */ }
   }
   function pageReady(missing = false) {
     const notFound = missing || Boolean(document.querySelector('[data-docs-not-found], .NotFound'));
     current = contextFor(location.href, notFound);
     if (!current) return;
-    try { window.gtag('set', clean(current)); } catch { /* Keep rendering working. */ }
+    try { window.gtag('config', settings.measurementId, { ...clean(current), update: true }); } catch { /* Keep rendering working. */ }
     if (notFound && lastMissingPath !== current.page_path) {
       lastMissingPath = current.page_path;
       send(events.notFound);
@@ -228,10 +228,9 @@
   // Initial HTML has already been parsed because the shared script is deferred.
   const initialMissing = Boolean(document.querySelector('[data-docs-not-found], .NotFound'));
   current = contextFor(location.href, initialMissing);
-  window.gtag('set', clean(current));
   window.gtag('js', new Date());
   // The shared stream measures browser history. Never emit manual page_view.
-  window.gtag('config', settings.measurementId, { content_group: 'Documentation' });
+  window.gtag('config', settings.measurementId, clean(current));
   pageReady(initialMissing);
   const script = document.createElement('script');
   script.id = 'siebly-google-tag';
