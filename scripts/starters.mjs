@@ -18,7 +18,7 @@ function readme(sdk, environment) {
     ? `Install ${environmentTitles[environment]} first.` : 'Use Node.js 24 and npm.';
   const native = environment === 'expo' ? '\nOpen the project in a matching Expo Go installation. Press **i** for an iOS simulator or **a** for an Android emulator.\n' : '';
   const controls = ['react', 'vite', 'expo'].includes(environment) ? '\nUse **Stop stream** to close the price subscription.\n' : '';
-  const optionalStream = streaming ? `\n${sdk.id === 'coinbase' ? 'To stream WebSocket prices until Ctrl+C:' : 'To receive one WebSocket price and close the connection:'}\n\n\`\`\`sh\n${stream}\n\`\`\`\n` : '';
+  const optionalStream = streaming ? `\n${['coinbase', 'okx'].includes(sdk.id) ? 'To stream WebSocket prices until Ctrl+C:' : 'To receive one WebSocket price and close the connection:'}\n\n\`\`\`sh\n${stream}\n\`\`\`\n` : '';
   const commonjs = environment === 'node' ? '\nFor CommonJS instead, run `node price.cjs` or `node stream.cjs`.\n' : '';
   const browserNote = sdk.id === 'kraken' && ['react', 'vite'].includes(environment)
     ? '\nThe public GET client removes the SDK’s `UserAgent` and `locale` headers to avoid Kraken’s failing CORS preflight. Keep this configuration for these public reads only. Run authenticated REST calls on your server, never in a browser bundle. See the guide for the server-side alternative.\n' : '';
@@ -27,7 +27,9 @@ function readme(sdk, environment) {
       + (['react', 'vite'].includes(environment) ? '\nKeep `sdk.vite.config.js`: it excludes Node-only JWT signing from this public-data application. Browser REST access depends on Coinbase CORS policy.\n' : '')
       + (environment === 'expo' ? '\nRetain `coinbase-public-auth.cjs` and both Metro files: they supply the public-data configuration and exclude Node-only JWT signing.\n' : '')
     : '';
-  return `# ${sdk.name}: ${environmentTitles[environment]}\n\nA runnable public-price example using \`${sdk.packageName}\`. No API key is required.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
+  const okxNote = sdk.id === 'okx'
+    ? '\nKeep authenticated calls on your server. Browser projects must retain the Vite configuration and omit Node-only `keepAlive`; browser REST access depends on OKX CORS policy. See the guide for runtime setup limits.\n' : '';
+  return `# ${sdk.name}: ${environmentTitles[environment]}\n\nA runnable public-price example using \`${sdk.packageName}\`. No API key is required.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${okxNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
 
 export async function starterFiles(id, sdk, environment) {
