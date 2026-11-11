@@ -1,0 +1,8 @@
+{
+  "name": "okx-deno-quickstart",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "okx-api": "latest"
+  }
+}
