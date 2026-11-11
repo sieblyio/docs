@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "OKX price screen",
+    "slug": "okx-price-screen",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}
