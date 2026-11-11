@@ -4,7 +4,8 @@ updates:
     directory: /releases
     schedule:
       interval: cron
-      cronjob: '19 * * * *'
+      # Dependabot requires at least 24 hours between checks.
+      cronjob: '19 0 * * *'
     versioning-strategy: increase
     open-pull-requests-limit: 1
     allow:
