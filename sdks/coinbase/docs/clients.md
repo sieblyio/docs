@@ -17,7 +17,7 @@ Choose the client for your Coinbase product. The main walkthroughs use Advanced 
 | [`CBInternationalClient`](/api/classes/CBInternationalClient) | International Exchange instruments, portfolios and orders. [INTX guide](/products/international). |
 | [`CBPrimeClient`](/api/classes/CBPrimeClient) | Prime institutional trading, portfolios and custody. [Prime guide](/products/prime). |
 | [`CBCommerceClient`](/api/classes/CBCommerceClient) | Commerce charges and checkouts. [Commerce guide](/products/commerce). |
-| [`WebsocketClient`](/api/classes/WebsocketClient) | Shared public and private subscriptions across supported Coinbase platforms, selected with `WS_KEY_MAP`. [Stream selection](#websocket-subscriptions). |
+| [`WebsocketClient`](/api/classes/WebsocketClient) | Shared public and private subscriptions across supported Coinbase platforms, selected with `WS_KEY_MAP`. [Stream selection](/clients#websocket-subscriptions). |
 | [`WebsocketAPIClient`](/api/classes/WebsocketAPIClient) | Awaitable Global derivatives JSON-RPC requests over WebSocket. [Global WebSocket API](/products/global#ws-api). |
 <!-- #endregion client-list -->
 
