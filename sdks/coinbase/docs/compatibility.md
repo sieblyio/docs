@@ -23,6 +23,10 @@ The [React](/environments/react) and [Vite](/environments/vite) projects use pub
 
 REST access in a browser depends on Coinbase's CORS policy. If a request is blocked by CORS, call the SDK through a server route instead. A Vite development proxy is not a production server route.
 
+### Webpack bundle
+
+The [SDK README](https://github.com/sieblyio/coinbase-api#browserfrontend-usage) also describes building a standalone Webpack bundle from the SDK repository with `npm install`, `npm run build` and `npm run pack`. Its configuration produces the `coinbaseapi` UMD bundle in `dist/`. That is a separate packaging option, not a prerequisite for the Vite or React projects above, which import the npm package directly. The README does not yet document bundle usage in detail.
+
 ## React Native and Expo
 
 The [Expo guide](/environments/expo) includes the Metro resolver, public-auth helper and required polyfills. Keep those files together. The project uses public market data; authenticated operations belong on your server.

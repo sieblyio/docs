@@ -1,20 +1,29 @@
 ---
-title: "Coinbase Advanced Trade SDK clients"
-description: "Choose REST requests or streaming subscriptions for Advanced Trade."
+title: "Coinbase SDK clients"
+description: "Choose a Coinbase REST client, shared WebSocket subscriptions or the Global WebSocket API."
 ---
 
-# Advanced Trade clients
+# Coinbase clients
 
-Use these two clients for Advanced Trade brokerage APIs. Looking for Global derivatives, Exchange, INTX, Prime, App or Commerce? [Choose your Coinbase API](/products).
+Choose the client for your Coinbase product. The main walkthroughs use Advanced Trade spot; the other product guides keep their accounts, credentials and protocols separate.
 
 <!-- #region client-list -->
 | Client | Purpose |
 | --- | --- |
-| [`CBAdvancedTradeClient`](/api/classes/CBAdvancedTradeClient) | Advanced Trade REST: market data, accounts, orders and supported derivatives endpoints. |
-| [`WebsocketClient`](/api/classes/WebsocketClient) | Advanced Trade market and user subscriptions, selected with `advTradeMarketData` or `advTradeUserData`. |
+| [`CBAdvancedTradeClient`](/api/classes/CBAdvancedTradeClient) | Advanced Trade spot and US futures (CFM): market data, accounts and orders. [Advanced Trade guide](/getting-started). |
+| [`CBAdvancedTradeGlobalClient`](/api/classes/CBAdvancedTradeGlobalClient) | Advanced Trade international derivatives on the Deribit-powered Starbase gateway. [Global derivatives guide](/products/global). |
+| [`CBAppClient`](/api/classes/CBAppClient) | Coinbase App wallet accounts and transactions. [App guide](/products/app). |
+| [`CBExchangeClient`](/api/classes/CBExchangeClient) | Coinbase Exchange REST market data, accounts and orders. [Exchange guide](/products/exchange). |
+| [`CBInternationalClient`](/api/classes/CBInternationalClient) | International Exchange instruments, portfolios and orders. [INTX guide](/products/international). |
+| [`CBPrimeClient`](/api/classes/CBPrimeClient) | Prime institutional trading, portfolios and custody. [Prime guide](/products/prime). |
+| [`CBCommerceClient`](/api/classes/CBCommerceClient) | Commerce charges and checkouts. [Commerce guide](/products/commerce). |
+| [`WebsocketClient`](/api/classes/WebsocketClient) | Shared public and private subscriptions across supported Coinbase platforms, selected with `WS_KEY_MAP`. [Stream selection](#websocket-subscriptions). |
+| [`WebsocketAPIClient`](/api/classes/WebsocketAPIClient) | Awaitable Global derivatives JSON-RPC requests over WebSocket. [Global WebSocket API](/products/global#ws-api). |
 <!-- #endregion client-list -->
 
-## REST requests
+Advanced Trade international derivatives moved to Starbase on 1 October 2026. Use `CBAdvancedTradeGlobalClient` for those markets, even though `CBAdvancedTradeClient` still exposes older INTX methods. Spot and US futures remain on `CBAdvancedTradeClient`. See the [Coinbase migration guide](https://docs.cdp.coinbase.com/coinbase-app/advanced-trade-apis/guides/derivatives/technical).
+
+## Advanced Trade REST requests
 
 <<< @/../examples/first-call.ts
 
@@ -22,8 +31,18 @@ Methods return response bodies directly, not Axios response wrappers. Public mar
 
 ## WebSocket subscriptions
 
-Register listeners before calling `subscribe()`. Pass the correct Advanced Trade `WS_KEY_MAP` value and receive parsed data on `update`. See [WebSocket subscriptions](/guides/websockets) and [private account updates](/guides/private-streams).
+Register listeners before calling `subscribe()`. `WebsocketClient` manages connections for the selected `WS_KEY_MAP` key and emits parsed data on `update`. Choose the key, channels and credentials for the product you use:
 
-`WebsocketClient` also supports other Coinbase products, but their channels and credentials belong to their own product guides. `WebsocketAPIClient` is for [Global derivatives](/products/global), not Advanced Trade spot order entry.
+| Product | Subscription keys | Guide |
+| --- | --- | --- |
+| Advanced Trade | `advTradeMarketData`, `advTradeUserData` | [Public streams](/guides/websockets), [private account updates](/guides/private-streams) |
+| Global derivatives | `advTradeGlobalMarketData`, `advTradeGlobalUserData` | [Public streams](/products/global#public-streams), [private account updates](/products/global#private-streams) |
+| Exchange | `exchangeMarketData`, `exchangeDirectMarketData` | [Exchange streams](/products/exchange#public-streams) |
+| International Exchange | `internationalMarketData` | [INTX streams](/products/international#public-streams) |
+| Prime | `primeMarketData` | [Prime streams](/products/prime#public-streams) |
 
-[Advanced Trade reference](/reference) · [Choose another API](/products)
+## Global WebSocket API
+
+`WebsocketAPIClient` provides awaitable request-response methods for Global derivatives, with the convenience of REST-style calls over a persistent WebSocket connection. It uses the dedicated `advTradeGlobalWSAPI` connection, separate from subscriptions. It is not an Advanced Trade spot order-entry client. See the [Global WebSocket API guide](/products/global#ws-api).
+
+[Advanced Trade reference](/reference) · [Choose a Coinbase API](/products)
