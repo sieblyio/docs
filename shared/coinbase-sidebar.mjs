@@ -12,7 +12,8 @@ export function coinbaseSidebar(sdk, groups) {
   reference.items = [
     { text: 'Advanced Trade reference', link: '/reference' },
     { text: 'CBAdvancedTradeClient', link: '/api/classes/CBAdvancedTradeClient' },
-    { text: 'Advanced Trade WebSocket subscriptions', link: '/api/classes/WebsocketClient' },
+    { text: 'Shared WebSocket client', link: '/api/classes/WebsocketClient' },
+    { text: 'Global WebSocket API', link: '/products/global#ws-api' },
     { text: 'All SDK exports', link: '/api/' },
   ];
   const products = {

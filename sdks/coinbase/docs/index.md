@@ -25,7 +25,7 @@ The [Node.js quickstart](/getting-started) reads a public Bitcoin price without 
 
 <!--@include: ./clients.md#client-list-->
 
-Coinbase's API families have different accounts, credentials and protocols. These guides focus on **Advanced Trade** unless stated otherwise.
+Coinbase's API families have different accounts, credentials and protocols. The main walkthroughs use **Advanced Trade spot**. For international derivatives, use the [Global client and guides](/products/global); US futures (CFM) remain on `CBAdvancedTradeClient`.
 
 ## Next steps
 
