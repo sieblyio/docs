@@ -5,11 +5,11 @@ description: "Send promise-based V3 order commands using WebsocketAPIClient and 
 
 # UTA WebSocket API requests
 
-`WebsocketAPIClient` wraps UTA V3 trading requests in promises. It is distinct from subscribing to account events and is not a Classic V2 trading client. Methods include `submitNewOrder()`, `updateOrder()`, `cancelOrder()` and batch operations. The underlying `WebsocketClientV3` is available through `getWSClient()`.
+`WebsocketAPIClient` returns promises for UTA V3 trading requests. Use a separate private subscription client for account events. Classic V2 trading is not supported by this client. Methods include `submitNewOrder()`, `updateOrder()`, `cancelOrder()` and batch operations. The underlying `WebsocketClientV3` is available through `getWSClient()`.
 
 ## Cancel one existing UTA Spot order
 
-This example sends a **real cancellation** for the existing order identified by `BITGET_CLIENT_ORDER_ID`. Configure [credentials](/guides/authentication), select the intended account/environment and keep the separate [UTA private stream](/guides/private-streams) running. Save as `ws-api.ts`, compile with the credential helper and run only when you intend to cancel that order:
+This example cancels the remaining quantity of the order identified by `BITGET_CLIENT_ORDER_ID`. It uses live trading by default. Configure [credentials](/guides/authentication), select the intended account/environment and keep the separate [UTA private stream](/guides/private-streams) running. Save as `ws-api.ts`, compile with the credential helper and run only when you intend to cancel that order:
 
 <<< @/../examples/ws-api.ts
 
@@ -26,12 +26,12 @@ The wrapper connects and authenticates automatically. This one-shot example clos
 - WebSocket response payloads are in `args`, not REST's `data`.
 - Placement uses `submitNewOrder(category, params)`. Amendment uses `updateOrder(category, params)`, not the REST name `modifyOrder()`.
 
-Inspect top-level codes and each item's result where supplied by batch endpoints. A resolved promise is not proof that every batch item succeeded or that an order filled. Requests may also reject. Handle both paths, and never replay a whole batch blindly after a partial result.
+Inspect top-level codes and each item's result where supplied by batch endpoints. A resolved promise is not proof that every batch item succeeded or that an order filled. Handle rejected requests as well. Check each item's outcome before retrying a partially successful batch.
 
 ## Recovery
 
-Command acknowledgements and private order/fill events serve different purposes. Follow the latter to update account state. A rejected or timed-out command may require reconciliation before retrying; use the saved order IDs and [targeted REST recovery](/guides/orders#recover-an-uncertain-outcome).
+A command acknowledgement confirms acceptance. Follow private order and fill events to keep account state current. A rejected or timed-out command may require reconciliation before retrying; use the saved order IDs and [targeted REST recovery](/guides/orders#recover-an-uncertain-outcome).
 
-The SDK manages connection and request correlation; your application owns durable identifiers, rate-limit policy and state recovery. Moving a request from REST to WebSockets does not remove exchange rate limits.
+The SDK manages the connection and matches responses to requests. Your application must save order IDs, respect rate limits and recover missed account changes. Moving a request from REST to WebSockets does not remove exchange rate limits.
 
-[WebsocketAPIClient reference](/api/classes/WebsocketAPIClient) · [Bitget WebSocket cancellation contract](https://www.bitget.com/api-doc/uta/websocket/private/Cancel-Order-Channel)
+[WebsocketAPIClient reference](/api/classes/WebsocketAPIClient) · [Bitget WebSocket cancellation API](https://www.bitget.com/api-doc/uta/websocket/private/Cancel-Order-Channel)

@@ -5,22 +5,24 @@ description: "Choose RestClient, WebsocketClient or WebsocketAPIClient for OKX r
 
 # Choose a client
 
+Use `RestClient` for individual requests and `WebsocketClient` for ongoing market and account updates. Both cover Spot and derivatives.
+
 <!-- #region client-list -->
 - [RestClient](/api/classes/RestClient): public market data, authenticated account reads and order commands over REST.
 - [WebsocketClient](/api/classes/WebsocketClient): public and private subscriptions, connection lifecycle events and low-level WebSocket API requests.
 - [WebsocketAPIClient](/api/classes/WebsocketAPIClient): promise-based order commands over WebSockets.
 <!-- #endregion client-list -->
 
-## REST and subscriptions work together
+## Combine REST requests and subscriptions {#rest-and-subscriptions-work-together}
 
 Use one long-lived REST client for your account and region. Start with [`getTicker()`](/api/classes/RestClient#getticker), then configure credentials for [`getBalance()`](/api/classes/RestClient#getbalance). The same client covers Spot and derivatives: select the instrument and trading mode in each request rather than choosing a separate futures class.
 
-Use `WebsocketClient` for ongoing prices and account state. It selects the public, private or business connection from the channel, signs private logins and restores subscriptions after reconnects. Your application still owns recovery of missed state.
+Use `WebsocketClient` for ongoing prices and account state. It selects the public, private or business connection from the channel, signs private logins and restores subscriptions after reconnects. After a disconnect, use REST to recover changes missed by the stream.
 
-## Awaitable WebSocket commands
+## Send WebSocket API requests {#awaitable-websocket-commands}
 
 <!--@include: @/.vitepress/shared/clients/awaitable-websocket.md-->
 
-`WebsocketAPIClient` exposes methods such as `submitNewOrder()`, `amendOrder()` and `cancelOrder()`. It is not a replacement for the private orders subscription: command responses acknowledge requests, while order events describe subsequent execution.
+`WebsocketAPIClient` exposes methods such as `submitNewOrder()`, `amendOrder()` and `cancelOrder()`. Use the private orders subscription to follow fills and other order changes after a command is accepted.
 
 New applications should use `WebsocketClient`, not the exported legacy client. See [WebSocket API requests](/guides/websocket-api) for the request and response differences.

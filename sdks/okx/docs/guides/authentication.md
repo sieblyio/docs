@@ -5,7 +5,7 @@ description: "Configure server-side API credentials and read trading-account bal
 
 # Authentication and account balances
 
-OKX credentials comprise an API key, API secret and API passphrase. The passphrase is the value associated with the API key, not your account password. Use read permissions for account reads and enable trading only when your application needs order commands. Withdrawal permission is unnecessary for these examples.
+OKX credentials consist of an API key, API secret and API passphrase. The passphrase is the value associated with the API key, not your account password. Use read permissions for account reads and enable trading only when your application needs order commands. Withdrawal permission is unnecessary for these examples.
 
 Keep credentials server-side. Never embed them in browser, React Native or Expo bundles, commit them, or expose them through public environment-variable prefixes. Use an IP allowlist where supported, and keep the machine's clock synchronized.
 
@@ -23,7 +23,7 @@ Save this helper as `authenticated-client.ts`:
 
 <<< @/../examples/authenticated-client.ts
 
-The SDK signs requests. Do not construct signature headers manually. Defaults use the live global service. Select the account's [region and environment](/guides/configuration) consistently for REST and WebSockets.
+The SDK signs requests automatically and uses the live global service by default. Select the account's [region and environment](/guides/configuration) consistently for REST and WebSockets.
 
 ## Read starting account state
 
@@ -42,12 +42,12 @@ npx tsc --target ES2022 --module NodeNext --strict --skipLibCheck --outDir dist 
 node --env-file=.env dist/account-state.js
 ```
 
-Run with Node.js 24. Keep `.env` in the project directory and run the commands from there. Relative `.js` imports refer to the compiled files. This explicit file list does not depend on the [TypeScript starter](/environments/typescript)'s `.mts` include pattern.
+Run with Node.js 24. Keep `.env` in the project directory and run the commands from there. Relative `.js` imports refer to the compiled files. These commands compile the `.ts` files directly. If you use the [TypeScript starter](/environments/typescript), add them to its `include` list, which uses `.mts` files by default.
 
 For the other private examples, replace `account-state.ts` in the compile command with `private-stream.ts`, `first-order.ts` or `ws-api.ts`, retaining `authenticated-client.ts`. Run the corresponding emitted `.js` file as shown in its guide. Compilation alone does not send requests.
 
-`getBalance()` reads the trading account, including per-currency `details`. It is different from `getBalances()`, which reads funding-account balances. An empty currency balance or no open orders is not automatically an authentication failure. This example prints one page of open Spot orders; production bootstrap must paginate when necessary.
+`getBalance()` reads the trading account, including per-currency `details`. It is different from `getBalances()`, which reads funding-account balances. A successful request may return empty balances or no open orders. The example prints one page of open Spot orders; use pagination to load all orders in your application.
 
-Use this read for startup or diagnosis, then keep the [private account stream](/guides/private-streams) connected. Do not repeat a full snapshot after every order. Avoid sending account balances or raw authenticated error objects to public logs.
+Load account state at startup, then use the [private account stream](/guides/private-streams) to keep it current. Use REST again for explicit lookups or recovery after a gap. Avoid sending account balances or raw authenticated error objects to public logs.
 
 [getBalance reference](/api/classes/RestClient#getbalance) · [Order management](/guides/orders)

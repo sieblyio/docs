@@ -6,7 +6,7 @@ async function main() {
 
   switch (command) {
     case 'place': {
-      // Persist this ID before sending. Never blindly retry an uncertain command.
+      // Save this ID before sending. Check the order status before retrying a timed-out request.
       console.log('Submitting client order ID:', clientOid);
       const response = await unified.submitNewOrder({
         category: 'SPOT',

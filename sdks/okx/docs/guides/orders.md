@@ -5,7 +5,7 @@ description: "Place, observe, amend and cancel a Spot order using REST and priva
 
 # Order management
 
-This walkthrough sends real Spot order commands to the default live global service. Each CLI command is explicit; running `place` can spend funds. For simulated trading, configure [demo trading](/guides/configuration#demo-trading) on every client and use separate demo credentials before running anything.
+Use `RestClient` to place, amend and cancel a BTC-USDT Spot order. The example uses the live global service, so running `place` can spend real funds. To use simulated funds, configure [demo trading](/guides/configuration#demo-trading) on every client with demo credentials before running the commands.
 
 ## Before submitting
 
@@ -23,7 +23,7 @@ OKX_ORDER_SIZE=0.0001
 OKX_NEW_PRICE=59000
 ```
 
-Prices and sizes are illustrative, not recommendations or guaranteed-valid orders. Choose a buy price below the current best bid. A `post_only` order that would immediately take liquidity is rejected or cancelled according to the exchange's rules; a resting order can still fill before you cancel it.
+Replace the example prices and size with values that meet the current instrument rules. Choose a buy price below the current best bid. A `post_only` order that would immediately take liquidity is rejected or cancelled according to the exchange's rules; a resting order can still fill before you cancel it.
 
 ## Place and observe
 
@@ -37,7 +37,7 @@ node --env-file=.env dist/first-order.js place
 
 Save the returned `ordId`. REST removes the top-level response envelope, but each result still has `sCode` and `sMsg`. Only `sCode: '0'` indicates that item was accepted. The sample checks each returned result.
 
-Follow the matching `ordId` or `clOrdId` on the private `orders` channel. Typical states include `live`, `partially_filled`, `filled` and `canceled`. Read `accFillSz` for cumulative filled quantity; use fill identifiers and trade history when recording individual executions. Acceptance is not evidence of a fill.
+Follow the matching `ordId` or `clOrdId` on the private `orders` channel. Typical states include `live`, `partially_filled`, `filled` and `canceled`. Read `accFillSz` for cumulative filled quantity; use fill identifiers and trade history when recording individual executions. An accepted order may still be unfilled.
 
 ## Amend an open order
 
@@ -53,11 +53,11 @@ This changes the price using `newPx` and explicitly sets `cxlOnFail: false`. It 
 node --env-file=.env dist/first-order.js cancel
 ```
 
-Cancellation requests do not reverse fills. Follow the order stream until the resulting state is known, accounting for fills that race with cancellation. A filled Spot buy leaves an asset balance even if any remainder is cancelled.
+Cancellation requests do not reverse fills. Follow the order stream until the resulting state is known, including fills received while the cancellation was being processed. A filled Spot buy leaves an asset balance even if any remainder is cancelled.
 
 ## Recover an uncertain outcome
 
-The sample never retries order commands automatically. A timeout can occur after OKX accepts a request. Check matching private events first, then use a scoped read if the outcome is still unknown:
+The sample never retries order commands automatically. A timeout can occur after OKX accepts a request. Check matching private events first, then query the order if its status is still unknown:
 
 ```sh
 node --env-file=.env dist/first-order.js status
@@ -65,8 +65,8 @@ node --env-file=.env dist/first-order.js status
 
 This uses [`getOrderDetails()`](/api/classes/RestClient#getorderdetails) with the saved client ID. For records beyond that endpoint's scope, use [`getOrderHistory()`](/api/classes/RestClient#getorderhistory), [`getOrderHistoryArchive()`](/api/classes/RestClient#getorderhistoryarchive) and [`getFills()`](/api/classes/RestClient#getfills), with pagination and appropriate filters. Empty results or delayed history are not proof the order failed.
 
-Treat client IDs as correlation identifiers, not a guarantee of indefinite idempotency. Do not reuse one for a new intended order or resubmit an uncertain request merely because its response was lost. Use REST for recovery, not after every successful command.
+Use the client ID to match requests with order events and status queries. Give each new order a unique ID. Reusing an ID does not guarantee duplicate requests will be ignored indefinitely, so resolve a timed-out request before resubmitting it. Use REST for recovery rather than querying after every successful command.
 
 Closing a process or WebSocket does not cancel open orders.
 
-[Private account updates](/guides/private-streams) · [Error handling](/guides/errors) · [OKX order contract](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-place-order)
+[Private account updates](/guides/private-streams) · [Error handling](/guides/errors) · [OKX order API](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-place-order)

@@ -12,13 +12,13 @@ ws.on('update', (message) => {
   console.log('Classic account update received:', message.arg);
 });
 ws.on('exception', () => {
-  console.error('Private stream exception; inspect sanitized server diagnostics.');
+  console.error('Private stream exception; check the error code and message without logging credentials.');
 });
 ws.on('reconnect', () => {
-  console.log('Mark Classic account state stale.');
+  console.log('Reconnecting; Classic account state may be stale.');
 });
 ws.on('reconnected', () => {
-  console.log('Confirm subscriptions, then reconcile missing state through REST.');
+  console.log('Connection restored. Confirm subscriptions and recover missed account updates through REST.');
 });
 
 Promise.all([

@@ -1,11 +1,11 @@
 ---
 title: "Bitget private account WebSocket streams"
-description: "Observe Classic V2 or UTA V3 orders, balances and executions without polling after every command."
+description: "Subscribe to Classic V2 or UTA V3 order, balance and execution updates."
 ---
 
 # Private account updates
 
-Choose the stream matching your [account generation](/clients). Private subscriptions authenticate using server-side credentials. These examples observe events only; they do not place, amend or cancel orders.
+Choose the stream for your [UTA or Classic account](/clients). Private subscriptions require server-side credentials. These examples read updates only; they do not place, amend or cancel orders.
 
 ## Unified Trading Account V3
 
@@ -17,7 +17,7 @@ node --env-file=.env dist/private-stream.js
 
 <<< @/../examples/private-stream.ts
 
-UTA private subscriptions use `WS_KEY_MAP.v3Private` and `instType: 'UTA'`, including account, order, fill and position topics. The order topic is singular, `order`; Classic uses `orders`. Keep the event payloads in private server-side handlers. The example logs only the routing argument.
+UTA private subscriptions use `WS_KEY_MAP.v3Private` and `instType: 'UTA'`, including account, order, fill and position topics. The order topic is singular, `order`; Classic uses `orders`. Handle account data on the server. The example logs only the topic information.
 
 ## Classic V2 Spot
 
@@ -29,20 +29,20 @@ Save as `classic-private-stream.ts`, compile it with the same helper and run the
 node --env-file=.env dist/classic-private-stream.js
 ```
 
-`subscribeTopic()` determines the private connection from the topic. The `default` selector follows the Classic private topic contract; it is not a Spot symbol. Futures and margin have different instrument types and available channels. Do not reuse a Spot topic blindly.
+`subscribeTopic()` determines the private connection from the topic. For this private topic, `default` selects account updates rather than a particular Spot symbol. Futures and margin use different instrument types and channels.
 
-## Observe commands passively
+## Follow order updates {#observe-commands-passively}
 
-Wait for authentication and successful acknowledgements for every required subscription before allowing dependent commands. Correlate order updates by `orderId` and your saved `clientOid`. Treat an order acknowledgement separately from execution. A quiet stream can be healthy when no account changes occur.
+Wait for authentication and all required subscription acknowledgements before placing orders. Match updates to orders using `orderId` and your saved `clientOid`. An order-command acknowledgement confirms acceptance, not execution. Follow order and fill events to track execution. A quiet stream can be healthy when no account changes occur.
 
 Keep order state, fills, balances and positions separate. Deduplicate executions by their exchange identifiers and preserve decimal precision. Do not poll REST after every successful event or command.
 
 ## Recover after a gap
 
-Mark affected state stale on reconnect or unexpected closure. Confirm renewed authentication and subscriptions, buffer incoming events, then reconcile balances, open orders and executions using the matching REST client. Page through all relevant history, merge buffered events by identifiers and timestamps, and resume dependent actions only when the state is consistent.
+Mark affected state stale on reconnect or unexpected closure. Confirm renewed authentication and subscriptions, buffer incoming events, then reconcile balances, open orders and executions using the matching REST client. Page through all relevant history, merge buffered events by identifiers and timestamps, and resume trading decisions only when account state is current.
 
-For UTA use `getBalances()`, `getUnfilledOrders()`, `getHistoryOrders()` and **`getTradeFills()`**. `getFills()` is public market trade data and cannot recover your account executions. Classic Spot uses `getSpotAccountAssets()`, `getSpotOpenOrders()`, `getSpotHistoricOrders()` and `getSpotFills()`. Respect each endpoint's history window and pagination.
+For UTA use `getBalances()`, `getUnfilledOrders()`, `getHistoryOrders()` and `getTradeFills()`. `getFills()` is public market trade data and cannot recover your account executions. Classic Spot uses `getSpotAccountAssets()`, `getSpotOpenOrders()`, `getSpotHistoricOrders()` and `getSpotFills()`. Respect each endpoint's history window and pagination.
 
-Do not assume every private topic provides a full initial snapshot or that reconnection replays missed events. Follow each channel's contract and keep recovery bounded by persistent checkpoints.
+Check which topics send an initial snapshot and load any missing state through REST. Reconnection does not necessarily replay missed events. Save recovery checkpoints so later history queries cover the gap without reloading all history.
 
 [UTA order management](/guides/orders) · [Production usage](/guides/production)

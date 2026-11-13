@@ -5,7 +5,7 @@ description: "Install bitget-api and read a public BTCUSDT Spot ticker with Rest
 
 # Node.js quickstart with JavaScript
 
-Read a live BTCUSDT Spot price using Bitget UTA V3 public market data. No API key, secret or passphrase is required.
+Read a live BTCUSDT Spot price using Bitget's Unified Trading Account (UTA) V3 API. No API key, secret or passphrase is required.
 
 ## Installation
 
@@ -29,7 +29,7 @@ node prices.mjs
 BTCUSDT last price: 65000.1
 ```
 
-The price is illustrative. `getTickers()` returns the REST envelope. Its `data` is an array, and `lastPrice` is a decimal string. An empty array means this example has no ticker to print; do not interpret `undefined` as a price.
+Your price will differ. `getTickers()` returns tickers in `data`. The example reads `data[0]?.lastPrice`, a decimal string, or `undefined` if no ticker is returned.
 
 ## Module formats
 

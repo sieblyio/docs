@@ -29,7 +29,7 @@ node prices.mjs
 BTC-USDT last price: 65000.1
 ```
 
-The price is illustrative. `getTicker()` returns an array of ticker objects, not the raw REST envelope. Numeric values such as `last` are decimal strings.
+Your price will differ. `getTicker()` returns an array of ticker objects, not the raw REST envelope. Numeric values such as `last` are decimal strings.
 
 If your account belongs to a regional OKX service, [select its market](/guides/configuration) before adding authenticated requests.
 

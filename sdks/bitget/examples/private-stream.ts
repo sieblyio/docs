@@ -9,17 +9,17 @@ ws.on('response', (message) => {
   console.log('Subscription response:', message);
 });
 ws.on('update', (message) => {
-  // Account payloads are private. Send only to your server-side state handler.
+  // Handle account data on the server; keep it out of public logs.
   console.log('UTA account update received:', message.arg);
 });
 ws.on('exception', () => {
-  console.error('Private stream exception; inspect sanitized server diagnostics.');
+  console.error('Private stream exception; check the error code and message without logging credentials.');
 });
 ws.on('reconnect', () => {
-  console.log('Mark account state stale; pause dependent actions.');
+  console.log('Reconnecting; account state may be stale. Pause trading decisions until recovery completes.');
 });
 ws.on('reconnected', () => {
-  console.log('Confirm subscriptions, then reconcile missing state through REST.');
+  console.log('Connection restored. Confirm subscriptions and recover missed account updates through REST.');
 });
 
 ws.subscribe([

@@ -6,7 +6,7 @@ const api = new WebsocketAPIClient({ accounts: [credentials] });
 async function main() {
   const clOrdId = process.env.OKX_CLIENT_ORDER_ID;
   if (!clOrdId) {
-    throw new Error('Set OKX_CLIENT_ORDER_ID to the existing BTC-USDT order to cancel.');
+    throw new Error('Set OKX_CLIENT_ORDER_ID to the client order ID of the existing BTC-USDT order to cancel.');
   }
   const response = await api.cancelOrder({ instId: 'BTC-USDT', clOrdId });
   console.log('Cancellation response:', response);
