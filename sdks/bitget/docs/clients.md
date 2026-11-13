@@ -5,6 +5,8 @@ description: "Start with UTA V3 clients and find Classic V2 alternatives for exi
 
 # Choose a client
 
+Use V3 clients for a Unified Trading Account (UTA) and V2 clients for a Classic account. REST clients make individual requests; WebSocket clients receive ongoing updates.
+
 <!-- #region client-list -->
 - [RestClientV3](/api/classes/RestClientV3): UTA public market data, account reads and trading, plus the V3 product APIs exposed by the SDK.
 - [WebsocketClientV3](/api/classes/WebsocketClientV3): UTA V3 subscriptions and low-level WebSocket API requests.
@@ -19,9 +21,9 @@ For new integrations, start with `RestClientV3` and `WebsocketClientV3`, as the 
 
 ## Match the account and API version {#match-the-account-and-api-generation}
 
-Use V3 for a Unified Trading Account and V2 for a Classic account. Creating a V3 client does not convert a Classic account to UTA.
+Creating a V3 client does not convert a Classic account to UTA.
 
-For UTA, begin with `RestClientV3.getTickers()` with a category such as `SPOT`, and `getBalances()` for the account. Existing Classic Spot integrations use `RestClientV2.getSpotTicker()` and `getSpotAccountAssets()`. REST returns an envelope with `code`, `msg`, `requestTime` and `data`; it does not unwrap `data` for you.
+For UTA, use `RestClientV3.getTickers()` to read prices for a category such as `SPOT`, and `getBalances()` to read account balances. Existing Classic Spot integrations use `RestClientV2.getSpotTicker()` and `getSpotAccountAssets()`. REST returns an envelope with `code`, `msg`, `requestTime` and `data`; it does not unwrap `data` for you.
 
 ## Product coverage
 
@@ -29,11 +31,11 @@ For UTA, begin with `RestClientV3.getTickers()` with a category such as `SPOT`, 
 
 Check each method's request type and exchange documentation. Spot and futures use different quantity units, and Classic parameters differ from UTA parameters.
 
-## REST and subscriptions work together
+## Combine REST requests and subscriptions {#rest-and-subscriptions-work-together}
 
 Reuse REST clients for initial data and recovery after disconnects. Use the matching WebSocket client for ongoing market and account updates. V3 uses topic/payload objects plus an explicit connection key. Classic V2 uses `subscribeTopic('SPOT', 'ticker', 'BTCUSDT')`. Private V3 topics use `instType: 'UTA'`.
 
-## Awaitable WebSocket commands
+## Send WebSocket API requests {#awaitable-websocket-commands}
 
 <!--@include: @/.vitepress/shared/clients/awaitable-websocket.md-->
 

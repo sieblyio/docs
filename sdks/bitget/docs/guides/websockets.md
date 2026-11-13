@@ -5,11 +5,21 @@ description: "Stream UTA V3 tickers and understand subscription acknowledgements
 
 # Public WebSocket subscriptions
 
-`WebsocketClientV3` connects when needed, maintains heartbeats and restores requested subscriptions after reconnects. This public UTA Spot example runs until Ctrl+C:
+`WebsocketClientV3` connects when needed, maintains heartbeats and restores requested subscriptions after reconnects.
+
+## Subscribe to ticker updates
+
+Install `bitget-api` and save this example as `stream.ts`. It subscribes to public BTCUSDT Spot ticker updates without credentials.
 
 <<< @/../examples/stream.ts
 
-Save as `stream.ts` and run `node stream.ts` on Node.js 24 after installing `bitget-api`, or compile it with your TypeScript project.
+Run it on Node.js 24, or compile it with your TypeScript project:
+
+```sh
+node stream.ts
+```
+
+The example logs subscription responses and incoming market updates. Leave it running to receive new prices, then press Ctrl+C to close the connection.
 
 ## Subscription acknowledgement and data
 

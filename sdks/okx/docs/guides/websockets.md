@@ -5,11 +5,21 @@ description: "Subscribe to public market updates and handle connection recovery.
 
 # WebSocket subscriptions
 
-`WebsocketClient` opens connections as needed, maintains heartbeats and resubscribes after reconnects. This public example runs until Ctrl+C:
+`WebsocketClient` opens connections as needed, maintains heartbeats and resubscribes after reconnects.
+
+## Subscribe to ticker updates
+
+Install `okx-api` and save this example as `stream.ts`. It subscribes to public BTC-USDT Spot ticker updates without credentials.
 
 <<< @/../examples/stream.ts
 
-Use `node stream.ts` on Node.js 24 after installing `okx-api`, or compile with your TypeScript project.
+Run it on Node.js 24, or compile it with your TypeScript project:
+
+```sh
+node stream.ts
+```
+
+The example logs subscription responses and incoming market updates. Leave it running to receive new prices, then press Ctrl+C to close the connection.
 
 ## Subscription acknowledgements and data
 

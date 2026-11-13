@@ -5,7 +5,7 @@ description: "Install bitget-api and read a public BTCUSDT Spot ticker with Rest
 
 # Node.js quickstart with JavaScript
 
-Read a live BTCUSDT Spot price using Bitget UTA V3 public market data. No API key, secret or passphrase is required.
+Read a live BTCUSDT Spot price using Bitget's Unified Trading Account (UTA) V3 API. No API key, secret or passphrase is required.
 
 ## Installation
 
