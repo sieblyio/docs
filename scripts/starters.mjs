@@ -16,20 +16,29 @@ function readme(sdk, environment) {
   const stream = environment === 'bun' ? 'bun run stream' : environment === 'deno' ? 'deno task stream' : 'npm run stream';
   const prerequisite = environment === 'bun' || environment === 'deno'
     ? `Install ${environmentTitles[environment]} first.` : 'Use Node.js 24 and npm.';
-  const native = environment === 'expo' ? '\nOpen the project in a matching Expo Go installation. Press **i** for an iOS simulator or **a** for an Android emulator.\n' : '';
+  const result = ['react', 'vite'].includes(environment)
+    ? '\nOpen the local URL printed by Vite. The page shows a REST price and live WebSocket prices.\n'
+    : environment === 'next'
+      ? '\nOpen `http://localhost:3000/api/price`. A successful response contains the symbol and price as JSON.\n'
+      : environment === 'cloudflare-workers'
+        ? '\nOpen the local URL printed by Wrangler. Each request returns the symbol and public price as JSON.\n\nThe separate `src/order.js` handler can submit live orders with production credentials. Follow the guide to configure secrets and review order parameters before using `npm run dev:orders`. Starting the server does not submit an order.\n'
+        : streaming ? '\nThe script prints a public REST price and exits.\n' : '';
+  const native = environment === 'expo' ? '\nUse an Expo Go version that supports the Expo SDK in `package.json`. Press **i** for an iOS simulator or **a** for an Android emulator. iOS simulators require macOS and Xcode. Keep Expo Go in the foreground.\n' : '';
   const controls = ['react', 'vite', 'expo'].includes(environment) ? '\nUse **Stop stream** to close the price subscription.\n' : '';
   const optionalStream = streaming ? `\n${['coinbase', 'okx', 'bitget'].includes(sdk.id) ? 'To stream WebSocket prices until Ctrl+C:' : 'To receive one WebSocket price and close the connection:'}\n\n\`\`\`sh\n${stream}\n\`\`\`\n` : '';
   const commonjs = environment === 'node' ? '\nFor CommonJS instead, run `node price.cjs` or `node stream.cjs`.\n' : '';
   const browserNote = sdk.id === 'kraken' && ['react', 'vite'].includes(environment)
-    ? '\nThe public GET client removes the SDK’s `UserAgent` and `locale` headers to avoid Kraken’s failing CORS preflight. Keep this configuration for these public reads only. Run authenticated REST calls on your server, never in a browser bundle. See the guide for the server-side alternative.\n' : '';
+    ? '\nThe public GET client removes the SDK’s `UserAgent` and `locale` headers because they trigger a CORS preflight that Kraken rejects. Keep this configuration for these public reads only. Run authenticated REST calls on your server, never in a browser bundle. See the guide for the server-side alternative.\n' : '';
   const coinbaseNote = sdk.id === 'coinbase' && environment !== 'cloudflare-workers'
-    ? '\nThese examples use Advanced Trade public market data. Keep credentialed calls on your Node.js server.\n'
+    ? '\nThese examples use Advanced Trade public market data. Keep authenticated calls on your Node.js server.\n'
       + (['react', 'vite'].includes(environment) ? '\nKeep `sdk.vite.config.js`: it excludes Node-only JWT signing from this public-data application. Browser REST access depends on Coinbase CORS policy.\n' : '')
-      + (environment === 'expo' ? '\nRetain `coinbase-public-auth.cjs` and both Metro files: they supply the public-data configuration and exclude Node-only JWT signing.\n' : '')
+      + (environment === 'expo' ? '\nKeep `coinbase-public-auth.cjs` and both Metro configuration files. They configure the app for public market data and disable Node-only JWT signing.\n' : '')
     : '';
   const transportNote = ['okx', 'bitget'].includes(sdk.id) && environment !== 'cloudflare-workers'
-    ? '\nKeep authenticated calls on your server. Browser projects must retain the Vite configuration and omit Node-only `keepAlive`; browser REST access depends on EXCHANGE CORS policy. See the guide for runtime setup limits.\n'.replace('EXCHANGE', sdk.name) : '';
-  return `# ${sdk.name}: ${environmentTitles[environment]}\n\nA runnable public-price example using \`${sdk.packageName}\`. No API key is required.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
+    ? (['react', 'vite'].includes(environment)
+      ? '\nKeep authenticated calls on your server. Keep the supplied Vite configuration and omit Node-only `keepAlive`. Browser REST access depends on EXCHANGE CORS policy; use a server route if requests are blocked.\n'.replace('EXCHANGE', sdk.name)
+      : '\nThis example uses public market data. Keep authenticated account and trading calls on your server. See the guide for this runtime’s requirements and limitations.\n') : '';
+  return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
 
 export async function starterFiles(id, sdk, environment) {

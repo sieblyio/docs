@@ -1,6 +1,6 @@
 # Bitget: Next.js
 
-A runnable public-price example using `bitget-api`. No API key is required.
+Read public market prices with `bitget-api`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -13,6 +13,8 @@ npm install
 npm run dev
 ```
 
-Keep authenticated calls on your server. Browser projects must retain the Vite configuration and omit Node-only `keepAlive`; browser REST access depends on Bitget CORS policy. See the guide for runtime setup limits.
+Open `http://localhost:3000/api/price`. A successful response contains the symbol and price as JSON.
+
+This example uses public market data. Keep authenticated account and trading calls on your server. See the guide for this runtime’s requirements and limitations.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/bitget/environments/next.html).

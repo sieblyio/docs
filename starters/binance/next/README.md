@@ -1,6 +1,6 @@
 # Binance: Next.js
 
-A runnable public-price example using `binance`. No API key is required.
+Read public market prices with `binance`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -12,5 +12,7 @@ From this folder:
 npm install
 npm run dev
 ```
+
+Open `http://localhost:3000/api/price`. A successful response contains the symbol and price as JSON.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/binance/environments/next.html).

@@ -1,6 +1,6 @@
 # Coinbase: Next.js
 
-A runnable public-price example using `coinbase-api`. No API key is required.
+Read public market prices with `coinbase-api`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -13,6 +13,8 @@ npm install
 npm run dev
 ```
 
-These examples use Advanced Trade public market data. Keep credentialed calls on your Node.js server.
+Open `http://localhost:3000/api/price`. A successful response contains the symbol and price as JSON.
+
+These examples use Advanced Trade public market data. Keep authenticated calls on your Node.js server.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/coinbase/environments/next.html).

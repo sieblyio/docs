@@ -11,4 +11,4 @@ Follow the guide for your runtime or framework. Each includes a complete project
 | Cloudflare Workers | [Public prices and authenticated orders](/environments/cloudflare-workers) |
 | Mobile apps | [React Native / Expo for iOS and Android](/environments/expo) |
 
-Browser and Expo guides include SDK-specific bundler configuration and polyfills where needed. See [Runtime compatibility](/compatibility) for tested versions, required configuration and check scope.
+Browser and Expo guides include SDK-specific bundler configuration and polyfills where needed. See [Runtime compatibility](/compatibility) for tested versions, required configuration and what the checks cover.

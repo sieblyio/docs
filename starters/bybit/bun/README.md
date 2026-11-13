@@ -1,6 +1,6 @@
 # Bybit: Bun
 
-A runnable public-price example using `bybit-api`. No API key is required.
+Read public market prices with `bybit-api`. No API key is required for public prices.
 
 Install Bun first.
 
@@ -12,6 +12,8 @@ From this folder:
 bun install
 bun run start
 ```
+
+The script prints a public REST price and exits.
 
 To receive one WebSocket price and close the connection:
 

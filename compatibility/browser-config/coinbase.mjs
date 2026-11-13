@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 
 // Public market data only. Coinbase's JWT helper imports Node crypto eagerly.
-// Keep credentialed calls on a Node.js server rather than bundling private keys.
+// Keep authenticated calls and private keys on a Node.js server.
 const publicAuth = '\0coinbase-public-auth';
 const sdkRoot = fileURLToPath(new URL('./node_modules/coinbase-api/', import.meta.url));
 export default {

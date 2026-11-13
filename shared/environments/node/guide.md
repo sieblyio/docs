@@ -48,5 +48,5 @@ WebSocket closed.
 
 - Use `.mjs` for `import` and `.cjs` for `require`. These [Node.js module rules](https://nodejs.org/api/packages.html#packagejson-and-file-extensions) let you choose either format without configuring `"type"` in `package.json`.
 - If the SDK cannot be resolved, run the install command from the directory containing your program and `package.json`.
-- A failed request or no update within 30 seconds needs a network check. Exchange regional restrictions apply.
+- If a request fails or no update arrives within 30 seconds, check HTTPS and WSS access to the exchange from your network and region.
 - See [Runtime compatibility](/compatibility) for tested versions and [WebSocket subscriptions](/guides/websockets) for continuous subscriptions.

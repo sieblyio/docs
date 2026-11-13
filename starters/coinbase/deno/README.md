@@ -1,6 +1,6 @@
 # Coinbase: Deno
 
-A runnable public-price example using `coinbase-api`. No API key is required.
+Read public market prices with `coinbase-api`. No API key is required for public prices.
 
 Install Deno first.
 
@@ -13,12 +13,14 @@ deno install
 deno task start
 ```
 
+The script prints a public REST price and exits.
+
 To stream WebSocket prices until Ctrl+C:
 
 ```sh
 deno task stream
 ```
 
-These examples use Advanced Trade public market data. Keep credentialed calls on your Node.js server.
+These examples use Advanced Trade public market data. Keep authenticated calls on your Node.js server.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/coinbase/environments/deno.html).

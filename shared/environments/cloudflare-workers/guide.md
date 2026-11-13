@@ -66,12 +66,12 @@ Use [Worker secrets](https://developers.cloudflare.com/workers/configuration/sec
 
 For local development, put those same names in an untracked `.dev.vars` file. Keep it out of source control. `ORDER_TOKEN` protects your application endpoint; it is not your exchange API key. Do not expose it in a public browser app. See [authentication](/guides/authentication) for your SDK’s credential format.
 
-Run `npm run dev:orders` to select the private handler. The public default entrypoint does not accept orders. A deliberate `POST /order` with `Authorization: Bearer <your ORDER_TOKEN>` and a JSON body containing positive decimal strings `price` and `quantity` submits one order. Starting the server does not submit anything. @@WORKER_ORDER_ID_NOTE@@
+Run `npm run dev:orders` to select the private handler. The public default entrypoint does not accept orders. Send `POST /order` with `Authorization: Bearer <your ORDER_TOKEN>` and a JSON body containing `price` and `quantity` as positive decimal strings to submit one order. Starting the server does not submit anything. @@WORKER_ORDER_ID_NOTE@@
 
 Inspect the exchange’s response, including per-order rejection fields. Acknowledgement is not a fill. Use [account authentication](/guides/authentication) and [order management](/guides/orders) for account events and order state. If a request times out, resolve its outcome before retrying; do not blindly resubmit.
 
 ## WebSocket lifecycle and production use
 
-A request handler is not an always-running Node.js process. Do not open a background subscription and assume it continues after the response. [`waitUntil()`](https://developers.cloudflare.com/workers/runtime-apis/context/#waituntil) extends work only for a limited time. Persistent streams need a separate lifecycle design; outgoing WebSockets in Durable Objects [do not support hibernation](https://developers.cloudflare.com/durable-objects/best-practices/websockets/).
+A request handler is not an always-running Node.js process. Do not open a background subscription and assume it continues after the response. [`waitUntil()`](https://developers.cloudflare.com/workers/runtime-apis/context/#waituntil) extends work only for a limited time. For persistent streams, choose a service that can keep the connection open and handle reconnects. Outgoing WebSockets in Durable Objects [do not support hibernation](https://developers.cloudflare.com/durable-objects/best-practices/websockets/).
 
 See [WebSocket subscriptions](/guides/websockets), [authentication](/guides/authentication), and [production usage](/guides/production). Exchange region restrictions still apply to your Worker’s outbound requests.

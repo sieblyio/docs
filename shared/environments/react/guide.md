@@ -25,7 +25,9 @@ npm run dev
 
 Open Vite's printed URL, normally `http://localhost:5173/`. Both price fields should display positive numbers such as `65000.5`. Tap **Stop stream** to unmount the price component and close its WebSocket. **Start stream** mounts a new component and creates a fresh subscription.
 
-The effect ignores late REST responses after unmount. Its cleanup closes the client on unmount and before a replacement effect. React StrictMode deliberately performs an extra setup and cleanup in development. The same cleanup handles it. The entry module pauses the price component before the browser caches the page and resumes it on Back or Forward, while preserving your Stop/Start choice. It unmounts the root when the page is discarded or Vite replaces the entry module. See [React's effect lifecycle](https://react.dev/reference/react/useEffect#connecting-to-an-external-system).
+The effect ignores REST responses that arrive after unmount. Its cleanup closes the client before the effect runs again and when the component unmounts. This also handles StrictMode’s extra setup and cleanup cycle in development.
+
+The entry module pauses the price component when the browser caches the page for Back or Forward navigation. Restoring the page resumes it without changing your Stop/Start choice. The module unmounts the React root when the page is discarded or Vite replaces the entry module. See [React's effect lifecycle](https://react.dev/reference/react/useEffect#connecting-to-an-external-system).
 
 Build and preview the production app:
 

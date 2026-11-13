@@ -17,7 +17,7 @@ if (sdk.compatibilityPage === 'authored') {
   const setupFragment = path.join(ctx.docs, '.vitepress/shared/getting-started/environments.md');
   const content = await readFile(setupFragment, 'utf8');
   await writeFile(setupFragment, content.replace(
-    'See [Runtime compatibility](/compatibility) for tested versions, required configuration and check scope.',
+    'See [Runtime compatibility](/compatibility) for tested versions, required configuration and what the checks cover.',
     'See [Runtime setup](/compatibility) for project recipes and required configuration.',
   ));
 }
@@ -79,9 +79,25 @@ if (!project || app.logger.hasErrors()) throw new Error('TypeDoc conversion fail
 
 // Enrich the documentation model, never the SDK or generated Markdown.
 for (const [name, description] of Object.entries(sdk.referenceDescriptions || {})) {
-  const reflection = project.getChildByName(name.split('.'));
-  if (!reflection) throw new Error(`Missing documented export: ${name}`);
-  reflection.comment = new Comment([{ kind: 'text', text: description }]);
+  const parts = name.split('.');
+  const reflection = project.getChildByName(parts);
+  const method = !reflection && project.getChildByName(parts.slice(0, -1));
+  const targets = reflection
+    ? (reflection.signatures?.length ? reflection.signatures : [reflection])
+    : (method?.signatures || []).flatMap(signature =>
+      (signature.parameters || []).filter(parameter => parameter.name === parts.at(-1)));
+  if (!targets.length) throw new Error(`Missing documented export: ${name}`);
+  // Keep parameter, return and deprecation tags when clarifying a summary.
+  for (const target of targets) {
+    target.comment = (target.comment || reflection?.comment)?.clone() || new Comment();
+    const summary = typeof description === 'string' ? description : description.summary;
+    if (summary !== undefined) target.comment.summary = [{ kind: 'text', text: summary }];
+    if (typeof description === 'object' && description.deprecated !== undefined) {
+      const tag = target.comment.blockTags.find(tag => tag.tag === '@deprecated');
+      if (!tag) throw new Error(`Missing deprecation tag for documented export: ${name}`);
+      tag.content = [{ kind: 'text', text: description.deprecated }];
+    }
+  }
 }
 
 // Exact member checks make renamed or removed methods fail the docs build.

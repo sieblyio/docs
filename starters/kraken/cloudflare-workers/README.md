@@ -1,6 +1,6 @@
 # Kraken: Cloudflare Workers
 
-A runnable public-price example using `@siebly/kraken-api`. No API key is required.
+Read public market prices with `@siebly/kraken-api`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -12,5 +12,9 @@ From this folder:
 npm install
 npm run dev
 ```
+
+Open the local URL printed by Wrangler. Each request returns the symbol and public price as JSON.
+
+The separate `src/order.js` handler can submit live orders with production credentials. Follow the guide to configure secrets and review order parameters before using `npm run dev:orders`. Starting the server does not submit an order.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/kraken/environments/cloudflare-workers.html).

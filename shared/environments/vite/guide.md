@@ -23,7 +23,7 @@ See [Runtime compatibility](/compatibility) for runtime requirements.
 npm run dev
 ```
 
-Open the URL printed by Vite, normally `http://localhost:5173/`. The page shows a REST price and a changing WebSocket price. Click **Stop stream** to close the client. Navigation and Vite hot replacement also close the connection. Returning with Back or Forward starts a fresh subscription after a cached-page restoration, unless you clicked Stop stream.
+Open the URL printed by Vite, normally `http://localhost:5173/`. The page shows a REST price and a changing WebSocket price. Click **Stop stream** to close the client. Leaving the page or replacing the module during Vite development also closes the connection. If Back or Forward navigation restores a cached page, it starts a new subscription unless you clicked **Stop stream**.
 
 To check the production bundle:
 

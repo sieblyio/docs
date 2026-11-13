@@ -72,9 +72,9 @@ export function workerGuideFields(id, files) {
     WORKER_SECRETS: ['ORDER_TOKEN', ...recipe.credentials].map(name => `npx wrangler secret put ${name}`).join('\n'),
     WORKER_ORDER_ENVIRONMENT: recipe.environment,
     WORKER_LIVE_NOTE: 'The example uses production credentials and submits a live order.',
-    WORKER_ORDER_ID_NOTE: id === 'coinbase' ? 'Also supply `clientOrderId`: generate a unique ID in your calling application and persist it before sending. Reuse that identity when resolving an uncertain outcome rather than generating a new order.' : '',
+    WORKER_ORDER_ID_NOTE: id === 'coinbase' ? 'Also supply `clientOrderId`: generate a unique ID in your calling application and persist it before sending. Use that same ID to resolve an uncertain order outcome before submitting another order.' : '',
     WORKER_CACHE: id === 'kraken'
       ? 'This Kraken recipe uses the SDK’s native request configuration without an Axios cache override.'
-      : "The second constructor argument sets `fetchOptions.cache` to `no-store`, a [cache mode Workers supports](https://developers.cloudflare.com/workers/runtime-apis/request/). Axios 1.20.0 otherwise requests `default`, which Workers rejects. Keep this option while using that affected version. Axios 1.21.1 fixes the default path; SDK dependency upgrades follow [Siebly’s security policy](https://siebly.io/security), typically a minimum 30-day review window rather than a promised release date. You do not need to override the SDK dependency.",
+      : "The second constructor argument sets `fetchOptions.cache` to `no-store`, a [cache mode Workers supports](https://developers.cloudflare.com/workers/runtime-apis/request/). Axios 1.20.0 otherwise requests `default`, which Workers rejects. Keep this option while using that affected version. Axios 1.21.1 fixes this default cache behavior. SDK dependency upgrades follow [Siebly’s security policy](https://siebly.io/security), which generally includes at least 30 days of review. This does not guarantee a release date. You do not need to override the SDK dependency.",
   };
 }
