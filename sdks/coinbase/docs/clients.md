@@ -14,7 +14,7 @@ Choose the client for your Coinbase product. The main guides use Advanced Trade 
 | [`CBAdvancedTradeGlobalClient`](/api/classes/CBAdvancedTradeGlobalClient) | Advanced Trade international derivatives on the Deribit-powered Starbase gateway. [Global derivatives guide](/products/global). |
 | [`CBAppClient`](/api/classes/CBAppClient) | Coinbase App wallet accounts and transactions. [App guide](/products/app). |
 | [`CBExchangeClient`](/api/classes/CBExchangeClient) | Coinbase Exchange REST market data, accounts and orders. [Exchange guide](/products/exchange). |
-| [`CBInternationalClient`](/api/classes/CBInternationalClient) | International Exchange instruments, portfolios and orders. [INTX guide](/products/international). |
+| [`CBInternationalClient`](/api/classes/CBInternationalClient) | Retained legacy INTX methods. [Migration and historical records](/products/international). |
 | [`CBPrimeClient`](/api/classes/CBPrimeClient) | Prime institutional trading, portfolios and custody. [Prime guide](/products/prime). |
 | [`CBCommerceClient`](/api/classes/CBCommerceClient) | Legacy Commerce charges and checkouts. [Migration and retained methods](/products/commerce). |
 | [`WebsocketClient`](/api/classes/WebsocketClient) | Shared public and private subscriptions across supported Coinbase platforms, selected with `WS_KEY_MAP`. [Stream selection](/clients#websocket-subscriptions). |
@@ -38,7 +38,7 @@ Register listeners before calling `subscribe()`. `WebsocketClient` manages conne
 | Advanced Trade | `advTradeMarketData`, `advTradeUserData` | [Public streams](/guides/websockets), [private account updates](/guides/private-streams) |
 | Global derivatives | `advTradeGlobalMarketData`, `advTradeGlobalUserData` | [Public streams](/products/global#public-streams), [private account updates](/products/global#private-streams) |
 | Exchange | `exchangeMarketData`, `exchangeDirectMarketData` | [Exchange streams](/products/exchange#public-streams) |
-| International Exchange | `internationalMarketData` | [INTX streams](/products/international#public-streams) |
+| International Exchange (legacy) | `internationalMarketData` | [Legacy INTX stream mapping](/products/international#public-streams) |
 | Prime | `primeMarketData` | [Prime streams](/products/prime#public-streams) |
 
 ## Global WebSocket API

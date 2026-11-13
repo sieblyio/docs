@@ -1,3 +1,5 @@
+// Legacy INTX example. Institutional trading migrated to Deribit on 1 October 2026.
+// Retained SDK routes do not guarantee current endpoint or feed availability.
 import { WebsocketClient, WS_KEY_MAP } from 'coinbase-api';
 
 function requiredEnvVar(name: string) {

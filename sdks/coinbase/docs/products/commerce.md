@@ -19,7 +19,7 @@ Commerce used an API key in `X-CC-Api-Key`, without an API secret or passphrase.
 
 ## Charge methods {#charges}
 
-`getAllCharges()` requests `/charges`. The retained example reads `COINBASE_COMMERCE_API_KEY` from the environment:
+`getAllCharges()` requests one page from `/charges`, despite its name. The historical API requires cursor pagination to retrieve all charges, but this wrapper does not accept a cursor or fetch further pages automatically. The retained example reads `COINBASE_COMMERCE_API_KEY` from the environment:
 
 <<< @/../examples/commerce-read.ts
 
@@ -33,9 +33,9 @@ The SDK types these responses as `any`. It does not validate payment state or es
 
 ## Checkout and event methods {#events}
 
-- `getAllCheckouts()` requests legacy checkout resources.
+- `getAllCheckouts()` requests one page of legacy checkout resources, not all checkouts. It does not accept a cursor or fetch further pages automatically.
 - `getCheckout({ checkout_id })` requests one legacy checkout.
-- `listEvents()` and `showEvent()` require an `X-CC-Version` argument.
+- `listEvents()` and `showEvent()` require an `X-CC-Version` argument. Event lists were also paginated; `listEvents()` does not fetch all pages automatically.
 
 These are not the Business checkout or webhook APIs. Follow the replacement API's documentation for payment events and signature verification.
 

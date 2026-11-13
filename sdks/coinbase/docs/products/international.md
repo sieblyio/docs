@@ -1,64 +1,56 @@
 ---
-title: "Coinbase International Exchange SDK"
-description: "Read INTX instruments, subscribe to authenticated market data, and manage portfolio balances, positions and orders."
+title: "Legacy Coinbase International Exchange SDK"
+description: "Understand retained INTX methods, historical records and the institutional migration to Deribit."
 ---
 
-# International Exchange
+# International Exchange (legacy)
 
-`CBInternationalClient` targets INTX at `api.international.coinbase.com`. Use INTX instruments, portfolio IDs and credentials; its order fields differ from other Coinbase products.
+`CBInternationalClient` retains the old `api.international.coinbase.com` routes. Coinbase's [institutional migration FAQ](https://help.coinbase.com/en/international-exchange/deribit/institutional-faqs) says accounts, positions and balances migrated to Deribit on **1 October 2026**. The migrated INTX accounts are view-only and the old API endpoints no longer support trading.
 
-## Setup {#setup}
+For institutional trading, follow the FAQ and the [Deribit API documentation](https://docs.deribit.com/). New Deribit API keys are required. The retail [Advanced Trade Global client](/products/global) uses a different Coinbase gateway; do not assume it replaces an institutional INTX integration.
 
-Install `coinbase-api` with `npm install coinbase-api` and use Node.js 24 to run the examples. Public REST examples need no credentials. For authenticated examples, add the variables below to a private `.env` file excluded from Git and run `node --env-file=.env filename.ts`, replacing `filename.ts` with its filename. Keep account output private.
+## SDK scope {#setup}
 
-## Public REST instruments {#market-data}
+These methods and examples remain available to identify or maintain legacy integrations. Their exported signatures do not establish current service availability. The SDK still uses INTX-specific instruments, portfolio IDs and credentials; changing a base URL is not a migration.
 
-Save as `international-market-data.ts` and run `node international-market-data.ts`:
+## Legacy market data {#market-data}
+
+The retained public REST example shows how the SDK constructs requests:
 
 <<< @/../examples/international-market-data.ts
 
-Choose an instrument returned by `getInstruments()`. `getInstrumentDetails({ instrument })` reads its rules; `getQuotePerInstrument({ instrument })` reads a quote. Do not infer the instrument name or size constraints from another exchange's symbol.
+`getInstruments()`, `getInstrumentDetails()` and `getQuotePerInstrument()` describe historical INTX market-data operations. Their former availability is not a promise that these endpoints still return market data after migration. Use the replacement venue's current instrument and market-data contracts.
 
-## Authentication {#authentication}
+## Legacy authentication {#authentication}
 
-INTX market WebSockets require an API key, secret and API passphrase, even though the public REST discovery request does not. Set these in `.env`:
+The SDK's INTX authentication uses an API key, secret and passphrase. Historical public REST discovery did not require credentials, but INTX market WebSocket subscriptions did. Do not reuse these API keys with the replacement venue.
 
-```dotenv
-COINBASE_INTX_API_KEY=your-intx-key
-COINBASE_INTX_API_SECRET=your-intx-secret
-COINBASE_INTX_API_PASSPHRASE=your-api-passphrase
-```
+## Legacy market subscriptions {#public-streams}
 
-## Market WebSocket subscriptions {#public-streams}
-
-Save as `international-stream.ts`:
+The retained example subscribes to `LEVEL1` on the SDK's `internationalMarketData` connection:
 
 <<< @/../examples/international-stream.ts
 
-The `LEVEL1` subscription provides market updates for `BTC-PERP`; choose an instrument available to your environment. Channel names are case-sensitive. The SDK signs requests for `internationalMarketData`. Inspect `response` and `exception` before relying on the stream, which runs until Ctrl+C.
+The SDK signs subscription requests and maps the feed to `wss://ws-md.international.coinbase.com`. This is historical market-data integration code, not confirmation that the feed remains operational. It is not a portfolio/order stream, and the SDK does not map a separate INTX private-account feed or INTX WebSocket order API.
 
-This is market data, not a stream of your portfolio positions or orders.
+## Historical records {#account-state}
 
-## Read balances and positions {#account-state}
+Coinbase says historical INTX trade and order data will remain accessible for **approximately 12 months after migration**. INTX history does not appear in Deribit. Keep a copy of required records and consult Coinbase's current retention guidance; this statement does not guarantee that every legacy account endpoint remains available.
 
-Use `getUserPortfolios()` to find your INTX portfolio ID. Add `COINBASE_INTX_PORTFOLIO` to `.env`, then save this as `international-account.ts`:
+The retained account example shows portfolio-scoped reads:
 
 <<< @/../examples/international-account.ts
 
-Keep balances, positions and orders scoped to the same portfolio. `getPortfolioSummary()` provides a broader summary; `getPositionForPortfolioInstrument()` narrows a position read to one instrument. Respect each list endpoint's pagination.
+`getOrderDetails()` and `getPortfolioFills()` are legacy order and fill methods. Confirm the supported history routes for your account before relying on them. Keep the INTX portfolio identifier with each historical record and respect endpoint pagination.
 
-## Order management {#orders}
+## Retired trading and known SDK mismatch {#orders}
 
-Build an INTX `submitOrder()` request with `instrument`, `portfolio`, `side`, `size`, `type` and `tif`, plus a price where required. Generate and persist `client_order_id` with `client.generateNewOrderId()` before sending. Submission changes the live account.
+Do not use `submitOrder()`, `updateOpenOrder()` or the cancellation methods as a new INTX trading integration. Coinbase states that old INTX endpoints no longer support trading. Margin loans did not migrate.
 
-Use `getOrderDetails({ id, portfolio })` for a specific order, `getOpenOrders({ portfolio })` for current open orders, and `getPortfolioFills()` for execution history. `updateOpenOrder()` amends an order; `cancelOrder({ id, portfolio })` cancels it. Preserve the portfolio alongside the returned order ID.
+There is also a historical route mismatch in this SDK release: `updatePortfolioParameters()` sends `PATCH /api/v1/portfolios`, while the [archived official contract](https://web.archive.org/web/20260412070122/https://docs.cdp.coinbase.com/api-reference/international-exchange-api/rest-api/intx-spec.yaml) requires `/api/v1/portfolios/{portfolio}`. Its request type lacks that identifier. Do not treat this method's presence as evidence that it can update a portfolio.
 
-Do not treat the market WebSocket as confirmation of your fills. Resolve unknown submissions or cancellations with the relevant portfolio order/fill reads. If your application has a separate private event source, update account state from it and use REST for initial or missing state; this SDK does not map a separate INTX private-account feed or INTX WebSocket order API.
+## Legacy environments {#environments}
 
-## Environments and recovery {#environments}
+`useSandbox: true` still selects the SDK's INTX sandbox REST and WebSocket host mappings. Those mappings do not establish current sandbox availability. Follow the replacement API's test environment, credentials and recovery guidance.
 
-`useSandbox: true` selects INTX sandbox REST and WebSocket hosts. Use corresponding credentials and instruments.
-
-The market client reconnects and restores subscriptions automatically. On `reconnect`, mark derived market state stale. Wait for fresh market data and rebuild any missing snapshot state before making dependent decisions. A recovered market socket does not repair portfolio state automatically.
-
-[INTX client reference](/api/classes/CBInternationalClient) · [INTX WebSocket documentation](https://docs.cdp.coinbase.com/intx/docs/websocket-overview) · [Choose another API](/products)
+[Legacy INTX client reference](/api/classes/CBInternationalClient) · [Institutional migration FAQ](https://help.coinbase.com/en/international-exchange/deribit/institutional-faqs) · [Choose another API](/products)

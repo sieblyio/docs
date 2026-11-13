@@ -11,9 +11,9 @@ export default {
   repository: 'https://github.com/sieblyio/okx-api',
   // Clarify upstream comments without changing SDK types or behavior.
   referenceDescriptions: {
-    "WebsocketAPIClient": "Promise-based wrapper around `WebsocketClient` for WebSocket trading requests. Use its methods to send a request and await the response, or call `WebsocketClient.sendWSAPIRequest()` directly.",
+    "WebsocketAPIClient": "Promise-based wrapper for the OKX WebSocket trading API. Use its methods to await trading responses, or call `WebsocketClient.sendWSAPIRequest()` directly. For order placement and cancellation, use `instIdCode`. The [SDK source example](https://github.com/tiagosiebler/okx-api/blob/master/examples/Websocket/WS-API/ws-api-trade-raw.ts) illustrates the call structure but still uses legacy `instId` fields; update those before running its order-placement or cancellation calls.",
     "ASSET_BILL_TYPE": "Asset-bill type codes used by the SDK funding-account interfaces.",
-    "OrderRequest.quickMgnType": "Quick-margin setting retained in the SDK type. The current REST place-order parameter table does not list it; do not rely on this field without confirming support with OKX.",
+    "OrderRequest.quickMgnType": "Legacy Quick Margin selector retained in the SDK. OKX announced retirement of Quick Margin mode for May 29, 2024, and marks the response field deprecated. The current place-order request table does not list this parameter.",
     "RestClient.getMaxBuySellAmount.params.outcome": "Market outcome for EVENTS: `yes` or `no`. Optional; defaults to `yes`.",
     "RestClient.getLeverageV2": {"deprecated": "Use `getLeverage()` instead. Both methods call the same leverage-info endpoint in SDK 3.2.9."},
     "WebsocketClientLegacy": {"deprecated": "Legacy WebSocket client retained for compatibility. Use `WebsocketClient` for new code."},
@@ -24,7 +24,7 @@ export default {
     "MmInstrumentType.pairType": "MM program category: `A`, `B-Crypto`, `B-TradFi` or `Type Special` (GLP Special Pair). `B-TradFi` applies to SWAP instruments.",
     "WithdrawRequest.toAddrType": "Destination identifier type: `1` for a wallet address, email, phone number or login account name; `2` for a UID. UID destinations apply only to internal transfers (`dest: 3`).",
     "OrderRequest.stpMode": "Self-trade prevention mode. When omitted, the account-level `acctStpMode` applies. Its initial default is `cancel_maker`, but the master account can change it. `cancel_both` is not supported for FOK orders.",
-    "OrderRequest.speedBump": "Legacy event-contract speed-bump flag. OKX removed it from REST place-order on July 24, 2026, and says values sent to that endpoint are ignored.",
+    "OrderRequest.speedBump": "Legacy event-contract speed-bump flag. OKX removed it from REST place-order on July 24, 2026, and says values sent to that endpoint are ignored. This type is also used for REST batch placement, whose schema still lists the flag for some EVENTS orders; do not assume batch requests ignore it.",
     "AmendOrderRequest.speedBump": "Legacy event-contract speed-bump flag. OKX announced its removal for REST place-order on July 24, 2026, but this endpoint's schema still lists it for some EVENTS orders. The official sources disagree; do not assume it is ignored here.",
     "WSAPIPlaceOrderRequestV5.speedBump": "Legacy event-contract speed-bump flag. OKX announced its removal for REST place-order on July 24, 2026, but this endpoint's schema still lists it for some EVENTS orders. The official sources disagree; do not assume it is ignored here.",
     "WSAPIAmendOrderRequestV5.speedBump": "Legacy event-contract speed-bump flag. OKX announced its removal for REST place-order on July 24, 2026, but this endpoint's schema still lists it for some EVENTS orders. The official sources disagree; do not assume it is ignored here.",
