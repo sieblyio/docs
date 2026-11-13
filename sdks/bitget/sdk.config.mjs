@@ -21,7 +21,7 @@ export default {
     "RestClientV3.getUnifiedAccountSwitchStatus": "Get account switching status. Bitget documents `process`, `success` and `fail`. SDK 3.2.8 incorrectly types these values as `processProcessing`, `successSuccess` and `failFailed`; the SDK does not convert the response values.",
     "WsTopicSubscribePrivateInstIdArgsV2.instId": "Channel-specific instrument selector. Use `default` for the futures positions channel. Other channels may accept a symbol such as `BTCUSDT`; check the channel reference.",
     "RestClientV3.submitWithdraw": "Withdrawal wrapper for on-chain withdrawals and internal transfers. SDK 3.2.8 sends `POST /api/v3/account/withdraw`, while Bitget documents `POST /api/v3/account/withdrawal`. This wrapper does not use the documented route. Use `postPrivate('/api/v3/account/withdrawal', params)` to target it directly.",
-    "SubAccountTransferRequestV3.clientOid": "Custom order ID, up to 64 characters. Required by the exchange.",
+    "SubAccountTransferRequestV3.clientOid": "Custom order ID, up to 50 characters. Required by the exchange.",
     "CoinInfoV3.convertRatioList": "Collateral-conversion tiers for the Tiered Discount Rate Model.",
     "ConvertRatioListItemV3": "A collateral-conversion tier for the Tiered Discount Rate Model, with a value range and conversion ratio.",
     "FuturesGetOpenOrdersRequestV2.status": "Defaults to `live`. Set `partially_filled` to retrieve partially filled orders.",
