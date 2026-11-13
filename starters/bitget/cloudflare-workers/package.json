@@ -1,0 +1,15 @@
+{
+  "name": "bitget-cloudflare-workers-quickstart",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:orders": "wrangler dev src/order.js"
+  },
+  "dependencies": {
+    "bitget-api": "latest"
+  },
+  "devDependencies": {
+    "wrangler": "4.161.0"
+  }
+}

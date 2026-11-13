@@ -1,4 +1,25 @@
 export const exchanges = {
+  bitget: {
+    restClient: 'RestClientV2',
+    websocketClient: 'WebsocketClientV2',
+    symbol: 'BTCUSDT',
+    continuous: true,
+    cliSubscription: "ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT').catch((error) => {\n  console.error('WebSocket subscription failed:', error);\n})",
+    request: `const client = new RestClientV2();
+const response = await client.getSpotTicker({
+  symbol: 'BTCUSDT',
+});
+const price = response.data[0]?.lastPr;`,
+    event: 'update',
+    update: `if (message.arg?.channel !== 'ticker') {
+  console.log('WebSocket update:', message);
+  return;
+}
+
+const price = message.data?.[0]?.lastPr;`,
+    websocket: 'new WebsocketClientV2()',
+    subscription: "ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT')",
+  },
   okx: {
     restClient: 'RestClient',
     symbol: 'BTC-USDT',

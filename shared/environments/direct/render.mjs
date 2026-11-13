@@ -32,7 +32,7 @@ export async function programFiles(id, sdk, format = 'esm', extension = 'mjs') {
     CLOSE: commonjs ? `}\n\nmain().catch((error) => {\n  console.error(error);\n  process.exitCode = 1;\n});` : '',
   }).trimEnd() + '\n';
   const stream = fill(await readFile(new URL(exchange.continuous ? './stream-continuous.tpl' : './stream.tpl', import.meta.url), 'utf8'), {
-    IMPORT: `${importSdk('WebsocketClient')}\n${commonjs ? "const process = require('node:process');" : "import process from 'node:process';"}`,
+    IMPORT: `${importSdk(exchange.websocketClient || 'WebsocketClient')}\n${commonjs ? "const process = require('node:process');" : "import process from 'node:process';"}`,
     WEBSOCKET: exchange.websocket,
     SYMBOL: exchange.symbol,
     TIMEOUT_TYPE: typescript ? ': ReturnType<typeof setTimeout> | undefined' : '',
@@ -65,7 +65,9 @@ export async function screenFile(id, sdk, setup) {
       UPDATE: indent(exchange.update, 6),
     }).trimEnd();
   }
-  return fill(await readFile(new URL(`./${setup}.tpl`, import.meta.url), 'utf8'), {
+  const template = (await readFile(new URL(`./${setup}.tpl`, import.meta.url), 'utf8'))
+    .replace(', WebsocketClient }', `, ${exchange.websocketClient || 'WebsocketClient'} }`);
+  return fill(template, {
     ...values,
     REQUEST: indent(request, 4),
     UPDATE: indent(exchange.update, 4),

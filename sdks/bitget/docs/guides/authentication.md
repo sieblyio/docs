@@ -1,0 +1,49 @@
+---
+title: "Bitget authentication and Classic or UTA balances"
+description: "Configure server-side Bitget credentials and read the account matching your API generation."
+---
+
+# Authentication and account balances
+
+Bitget credentials comprise an API key, API secret and API passphrase. The passphrase belongs to the key; it is not your account password. Give account-read examples read permission only. Enable trading only for applications that need order commands. Withdrawal permission is unnecessary here.
+
+Keep credentials on your server. Never embed them in browser, React Native or Expo bundles, commit them, or expose them through public environment-variable prefixes. Use an IP allowlist where supported and synchronize the server clock.
+
+## Configure credentials
+
+Store these in a private `.env` file excluded from version control:
+
+```dotenv
+BITGET_API_KEY=your_api_key
+BITGET_API_SECRET=your_api_secret
+BITGET_API_PASSPHRASE=your_api_passphrase
+```
+
+Save this helper as `authenticated-client.ts`:
+
+<<< @/../examples/authenticated-client.ts
+
+The SDK signs requests. Do not manually construct signature headers. Constructing both clients sends no request and does not switch account types. Use only the client matching the intended account and product. Defaults use production; configure [demo trading](/guides/configuration#demo-trading) consistently on every client if needed.
+
+## Read starting account state
+
+Save as `account-state.ts` beside the helper:
+
+<<< @/../examples/account-state.ts
+
+### Compile and run the examples
+
+```sh
+npm install bitget-api
+npm install --save-dev typescript @types/node
+npx tsc --target ES2022 --module NodeNext --strict --skipLibCheck --outDir dist authenticated-client.ts account-state.ts
+node --env-file=.env dist/account-state.js classic
+```
+
+For a Unified Trading Account, use `uta` instead of `classic`. Run with Node.js 24 from the project directory containing `.env`. Relative `.js` imports refer to the compiled output. This explicit file list does not depend on the [TypeScript starter](/environments/typescript)'s `.mts` include pattern.
+
+For the other private examples, replace `account-state.ts` in the compile command with `private-stream.ts`, `classic-private-stream.ts`, `first-order.ts` or `ws-api.ts`, retaining `authenticated-client.ts`. Compilation itself sends no requests.
+
+`getSpotAccountAssets()` reads Classic Spot assets, while `getBalances()` reads UTA balances. They are not interchangeable. This example prints only one page of open orders; production initialization must paginate where necessary. Empty balances or orders are not automatically authentication failures.
+
+Use REST for startup and recovery, then keep the [private account stream](/guides/private-streams) connected. Avoid a new snapshot after each successful command. Account payloads belong in private server-side handlers, not public logs.

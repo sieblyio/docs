@@ -20,7 +20,7 @@ export async function checkPublic(directory) {
     const stat = await lstat(filename);
     if (stat.isDirectory()) continue;
     if (stat.isFile() && path.extname(relative) === '.gz') {
-      const match = /^(hyperliquid|bybit|binance|kraken|coinbase|okx)\/starters\/(node|typescript|react|bun|deno|vite|next|expo|cloudflare-workers)\.tar\.gz$/.exec(parts.join('/'));
+      const match = /^(hyperliquid|bybit|binance|kraken|coinbase|okx|bitget)\/starters\/(node|typescript|react|bun|deno|vite|next|expo|cloudflare-workers)\.tar\.gz$/.exec(parts.join('/'));
       if (!match || stat.size > 131072) throw new Error(`Unexpected public archive: ${relative}`);
       const sdk = (await import(`../sdks/${match[1]}/sdk.config.mjs`)).default;
       await checkStarter(filename, await environmentFiles(match[1], sdk, match[2]));
