@@ -302,10 +302,10 @@ export default {
       ],
     },
     {
-      text: 'Commerce', slug: 'commerce', clients: ['CBCommerceClient'],
+      text: 'Commerce (legacy)', slug: 'commerce', clients: ['CBCommerceClient'],
       guides: [
-        ['Authentication', 'authentication'], ['Read charges', 'charges'], ['Payment state', 'payment-state'],
-        ['Payment events', 'events'], ['Create payments', 'payments'],
+        ['Legacy authentication', 'authentication'], ['Charge methods', 'charges'], ['Individual charge', 'payment-state'],
+        ['Checkout and event methods', 'events'], ['Legacy creation methods', 'payments'],
       ],
     },
   ],
