@@ -7,7 +7,7 @@ description: "Place and cancel a Spot Testnet order through REST, and follow its
 
 Use `MainClient` to place one `LIMIT_MAKER` order and cancel its remaining quantity. Run the private user data stream alongside these REST commands to see the order accepted, filled or cancelled.
 
-The order script makes one REST request per command. In a persistent application, keep the user data stream connected and track orders locally. Use REST reads to initialize state or recover gaps and uncertain outcomes, not after every order.
+The order script makes one REST request per command. In a persistent application, keep the user data stream connected and track orders locally. Use REST reads to initialize state, recover missed updates or resolve uncertain outcomes, not after every order.
 
 `LIMIT_MAKER` is post-only: Binance rejects it if it would immediately match as a taker. An accepted resting order can still fill, including before you cancel it.
 

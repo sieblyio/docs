@@ -27,7 +27,7 @@ async function main() {
       process.exitCode = 1;
     });
   };
-  // Includes connection/authentication time, not just the subscribed lifetime.
+  // The 60-second limit includes connection and authentication.
   const timer = setTimeout(stop, 60000);
   process.once('SIGINT', stop);
   process.once('SIGTERM', stop);

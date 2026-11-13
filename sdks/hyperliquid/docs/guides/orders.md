@@ -13,7 +13,7 @@ This walkthrough uses Hyperliquid Testnet and test funds to avoid accidental liv
 
 A post-only order is rejected if it would immediately take liquidity. Once resting, it can fill before cancellation. Cancelling an order does not reverse fills or close an existing position.
 
-Before placing orders, use the [authenticated account read](/guides/authentication) to check balances and account access.
+Before placing orders, use the [account read example](/guides/authentication) to check balances and confirm the account address.
 
 ## Set up
 

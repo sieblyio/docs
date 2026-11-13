@@ -21,7 +21,7 @@ Log the operation, status and exchange-error fields you need. Redact credentials
 
 Correct invalid parameters, signatures and permissions before retrying. Apply bounded backoff to transient read failures. If an order submission times out, check matching private execution events. Use REST to recover missing state only if the outcome remains unclear; do not automatically submit again. See [order recovery](/guides/production#resolve-uncertain-order-outcomes).
 
-WebSocket subscription failures arrive on `exception`. Use [subscription responses](/guides/websockets#messages-and-acknowledgements) and stream data for their distinct purposes.
+WebSocket subscription failures arrive on `exception`. Check [subscription responses](/guides/websockets#messages-and-acknowledgements) for acceptance and stream messages for data.
 
 ## HTTP diagnostics
 

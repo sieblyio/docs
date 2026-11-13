@@ -68,7 +68,7 @@ node --env-file=.env first-order.ts cancel
 
 Submission and cancellation responses acknowledge requests. Follow the private stream to see the resulting order state; cancellation can race with a fill. `cumExecQty` includes earlier fills even when the final status is `Cancelled`; resulting positions are separate from the remaining order quantity.
 
-See Bybit's [create-order](https://bybit-exchange.github.io/docs/v5/order/create-order) and [cancel-order](https://bybit-exchange.github.io/docs/v5/order/cancel-order) contracts. Use the execution and position topics as well when your application needs fills and position changes, rather than repeatedly querying them through REST.
+See Bybit's [create-order](https://bybit-exchange.github.io/docs/v5/order/create-order) and [cancel-order](https://bybit-exchange.github.io/docs/v5/order/cancel-order) documentation. Use the execution and position topics as well when your application needs fills and position changes, rather than repeatedly querying them through REST.
 
 ## Recover an interrupted request
 

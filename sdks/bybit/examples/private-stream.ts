@@ -25,7 +25,7 @@ function main() {
     console.log('Private stream closed. This does not cancel orders.');
   }
 
-  // Bound the whole example, including connection and authentication time.
+  // Stop after 60 seconds, including connection and authentication.
   const timer = setTimeout(stop, 60_000);
   process.once('SIGINT', stop);
   process.once('SIGTERM', stop);

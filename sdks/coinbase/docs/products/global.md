@@ -57,7 +57,7 @@ This example observes USDC futures order, trade and portfolio changes without pl
 
 <<< @/../examples/global-ws-api.ts
 
-`advTradeGlobalWSAPI` is a dedicated request-response connection, separate from private subscriptions even though both use `drb.coinbase.com`. Read `response.result`; unlike the Global HTTP client, this API returns the envelope. `getWSClient()` exposes the underlying event and connection client. `connectWSAPI()` optionally warms up an authenticated session; public calls do not require this authentication step.
+`advTradeGlobalWSAPI` is a dedicated request-response connection, separate from private subscriptions even though both use `drb.coinbase.com`. Read `response.result`; unlike the Global HTTP client, this API returns the envelope. `getWSClient()` exposes the underlying event and connection client. `connectWSAPI()` can establish an authenticated session before your first request; public calls do not require this authentication step.
 
 Private calls authenticate the socket automatically. The SDK manages session renewal and can reauthenticate after reconnect. `wsAPITimeout` controls the reply wait after sending (default 10 seconds); connection and authentication are handled separately. Pending requests are rejected if their connection is lost. `reauthWSAPIOnReconnect` defaults to enabled for a previously authenticated API session. A new session does not establish the outcome of a command sent on the old one.
 
