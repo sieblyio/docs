@@ -11,6 +11,7 @@ export default {
   repository: 'https://github.com/sieblyio/okx-api',
   // Clarify upstream comments without changing SDK types or behavior.
   referenceDescriptions: {
+    "RestClientOptions.keepAliveMsecs": "Delay before the first TCP keep-alive probe on an idle socket, in milliseconds. Applies only when `keepAlive` is enabled. Default: `1000`.",
     "WsKey": "Identifies an OKX WebSocket connection.",
     "OrderRequest.tgtCcy": "Unit of `sz` for a SPOT market order. For BTC-USDT, `base_ccy` means BTC and `quote_ccy` means USDT. Defaults to `quote_ccy` for buys and `base_ccy` for sells.",
     "WSAPIPlaceOrderRequestV5.tgtCcy": "Unit of `sz` for a SPOT market order. For BTC-USDT, `base_ccy` means BTC and `quote_ccy` means USDT. Defaults to `quote_ccy` for buys and `base_ccy` for sells.",

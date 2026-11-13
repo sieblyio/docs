@@ -23,7 +23,7 @@ Choose credentials for the environment you want to use:
 - **Testnet:** set `testnet: true` and use Testnet credentials.
 - **Demo trading:** set `demoTrading: true` with `testnet: false`, and use credentials from your Bybit Demo Trading account. This supports system testing with live market data and simulated orders.
 
-For REST and private WebSocket connections, `demoTrading` takes precedence if both flags are enabled. Demo trading has its own supported endpoints and rate limits; see [Bybit's demo documentation](https://bybit-exchange.github.io/docs/v5/demo).
+For REST and private WebSocket connections, `demoTrading` takes precedence if both flags are enabled. Demo trading supports private WebSocket streams but not WebSocket API trading requests. With `testnet: false`, public streams use Mainnet market data. See [Bybit's demo documentation](https://bybit-exchange.github.io/docs/v5/demo).
 
 ## Rate-limit information
 

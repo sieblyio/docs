@@ -1,5 +1,5 @@
 import { WebsocketAPIClient } from 'okx-api';
-import { credentials } from './authenticated-client.js';
+import { client, credentials } from './authenticated-client.js';
 
 const api = new WebsocketAPIClient({ accounts: [credentials] });
 
@@ -8,7 +8,12 @@ async function main() {
   if (!clOrdId) {
     throw new Error('Set OKX_CLIENT_ORDER_ID to the client order ID of the existing BTC-USDT order to cancel.');
   }
-  const response = await api.cancelOrder({ instId: 'BTC-USDT', clOrdId });
+  const instruments = await client.getInstruments({ instType: 'SPOT', instId: 'BTC-USDT' });
+  const instIdCode = instruments.find((instrument) => instrument.instId === 'BTC-USDT')?.instIdCode;
+  if (instIdCode === undefined) {
+    throw new Error('BTC-USDT instrument code was not returned; no cancellation was sent.');
+  }
+  const response = await api.cancelOrder({ instIdCode, clOrdId });
   console.log('Cancellation response:', response);
   if (response.code !== '0') {
     throw new Error(`Cancellation failed: ${response.code}`);

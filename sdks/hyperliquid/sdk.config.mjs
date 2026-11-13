@@ -17,6 +17,8 @@ export default {
   // References and shared examples only. API contracts stay in SDK source comments.
   // Clarify upstream comments without changing SDK types or behavior.
   referenceDescriptions: {
+    "RestClient.submitMarketClose": "Submit a reduce-only IOC order opposite the current perpetual position. If `size` is omitted, use the absolute open position size returned by the account query; pass `size` for a partial close. Execution is subject to available liquidity and the limit price, so a successful request does not guarantee the entire requested size filled.",
+    "HyperliquidSigner": "Signer interface used by the SDK. An ethers Wallet satisfies this interface. Other wallet integrations must provide the compatible `signTypedData(domain, types, value)` method and an `address` or `getAddress()` for address resolution.",
     "ValidatorSummary.stake": "Returned as a JSON number. Large stakes can exceed JavaScript's safe integer range.",
     "WebsocketMessageEvent": "The original message envelope, with `wsKey` identifying the connection that received it.",
     "WebsocketSubscriptionData": "Payload types keyed by subscription type. Message envelopes are defined in `ws-events`.",

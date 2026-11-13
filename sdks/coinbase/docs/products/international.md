@@ -59,6 +59,6 @@ Do not treat the market WebSocket as confirmation of your fills. Resolve unknown
 
 `useSandbox: true` selects INTX sandbox REST and WebSocket hosts. Use corresponding credentials and instruments.
 
-The market client reconnects and restores subscriptions. On `reconnect`, mark derived market state stale; on `reconnected`, confirm the channel and rebuild any missing snapshot state before making dependent decisions. A recovered market socket does not repair portfolio state automatically.
+The market client reconnects and restores subscriptions automatically. On `reconnect`, mark derived market state stale. Wait for fresh market data and rebuild any missing snapshot state before making dependent decisions. A recovered market socket does not repair portfolio state automatically.
 
 [INTX client reference](/api/classes/CBInternationalClient) · [INTX WebSocket documentation](https://docs.cdp.coinbase.com/intx/docs/websocket-overview) · [Choose another API](/products)

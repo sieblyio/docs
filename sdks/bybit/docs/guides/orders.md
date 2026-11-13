@@ -82,7 +82,7 @@ node --env-file=.env first-order.ts status
 
 Use this for diagnosis or recovery, not after every order. Despite its name, the method also returns recent closed orders. If no ID is available, use realtime orders, order history, executions and positions for BTCUSDT to resolve the request using its time, side, price and quantity. Avoid resubmitting until the outcome is resolved.
 
-For older records, or closed orders no longer available after a service restart, use [`getHistoricOrders()`](/api/classes/RestClientV5#gethistoricorders). Set `orderStatus: 'Cancelled'` when looking for a cancelled order; from 3 December 2026, unfiltered recent history excludes `Cancelled`, `Rejected` and `Deactivated`.
+For older records, or closed orders no longer available after a service restart, use [`getHistoricOrders()`](/api/classes/RestClientV5#gethistoricorders). Set `orderStatus: 'Cancelled'` when looking for a cancelled order, and check the endpoint's [retention rules](https://bybit-exchange.github.io/docs/v5/order/order-list). Fully cancelled, rejected and deactivated orders have a shorter history window than orders with fills.
 
 An empty result is inconclusive, and history can lag behind order updates. See [open and closed orders](https://bybit-exchange.github.io/docs/v5/order/open-order).
 

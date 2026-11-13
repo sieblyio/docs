@@ -17,6 +17,6 @@ Use the client, keys and account identifiers for your product. A Coinbase login 
 | International Exchange | [INTX guide](/products/international): international derivatives instruments and portfolios. |
 | Prime | [Prime guide](/products/prime): institutional trading, portfolios and custody. |
 | Coinbase App | [App guide](/products/app): wallet accounts and transactions. |
-| Commerce | [Commerce guide](/products/commerce): charges and checkouts. |
+| Commerce (legacy) | [Migration and retained methods](/products/commerce). Use Coinbase Business for new payment integrations. |
 
 Each product guide covers authentication, environments and links to its API reference.

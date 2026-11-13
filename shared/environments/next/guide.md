@@ -50,5 +50,5 @@ The handler makes a fresh REST request for each call. It does not open a WebSock
 ## Troubleshooting
 
 - Keep `runtime = 'nodejs'` in the handler. Run SDK calls in the server Route Handler, not a Client Component or the Edge runtime.
-- A `502` means the SDK request failed. Inspect the server log for the exchange error and check outbound HTTPS access from the server, including regional restrictions.
+- A `502` means the handler could not return a price. Inspect the server log for the error and check outbound HTTPS access from the server, including regional restrictions.
 - If Next.js reports a missing React package, run `npm install` from the directory containing this starter's `package.json`.

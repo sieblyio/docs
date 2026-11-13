@@ -21,7 +21,7 @@ Save returned order IDs with the account and pair so you can match later events 
 
 `WebsocketClient` reconnects and restores subscriptions automatically. `reconnecting` signals that connection recovery is starting; mark the affected account state as stale. `reconnected` means the socket has reopened and is a useful trigger for REST reconciliation of missed orders, executions and balances, plus positions when using Futures. Listen for `exception` to diagnose errors and let the SDK handle reconnection.
 
-Authentication and subscription recovery may still be completing when `reconnected` fires. Confirm the required private subscriptions, process their snapshots and updates, and account for events received during REST recovery. Compare current account state and open orders with the intended state before making follow-up changes; do not blindly recreate orders. Resume dependent actions once the state they need is current.
+The SDK handles authentication and resubscription; these may still be completing when `reconnected` fires. No manual resubscription is needed. Process the resumed streams’ snapshots and updates, and account for events received during REST recovery. Compare current account state and open orders with the intended state before making follow-up changes; do not blindly recreate orders. Resume dependent actions once the state they need is current.
 
 Market-data channels have their own snapshot, update and checksum rules. Track feed health; an open socket alone does not establish that the data is current.
 

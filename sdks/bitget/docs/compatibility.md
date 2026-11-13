@@ -36,6 +36,6 @@ Test the examples with the SDK version, runtime, network and region you will dep
 
 ## Streaming lifecycle
 
-Command-line streams run until Ctrl+C. Browser/mobile views must stop connections when removed or when Stop is selected. Let the SDK recover transient connections, but wait for restored subscriptions, fresh market data and reconciled account state before using the data.
+Command-line streams run until Ctrl+C. Browser/mobile views must stop connections when removed or when Stop is selected. The SDK reconnects and restores subscriptions automatically. Wait for fresh market data and reconcile missed account changes before using cached state.
 
 [WebSocket subscriptions](/guides/websockets) · [Production usage](/guides/production) · [Troubleshooting](/guides/troubleshooting)

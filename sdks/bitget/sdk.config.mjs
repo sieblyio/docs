@@ -11,6 +11,7 @@ export default {
   repository: 'https://github.com/sieblyio/bitget-api',
   // Clarify upstream comments without changing SDK types or behavior.
   referenceDescriptions: {
+    "RestClientOptions.keepAliveMsecs": "Delay before the first TCP keep-alive probe on an idle socket, in milliseconds. Applies only when `keepAlive` is enabled. Default: `1000`.",
     "WebsocketAPIClient": "Promise-based wrapper around `WebsocketClientV3` for UTA V3 trading requests. Use its methods to send a request and await the response, or use `WebsocketClientV3.sendWSAPIRequest()` directly.",
     "WsTopicRequest": "A subscription request containing a `topic` name and an optional `payload` with channel-specific parameters.",
     "WebsocketClientV2.subscribe": "Subscribe to one or more topics. Pass a topic string, an object with `topic` and optional `payload`, or an array of these values. Supply the connection key as the second argument. The SDK connects, authenticates when needed and restores subscriptions after reconnecting. Call `unsubscribe(requests, wsKey)` with the same requests and connection key to remove them.",

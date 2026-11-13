@@ -13,7 +13,7 @@ Set `accountAddress` to query an account without configuring a signer. This exam
 
 <<< @/../examples/account-state.ts
 
-Set `HYPERLIQUID_ACCOUNT_ADDRESS` before running the example. Perpetual positions are in `assetPositions`. For unified accounts or portfolio margin, [`getSpotBalances()`](/api/classes/RestClient#getspotbalances) returns balances across Spot and perps.
+Set `HYPERLIQUID_ACCOUNT_ADDRESS` before running the example. It uses Mainnet by default; add `testnet: true` to the constructor options to query Testnet. Perpetual positions are in `assetPositions`. For unified accounts or portfolio margin, [`getSpotBalances()`](/api/classes/RestClient#getspotbalances) returns balances across Spot and perps.
 
 Account methods resolve addresses in this order: request `user`, `vaultAddress`, `accountAddress`, then the configured signer.
 
@@ -32,6 +32,10 @@ Keep the private key in a secure server-side environment, supplied through a pro
 An API wallet signs for another account. Set `accountAddress` to the managed account so queries return its balances and positions.
 
 `vaultAddress` selects a vault or subaccount for supported actions and takes precedence over `accountAddress` for account queries. The signer must be authorized for the requested action. See the [Hyperliquid tutorial](https://siebly.io/sdk/hyperliquid/javascript/tutorial) for the account and API wallet setup workflow.
+
+## Trading side effects
+
+In SDK 1.0.3, the first trading action from a client instance also schedules a `SIEBLY` referral-code request. Orders check Siebly builder-fee approval and include the builder code only after approval is confirmed. With a main-wallet private key, the SDK can attempt builder approval in the background; API wallets cannot grant that approval. Review the [SDK referral and builder-code behavior](https://github.com/sieblyio/hyperliquid-api#referral--builder-codes-4-fee-discount) before configuring a signer for trading.
 
 ## Custom signers
 

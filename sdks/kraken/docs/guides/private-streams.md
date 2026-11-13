@@ -21,7 +21,7 @@ The SDK obtains and manages the Spot WebSocket authentication token. Do not fetc
 
 The channel sends snapshots and subsequent updates. Apply these events to local order and fill state as they arrive. Read each event's execution type and order status to follow an order from acceptance through fills or cancellation. Subscription and authentication replies describe the connection, not an order's outcome.
 
-Use the balance channel when your application also needs balance changes. Load any starting state not covered by the snapshots, then let private events keep it up to date. Do not query REST after every order. See [account state](/guides/production#keep-account-state-up-to-date).
+Use the `balances` channel when your application also needs balance changes. Load any starting state not covered by the snapshots, then let private events keep it up to date. Do not query REST after every order. See [account state](/guides/production#keep-account-state-up-to-date).
 
 The example logs all messages so you can inspect them before adding handlers. Follow the [executions channel schema](https://docs.kraken.com/api/docs/websocket-v2/executions/) when adding typed handlers.
 

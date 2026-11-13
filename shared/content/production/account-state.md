@@ -2,7 +2,7 @@
 
 Use REST to submit orders and private WebSocket subscriptions to follow what happens next. Order, fill, balance and position events update your application's account state as changes occur.
 
-1. Connect the private streams and confirm the subscriptions before submitting orders. Load any starting state the streams do not provide, and account for events received while that data loads.
+1. Connect the private streams and watch for subscription acknowledgements or errors before submitting orders. Load any starting state the streams do not provide, and account for events received while that data loads.
 2. Submit the order through REST. Save the returned IDs and inspect the response for errors or immediate results. An acknowledgement alone does not establish the order's later state.
 3. Apply matching WebSocket events to local state. Use order and fill events to track execution, and balance or position updates for the account changes your application needs. These events can arrive separately.
 4. Use REST to fill a specific gap: startup data, updates missed during a disconnect, conflicting events, or an outcome that neither the response nor the stream has resolved. Once account state is current, continue applying WebSocket updates.

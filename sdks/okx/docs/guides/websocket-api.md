@@ -19,6 +19,8 @@ This example cancels the remaining quantity of an existing `BTC-USDT` order. It 
 node --env-file=.env dist/ws-api.js
 ```
 
+The example looks up `BTC-USDT` with `getInstruments()` and passes its numeric `instIdCode` to the WebSocket command. Do not copy the REST `instId` parameter into WebSocket trading requests: use the instrument code required by the [current WebSocket API](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-order).
+
 Unlike the REST client, the WebSocket wrapper returns a response envelope containing `code`, `msg` and `data`. Inspect the top-level result and each item's `sCode` and `sMsg`. Transport or request errors may also reject the promise. Batch responses require checking every item; some items can succeed while others fail.
 
 ## Available commands

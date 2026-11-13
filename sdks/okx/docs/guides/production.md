@@ -15,7 +15,7 @@ OKX limits vary by endpoint, instrument, account and operation. Some trading lim
 
 ## OKX recovery events
 
-Mark affected state stale on `reconnect` or unexpected `close` events. On `reconnected`, confirm authentication and subscriptions, then recover missed updates. The `orders` channel does not send an initial list of open orders. Load them through REST and combine order history and fills with events buffered during recovery. See [Private account updates](/guides/private-streams).
+Mark affected state stale on `reconnect` or unexpected `close` events. The SDK reconnects, authenticates and restores subscriptions automatically. Use `reconnected` to start recovering missed account updates; it signals an open socket, not completed account-state recovery. The `orders` channel does not send an initial list of open orders. Load them through REST and combine order history and fills with events buffered during recovery. See [Private account updates](/guides/private-streams).
 
 For derivatives, key state by account, instrument and position side where applicable. Derivative contract sizes and Spot quantities are not interchangeable. Keep balance, order and position events separate rather than assuming they arrive together.
 

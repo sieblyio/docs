@@ -15,7 +15,7 @@ Bitget limits differ by endpoint, product and account. Budget startup and recove
 
 ## Bitget recovery events
 
-Use `reconnect` and unexpected closure to mark affected state stale. On `reconnected`, confirm authentication and subscriptions, then recover missed updates. Buffer live events during recovery and use saved identifiers to remove duplicates.
+Use `reconnect` and unexpected closure to mark affected state stale. The SDK reconnects, authenticates and restores subscriptions automatically. Use `reconnected` to start recovering missed account updates; it signals an open socket, not completed account-state recovery. Buffer live events during recovery and use saved identifiers to remove duplicates.
 
 Classic Spot uses V2 balances, open orders, history and fills. UTA uses V3 equivalents, including `getTradeFills()` for private executions. `getFills()` is public market data. Do not assume subscriptions replay every missed event. See [Private account updates](/guides/private-streams#recover-after-a-gap).
 
