@@ -32,7 +32,7 @@ export async function generateCompatibility(ctx,root) {
   const visible=targets.filter(t=>t.endsWith('-configured')&&t.startsWith('react-native')?ctx.id!=='hyperliquid':t==='vite'?displayedTarget(report,t,ctx.pkg.name).status!=='not-run':t==='browser-configured'?ctx.id!=='hyperliquid':t==='browser-bundle'?displayedTarget(report,t,ctx.pkg.name).status!=='not-run':true);
   const setupTarget=['react-native-configured','react-native-ios-configured'].find(t=>{const c=displayedTarget(report,t,ctx.pkg.name);return c.status==='passed'&&c.consumerDependencies;});
   const lines=['---',`title: "${ctx.sdk.name} SDK runtime compatibility"`,`description: "Live exchange REST and WebSocket checks for ${ctx.sdk.name} across JavaScript runtimes."`,'---','','# Runtime compatibility','',
-    `Setup and recorded public REST and WebSocket checks for the ${ctx.sdk.name} SDK. Install commands use the latest SDK release; test results identify the version checked.`, '',
+    `Configure the ${ctx.sdk.name} SDK for your runtime and review its recorded public REST and WebSocket test results. Install commands use the latest SDK release; test results identify the version checked.`, '',
     '| Environment | Tested version | Result |','| --- | --- | --- |',...visible.map(t=>{const c=displayedTarget(report,t,ctx.pkg.name);return `| [${labels[t]}](#${t}) | ${safe(c.runtimeVersion||'Not checked')} | ${statusLabel[c.status]||'Not verified'} |`;}),''];
   if(hasReport)lines.push(`Tested SDK: \`${ctx.pkg.name}@${version}\`. Last run: **${report.checkedAt.slice(0,10)}** on **${safe(report.platform)}**. Each environment lists its check date.`,'',
     sharedInclude('tested-version'),'');
@@ -63,10 +63,10 @@ export async function generateCompatibility(ctx,root) {
         'Tested in Expo Go with an npm `node_modules` layout.','',
         '[Metro resolver documentation](https://metrobundler.dev/docs/configuration/#resolverequest)','');
     }
-    if(t==='react-native'&&c.status==='failed')lines.push('This is the default configuration. See [Android with polyfills](#react-native-configured) for the consumer setup and its live results.','');
-    if(t==='react-native-ios'&&c.status==='failed')lines.push('See [iOS with polyfills](#react-native-ios-configured) for the configured consumer setup and results.','');
+    if(t==='react-native'&&c.status==='failed')lines.push('This check uses the default configuration. See [Android with polyfills](#react-native-configured) for the required configuration and live test results.','');
+    if(t==='react-native-ios'&&c.status==='failed')lines.push('See [iOS with polyfills](#react-native-ios-configured) for the required configuration and test results.','');
     if(t==='react-native-ios-configured'&&setupTarget&&t!==setupTarget)lines.push('Use the shared [Expo and Metro setup](#expo-and-metro-setup) above. The same helper is used for the iOS checks.','');
-    if(t==='next')lines.push(c.status==='not-run'?'The Next.js recipe uses a Node.js Route Handler. Runtime execution is unverified.':'Checked in a Node.js Route Handler. Client Components and Edge execution are untested.','');
+    if(t==='next')lines.push(c.status==='not-run'?'The Next.js recipe uses a Node.js Route Handler. Runtime execution is unverified.':'Checked in a Node.js Route Handler. Client Components and the Edge runtime have not been tested.','');
   }
   lines.push(sharedInclude('live-check-scope'),'',sharedInclude('browser-scope'),'',sharedInclude('android-scope'),'',sharedInclude('ios-scope'),'',
     ...(hasReport&&version!==ctx.pkg.version?[`Test metadata: SDK ${version}; API reference source ${ctx.pkg.version}.`,'']:[]),

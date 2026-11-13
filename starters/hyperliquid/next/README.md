@@ -1,6 +1,6 @@
 # Hyperliquid: Next.js
 
-A runnable public-price example using `@siebly/hyperliquid-api`. No API key is required.
+Read public market prices with `@siebly/hyperliquid-api`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -12,5 +12,7 @@ From this folder:
 npm install
 npm run dev
 ```
+
+Open `http://localhost:3000/api/price`. A successful response contains the symbol and price as JSON.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/hyperliquid/environments/next.html).

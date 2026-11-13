@@ -1,6 +1,6 @@
 # Binance: React Native / Expo
 
-A runnable public-price example using `binance`. No API key is required.
+Read public market prices with `binance`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -13,7 +13,7 @@ npm install
 npm start
 ```
 
-Open the project in a matching Expo Go installation. Press **i** for an iOS simulator or **a** for an Android emulator.
+Use an Expo Go version that supports the Expo SDK in `package.json`. Press **i** for an iOS simulator or **a** for an Android emulator. iOS simulators require macOS and Xcode. Keep Expo Go in the foreground.
 
 Use **Stop stream** to close the price subscription.
 

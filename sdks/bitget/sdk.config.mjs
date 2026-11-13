@@ -9,6 +9,20 @@ export default {
   website: 'https://siebly.io/sdk/bitget/javascript',
   tutorial: 'https://siebly.io/sdk/bitget/javascript/tutorial',
   repository: 'https://github.com/sieblyio/bitget-api',
+  // Clarify upstream comments without changing SDK types or behavior.
+  referenceDescriptions: {
+    "WebsocketAPIClient": "Promise-based wrapper around `WebsocketClientV3` for UTA V3 trading requests. Use its methods to send a request and await the response, or use `WebsocketClientV3.sendWSAPIRequest()` directly.",
+    "WsTopicRequest": "A subscription request containing a `topic` name and an optional `payload` with channel-specific parameters.",
+    "WebsocketClientV2.subscribe": "Subscribe to one or more topics. Pass a topic string, an object with `topic` and optional `payload`, or an array of these values. Supply the connection key as the second argument. The SDK connects, authenticates when needed and restores subscriptions after reconnecting. Call `unsubscribe(requests, wsKey)` with the same requests and connection key to remove them.",
+    "WebsocketClientV3.subscribe": "Subscribe to one or more topics. Pass a topic string, an object with `topic` and optional `payload`, or an array of these values. Supply the connection key as the second argument. The SDK connects, authenticates when needed and restores subscriptions after reconnecting. Call `unsubscribe(requests, wsKey)` with the same requests and connection key to remove them.",
+    "WebsocketClientV2.unsubscribe": "Unsubscribe from one or more topics on the connection selected by `wsKey`. The topics are removed from the subscription cache and will not be restored after reconnecting.",
+    "WebsocketClientV3.unsubscribe": "Unsubscribe from one or more topics on the connection selected by `wsKey`. The topics are removed from the subscription cache and will not be restored after reconnecting.",
+    "RestClientV2.fetchLatencySummary": "Estimate request latency and the clock difference between the client and server. This SDK utility is intended for diagnostics, not an official exchange endpoint. Results are approximate and can vary between requests.",
+    "RestClientV3.fetchLatencySummary": "Estimate request latency and the clock difference between the client and server. This SDK utility is intended for diagnostics, not an official exchange endpoint. Results are approximate and can vary between requests.",
+    "RestClientV3.setDepositAccount": "Set the default account for deposits of a specified symbol. The setting persists and does not need to be repeated for each deposit. Requires UTA management read and write permission.",
+    "isWSPingFrameAvailable": "Check whether the WebSocket supports native ping frames. These frames are unavailable in browsers; the SDK uses this check to disable native-frame heartbeats there.",
+    "isWSPongFrameAvailable": "Check whether the WebSocket supports native pong frames. These frames are unavailable in browsers; the SDK uses this check to disable native-frame heartbeats there.",
+  },
   referenceHelp: [
     { client: 'RestClientV3', method: 'getTickers', guide: '/getting-started', title: 'Read a public ticker' },
     { client: 'RestClientV3', method: 'getOrderBook', guide: '/guides/market-data', title: 'Read an order book' },

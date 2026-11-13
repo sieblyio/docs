@@ -15,6 +15,12 @@ export default {
   tutorial: 'https://siebly.io/sdk/hyperliquid/javascript/tutorial',
   repository: 'https://github.com/sieblyio/hyperliquid-api',
   // References and shared examples only. API contracts stay in SDK source comments.
+  // Clarify upstream comments without changing SDK types or behavior.
+  referenceDescriptions: {
+    "ValidatorSummary.stake": "Returned as a JSON number. Large stakes can exceed JavaScript's safe integer range.",
+    "WebsocketMessageEvent": "The original message envelope, with `wsKey` identifying the connection that received it.",
+    "WebsocketSubscriptionData": "Payload types keyed by subscription type. Message envelopes are defined in `ws-events`.",
+  },
   referenceHelp: [
     { client: 'RestClient', method: 'submitLimitOrder', guide: '/guides/orders', title: 'Order management' },
     { client: 'RestClient', method: 'cancelOrders', guide: '/guides/orders', title: 'Cancel an order' },

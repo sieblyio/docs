@@ -41,7 +41,7 @@ export default function siteConfig(data, docs) {
     ] },
     { text: 'Resources', items: [
       { text: 'Runnable examples', link: `https://github.com/sieblyio/docs/tree/main/starters/${sdkId}` },
-      { text: 'Runtime compatibility', link: '/compatibility' },
+      { text: sdk.compatibilityPage === 'authored' ? 'Runtime setup' : 'Runtime compatibility', link: '/compatibility' },
       { text: `${sdk.name} JavaScript SDK`, link: `https://www.npmjs.com/package/${sdk.packageName}` },
       { text: `${sdk.name} tutorial`, link: sdk.tutorial }, { text: 'Siebly SDKs', link: 'https://siebly.io/' },
       { text: 'GitHub repository', link: sdk.repository },
@@ -84,6 +84,12 @@ export default function siteConfig(data, docs) {
       socialLinks: [{ icon: 'github', link: sdk.repository }],
       outline: { level: [2, 3], label: 'On this page' },
       docFooter: { prev: 'Previous', next: 'Next' },
+      notFound: {
+        title: 'Page not found',
+        quote: 'Return to the SDK documentation to find its guides and API reference.',
+        linkLabel: `Open ${sdk.name} documentation`,
+        linkText: `${sdk.name} documentation`,
+      },
       footer: { message: 'Built by Siebly. Open source SDKs for exchange APIs.', copyright: sdk.license ? `${sdk.license} licensed SDK` : undefined },
     },
     transformPageData(page) {

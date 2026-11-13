@@ -36,8 +36,12 @@ test('Coinbase navigation keeps references scoped and its runtime setups expande
   const sdks = await catalogue();
   for (const sdk of sdks) {
     const config = siteConfig({ sdk, catalogue: sdks, siteUrl: `http://localhost/${sdk.id}/`, originUrl: 'http://localhost/', indexable: false }, '.');
+    assert.equal(config.themeConfig.notFound.title, 'Page not found');
+    assert.equal(config.themeConfig.notFound.linkText, `${sdk.name} documentation`);
     const sidebar = config.themeConfig.sidebar;
     const groups = Array.isArray(sidebar) ? sidebar : sidebar['/'];
+    const runtimeLink = groups.find(group => group.text === 'Resources').items.find(item => item.link === '/compatibility');
+    assert.equal(runtimeLink.text, sdk.compatibilityPage === 'authored' ? 'Runtime setup' : 'Runtime compatibility');
     if (!sdk.productGroups) continue;
     assert.equal(groups.find(group => group.text.startsWith('Frameworks and runtimes')).collapsed, undefined);
     const defaultReferences = groups.find(group => group.text === 'API reference').items;

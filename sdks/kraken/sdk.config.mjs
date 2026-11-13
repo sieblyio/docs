@@ -13,6 +13,27 @@ export default {
   website: 'https://siebly.io/sdk/kraken/javascript',
   tutorial: 'https://siebly.io/sdk/kraken/javascript/tutorial',
   repository: 'https://github.com/sieblyio/kraken-api',
+  // Clarify upstream comments without changing SDK types or behavior.
+  referenceDescriptions: {
+    "WSClientConfigurableOptions.reauthWSAPIOnReconnect": "Declared in the options type, but not used by the reconnect implementation in SDK 1.1.10. Setting this option does not disable the SDK’s automatic connection recovery or request authentication.",
+    "WebsocketClientOptions.reauthWSAPIOnReconnect": "Declared in the options type, but not used by the reconnect implementation in SDK 1.1.10. Setting this option does not disable the SDK’s automatic connection recovery or request authentication.",
+    "WebsocketClient.subscribe": "Subscribe to one or more topics. Pass a topic string, an object with `topic` and optional `payload`, or an array of these values. Supply the connection key as the second argument. The SDK connects, authenticates when needed and restores subscriptions after reconnecting. Call `unsubscribe(requests, wsKey)` with the same requests and connection key to remove them.",
+    "WebsocketClient.unsubscribe": "Unsubscribe from one or more topics on the connection selected by `wsKey`. The topics are removed from the subscription cache and will not be restored after reconnecting.",
+    "WSTopicRequest": "A subscription request containing a `topic` name and an optional `payload` with channel-specific parameters.",
+    "WebsocketClient.sendWSAPIRequest": "Send a Kraken Spot WebSocket API request and return a promise for its response. The SDK opens the selected connection, obtains a Spot WebSocket token and includes it in the request automatically; do not send a separate login request. The promise rejects on an error response or a lost connection. A rejected request may already have been processed, so resolve uncertain order outcomes before retrying.",
+    "WebsocketClient.sendWSAPIRequest.wsKey": "Kraken Spot connection to use: `spotPrivateV2` or `spotBetaPrivateV2`.",
+    "WebsocketClient.sendWSAPIRequest.params": "Parameters for the selected Kraken operation, sent in the request's `params` object. The SDK supplies the authentication token automatically.",
+    "InstitutionalClient.getCustodyDepositAddresses": "Retrieve deposit addresses for an asset and funding method, or generate a new address. Use the Get Deposit Methods API to choose the deposit method.",
+    "SpotClient.getDepositAddresses": "Retrieve deposit addresses for an asset and funding method, or generate a new address.",
+    "DerivativesClient.getPortfolioMarginParameters": "Retrieve portfolio margin calculation parameters, including account-specific options limits. This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.simulateMarginRequirements": "Calculate margin requirements, PnL and option Greeks for a portfolio of balances and positions. This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.getOpenRFQs": "List open requests for quotes (RFQs). This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.getOpenRFQ": "Retrieve an open RFQ by its identifier. This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.getRFQOpenOffers": "List the account's offers on open RFQs. This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.submitRFQNewOffer": "Place an offer on an open RFQ. Provide at least one of `bid` or `ask`. This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.updateRFQOpenOffer": "Replace the current offer on an open RFQ. Provide at least one of `bid` or `ask`. This method belonged to the retired Futures demo environment and is no longer available.",
+    "DerivativesClient.cancelRFQOffer": "Cancel the current offer on an open RFQ. This method belonged to the retired Futures demo environment and is no longer available.",
+  },
   referenceHelp: [
     {
       client: 'SpotClient',

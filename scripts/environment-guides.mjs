@@ -10,7 +10,7 @@ export function codeBlock(filename, content) {
 
 const command = value => `\`\`\`sh\n${value}\n\`\`\``;
 const purposes = {
-  'coinbase-public-auth.cjs': 'Reject JWT signing in this public-data consumer. Keep credentialed API calls on a Node.js server.',
+  'coinbase-public-auth.cjs': 'Disable JWT signing in this public-market-data app. Keep authenticated API calls on a Node.js server.',
   'package.json': 'Declare the SDK dependency and the commands used by this project.',
   'tsconfig.json': 'Enable strict type checking and compile the TypeScript programs into `dist/`.',
   'deno.json': 'Tell Deno to install npm dependencies locally and define the price and stream tasks.',
@@ -18,7 +18,7 @@ const purposes = {
   'vite.config.js': 'Configure the development server and production build.',
   'App.jsx': 'Build the React screen. The effect makes the REST request, subscribes to prices and closes the WebSocket on unmount.',
   'main.jsx': 'Mount the screen with StrictMode. Pause subscriptions while the browser caches the page, resume them on restoration and clean up when the page or entry module is discarded.',
-  'main.js': 'Read the REST price, show WebSocket updates and wire the Stop stream button to connection cleanup.',
+  'main.js': 'Read the REST price, show WebSocket updates and close the connection when the user clicks **Stop stream**.',
   'index.html': 'Create the browser page that loads the application entry module.',
   'app/layout.js': 'Provide the root HTML layout required by the Next.js App Router.',
   'app/api/price/route.js': 'Handle the request on the Node.js server. This file creates the SDK client and requests the current price directly.',
@@ -70,7 +70,7 @@ export function guideFields(id, sdk, environment, files) {
     const dev = JSON.parse(files.get('package.json')).devDependencies;
     setup = command(`mkdir ${project}\ncd ${project}\nnpm init -y\nnpm install ${sdk.packageName}\nnpm install --save-dev typescript@${dev.typescript} @types/node@${dev['@types/node']}`);
     config = fileStep('tsconfig.json', files, 1);
-    priceFiles = `Create \`price.mts\`. The SDK’s included definitions check the constructor, request parameters and response.\n\n${codeBlock('price.mts', files.get('price.mts'))}`;
+    priceFiles = `Create \`price.mts\`. The SDK’s type definitions let TypeScript check the constructor options, request parameters and response types.\n\n${codeBlock('price.mts', files.get('price.mts'))}`;
     streamFiles = `Create \`stream.mts\` when you want a live update. Its promise resolves to a price string and its \`finally\` block closes the client.\n\n${codeBlock('stream.mts', files.get('stream.mts'))}`;
     priceRun = command('npx tsc --noEmit\nnpx tsc\nnode dist/price.mjs');
     streamRun = command('npx tsc\nnode dist/stream.mjs');

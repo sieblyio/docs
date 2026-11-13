@@ -1,6 +1,6 @@
 # Kraken: Node.js / JavaScript
 
-A runnable public-price example using `@siebly/kraken-api`. No API key is required.
+Read public market prices with `@siebly/kraken-api`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -12,6 +12,8 @@ From this folder:
 npm install
 npm start
 ```
+
+The script prints a public REST price and exits.
 
 To receive one WebSocket price and close the connection:
 

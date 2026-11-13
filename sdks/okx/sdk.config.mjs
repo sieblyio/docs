@@ -9,6 +9,17 @@ export default {
   website: 'https://siebly.io/sdk/okx/javascript',
   tutorial: 'https://siebly.io/sdk/okx/javascript/tutorial',
   repository: 'https://github.com/sieblyio/okx-api',
+  // Clarify upstream comments without changing SDK types or behavior.
+  referenceDescriptions: {
+    "WsKey": "Identifies an OKX WebSocket connection.",
+    "OrderRequest.tgtCcy": "Unit of `sz` for a SPOT market order. For BTC-USDT, `base_ccy` means BTC and `quote_ccy` means USDT. Defaults to `quote_ccy` for buys and `base_ccy` for sells.",
+    "WSAPIPlaceOrderRequestV5.tgtCcy": "Unit of `sz` for a SPOT market order. For BTC-USDT, `base_ccy` means BTC and `quote_ccy` means USDT. Defaults to `quote_ccy` for buys and `base_ccy` for sells.",
+    "OrderRequest.slippagePct": "Maximum acceptable slippage for SPOT and SPOT-margin market orders where `tgtCcy` is the received currency (`base_ccy` for buys, `quote_ccy` for sells). Pass the decimal fraction as a string from `\"0\"` to `\"0.05\"`, inclusive. The percentage may have up to two decimal places: `\"0.0123\"` means 1.23%. Defaults to 0% when omitted. Cannot be amended on an existing order.",
+    "WSAPIPlaceOrderRequestV5.slippagePct": "Maximum acceptable slippage for SPOT and SPOT-margin market orders where `tgtCcy` is the received currency (`base_ccy` for buys, `quote_ccy` for sells). Pass the decimal fraction as a string from `\"0\"` to `\"0.05\"`, inclusive. The percentage may have up to two decimal places: `\"0.0123\"` means 1.23%. Defaults to 0% when omitted. Cannot be amended on an existing order.",
+    "RestClient.fetchLatencySummary": "Estimate request latency and the clock difference between the client and server. This SDK utility is intended for diagnostics, not an official exchange endpoint. Results are approximate and can vary between requests.",
+    "isWSPingFrameAvailable": "Check whether the WebSocket supports native ping frames. These frames are unavailable in browsers; the SDK uses this check to disable native-frame heartbeats there.",
+    "isWSPongFrameAvailable": "Check whether the WebSocket supports native pong frames. These frames are unavailable in browsers; the SDK uses this check to disable native-frame heartbeats there.",
+  },
   referenceHelp: [
     { client: 'RestClient', method: 'getTicker', guide: '/getting-started', title: 'Read a public ticker' },
     { client: 'RestClient', method: 'getOrderBook', guide: '/guides/market-data', title: 'Read an order book' },

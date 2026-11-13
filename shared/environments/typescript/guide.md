@@ -5,7 +5,7 @@ description: Use the @@SDK@@ API with TypeScript in Node.js. Type-check a direct
 
 # Node.js / TypeScript quickstart
 
-Compile a public @@SYMBOL@@ price request with `@@PACKAGE@@`, then run it in Node.js. No API key is needed. @@PRICE_KIND@@
+Write a TypeScript script that reads a public @@SYMBOL@@ price with `@@PACKAGE@@`, then compile and run it in Node.js. No API key is needed. @@PRICE_KIND@@
 
 Use Node.js 24 and npm. You can also [view the complete @@SDK@@ TypeScript example on GitHub](@@EXAMPLE_URL@@).
 
@@ -13,7 +13,7 @@ Use Node.js 24 and npm. You can also [view the complete @@SDK@@ TypeScript examp
 
 @@PROJECT_SETUP@@
 
-The SDK installs from the current npm release and includes its own type definitions. The development dependencies supply the TypeScript compiler and Node.js types.
+The install command adds the latest SDK release, which includes its own type definitions. The development dependencies supply the TypeScript compiler and Node.js types.
 
 @@CONFIG_FILES@@
 

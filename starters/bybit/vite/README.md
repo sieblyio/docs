@@ -1,6 +1,6 @@
 # Bybit: Vite (plain JavaScript)
 
-A runnable public-price example using `bybit-api`. No API key is required.
+Read public market prices with `bybit-api`. No API key is required for public prices.
 
 Use Node.js 24 and npm.
 
@@ -12,6 +12,8 @@ From this folder:
 npm install
 npm run dev
 ```
+
+Open the local URL printed by Vite. The page shows a REST price and live WebSocket prices.
 
 Use **Stop stream** to close the price subscription.
 

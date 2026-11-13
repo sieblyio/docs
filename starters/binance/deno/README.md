@@ -1,6 +1,6 @@
 # Binance: Deno
 
-A runnable public-price example using `binance`. No API key is required.
+Read public market prices with `binance`. No API key is required for public prices.
 
 Install Deno first.
 
@@ -12,6 +12,8 @@ From this folder:
 deno install
 deno task start
 ```
+
+The script prints a public REST price and exits.
 
 To receive one WebSocket price and close the connection:
 

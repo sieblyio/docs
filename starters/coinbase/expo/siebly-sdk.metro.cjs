@@ -9,7 +9,7 @@ module.exports = function configureSdkMetro(config, projectRoot) {
   const previousResolveRequest = config.resolver.resolveRequest;
 
   config.resolver.resolveRequest = (context, moduleName, platform) => {
-    // Replace only Coinbase's Node-only JWT implementation for public consumers.
+    // Replace Coinbase's Node-only JWT implementation for this public-market-data app.
     if (moduleName.endsWith('/jwtNode.js') &&
         context.originModulePath.startsWith(path.join(projectRoot, 'node_modules/coinbase-api') + path.sep)) {
       return { type: 'sourceFile', filePath: path.join(projectRoot, 'coinbase-public-auth.cjs') };

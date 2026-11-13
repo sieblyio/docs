@@ -1,6 +1,6 @@
 # OKX: Bun
 
-A runnable public-price example using `okx-api`. No API key is required.
+Read public market prices with `okx-api`. No API key is required for public prices.
 
 Install Bun first.
 
@@ -13,12 +13,14 @@ bun install
 bun run start
 ```
 
+The script prints a public REST price and exits.
+
 To stream WebSocket prices until Ctrl+C:
 
 ```sh
 bun run stream
 ```
 
-Keep authenticated calls on your server. Browser projects must retain the Vite configuration and omit Node-only `keepAlive`; browser REST access depends on OKX CORS policy. See the guide for runtime setup limits.
+This example uses public market data. Keep authenticated account and trading calls on your server. See the guide for this runtime’s requirements and limitations.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/okx/environments/bun.html).

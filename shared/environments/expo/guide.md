@@ -27,11 +27,11 @@ Press **i** to open the iOS simulator or **a** to open the Android emulator. Kee
 
 Tap **Stop stream**. The price component unmounts, its effect cleanup calls `closeAll()`, and the screen shows **Stream stopped. WebSocket closed.** Tap **Start stream** to create a new subscription. Late REST responses are ignored after unmount.
 
-Keep Expo Go in the foreground while following this guide. For background operation, use React Native’s AppState API to stop connections when the app is inactive and reload account or market state before reconnecting.
+For apps that move between the foreground and background, use React Native’s AppState API to stop connections when the app is inactive and reload account or market state before reconnecting.
 
 ## Troubleshooting
 
 - @@POLYFILL_TROUBLE@@
-- If Metro keeps an old resolution error, stop it and run `npx expo start --clear` from the starter directory.
+- If Metro still reports an import error after you fix the dependencies or configuration, stop it and run `npx expo start --clear` from the project directory.
 - If Expo Go rejects the project version, use the Expo Go release that supports the starter's Expo SDK. Match Expo Go to the Expo SDK version in `package.json`.
 - If price fields stay at **Loading** or **Connecting**, check internet access from the simulator or emulator and inspect the error shown on the screen. Exchange regional restrictions apply there too.
