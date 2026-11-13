@@ -5,11 +5,11 @@ description: "Read INTX instruments, subscribe to authenticated market data, and
 
 # International Exchange
 
-`CBInternationalClient` targets INTX at `api.international.coinbase.com`. Keep INTX instruments, portfolio IDs and credentials together; its order schema is specific to this product.
+`CBInternationalClient` targets INTX at `api.international.coinbase.com`. Use INTX instruments, portfolio IDs and credentials; its order fields differ from other Coinbase products.
 
 ## Setup {#setup}
 
-Install the package with `npm install coinbase-api`. Save each example with the shown filename and run it with Node.js 24. Public examples need no credentials; for authenticated examples, add the named variables to a private `.env` file excluded from Git, then use `node --env-file=.env filename.ts`. Keep account output private.
+Install `coinbase-api` with `npm install coinbase-api` and use Node.js 24 to run the examples. Public REST examples need no credentials. For authenticated examples, add the variables below to a private `.env` file excluded from Git and run `node --env-file=.env filename.ts`, replacing `filename.ts` with its filename. Keep account output private.
 
 ## Public REST instruments {#market-data}
 
@@ -17,7 +17,7 @@ Save as `international-market-data.ts` and run `node international-market-data.t
 
 <<< @/../examples/international-market-data.ts
 
-Select the instrument returned by `getInstruments()`. `getInstrumentDetails({ instrument })` reads its rules; `getQuotePerInstrument({ instrument })` reads a quote. Do not infer the instrument name or size constraints from another exchange's symbol.
+Choose an instrument returned by `getInstruments()`. `getInstrumentDetails({ instrument })` reads its rules; `getQuotePerInstrument({ instrument })` reads a quote. Do not infer the instrument name or size constraints from another exchange's symbol.
 
 ## Authentication {#authentication}
 
@@ -53,7 +53,7 @@ Build an INTX `submitOrder()` request with `instrument`, `portfolio`, `side`, `s
 
 Use `getOrderDetails({ id, portfolio })` for a specific order, `getOpenOrders({ portfolio })` for current open orders, and `getPortfolioFills()` for execution history. `updateOpenOrder()` amends an order; `cancelOrder({ id, portfolio })` cancels it. Preserve the portfolio alongside the returned order ID.
 
-Do not treat the market WebSocket as confirmation of your fills. Resolve unknown submissions or cancellations with the relevant portfolio order/fill reads. If your application has a separate private event source, apply it passively and use REST for startup or missing state; this SDK does not map a separate INTX private-account feed or INTX WebSocket order API.
+Do not treat the market WebSocket as confirmation of your fills. Resolve unknown submissions or cancellations with the relevant portfolio order/fill reads. If your application has a separate private event source, update account state from it and use REST for initial or missing state; this SDK does not map a separate INTX private-account feed or INTX WebSocket order API.
 
 ## Environments and recovery {#environments}
 

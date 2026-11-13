@@ -13,7 +13,7 @@ The examples below select Spot Testnet with `testnet: true`. Set the matching cr
 
 <<< @/../examples/authenticated-client.ts
 
-Keep API credentials in a secure server-side environment, supplied through protected environment variables or a secret manager, outside source files and browser bundles. Creating the client alone does not verify credentials or permissions.
+Supply API credentials through protected server-side environment variables or a secret manager. Keep them out of source files and browser bundles. Creating the client alone does not verify credentials or permissions.
 
 ## Verify account access
 
@@ -39,9 +39,7 @@ Run it with Node.js 24:
 node --env-file=.env account.mjs
 ```
 
-If you already supplied the variables through your server environment, use `node account.mjs` instead. A successful request prints `Account access verified.` and the number of returned records. Use the returned account data to inspect balances in your application.
-
-The response includes `balances` for your application to inspect. See [`getAccountInformation()`](/api/classes/MainClient#getaccountinformation) for the response type and [Error handling](/guides/errors) for safe diagnostics.
+If you already supplied the variables through your server environment, use `node account.mjs` instead. A successful request prints `Account access verified.` and the number of returned balances. Read `account.balances` to inspect them. See [`getAccountInformation()`](/api/classes/MainClient#getaccountinformation) for the response type and [Error handling](/guides/errors) for safe diagnostics.
 
 ## Match the environment and account
 
@@ -49,7 +47,7 @@ Use keys for the selected Binance product and environment. Check key permissions
 
 ## Place an order
 
-Once account access works, follow [Order management](/guides/orders). Start [Private order updates](/guides/private-streams) first, then use the order guide to submit and cancel through REST. WebSocket events report the lifecycle changes; REST status queries are available for diagnosis and recovery.
+Once account access works, start [Private order updates](/guides/private-streams), then follow [Order management](/guides/orders) to submit and cancel through REST. Follow WebSocket events for status changes and fills; use REST status queries for diagnosis and recovery.
 
 ## Signing and timestamps
 

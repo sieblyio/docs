@@ -11,7 +11,7 @@ import sdk from './.vitepress/generated.json';
 
 [`binance`](https://www.npmjs.com/package/binance) provides JavaScript and TypeScript clients for Binance REST and WebSocket APIs, covering market data, account queries and trading.
 
-Build trading bots and automate your Binance strategies in Node.js, or use real-time market data in a dashboard. Start with a public price request, then add authentication and order handling for your trading workflow.
+Start with a public price request, subscribe to market updates, or connect an account to place and manage orders.
 
 <p class="sdk-release">JavaScript &amp; TypeScript <span>·</span> v{{ sdk.version }} <span>·</span> {{ sdk.license }} license</p>
 

@@ -5,7 +5,7 @@ description: "Find REST and WebSocket clients, methods and typed requests for ok
 
 # API reference
 
-Generated reference for the documented `okx-api` release. JavaScript and TypeScript use the same methods; TypeScript additionally checks request and response shapes.
+Client methods, parameters and response types exported by [`okx-api`](https://www.npmjs.com/package/okx-api). The same API works in JavaScript and TypeScript.
 
 ## Clients
 

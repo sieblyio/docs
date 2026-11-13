@@ -7,13 +7,13 @@ description: Submit and cancel a post-only BTC perpetual order through REST, and
 
 Place a BTC perpetual limit order with `RestClient` and cancel any remaining quantity. Run the account stream alongside these REST commands to follow order updates and fills.
 
-The separate CLI commands make each step explicit. A persistent application can call the same SDK methods within one workflow, keeping the account stream connected and tracking orders and fills in local state. Use scoped REST reads to initialize state or recover gaps and uncertain outcomes, not after every order.
+The example uses separate commands to place, cancel and check an order. In a persistent application, keep the account stream connected and track orders and fills locally. Use REST reads for startup, recovery and unresolved requests rather than after every order.
 
 This walkthrough uses Hyperliquid Testnet and test funds to avoid accidental live trades. The same methods work on Mainnet, Hyperliquid's production markets. Remove `testnet` or set it to `false`, and use the Mainnet account address with an authorized signer to execute against live markets.
 
 A post-only order is rejected if it would immediately take liquidity. Once resting, it can fill before cancellation. Cancelling an order does not reverse fills or close an existing position.
 
-Before placing orders, use the [authenticated account read](/guides/authentication) to check balances and account access.
+Before placing orders, use the [account read example](/guides/authentication) to check balances and confirm the account address.
 
 ## Set up
 

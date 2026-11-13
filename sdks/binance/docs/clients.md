@@ -22,7 +22,7 @@ Binance has separate REST clients for Spot, futures and Portfolio Margin. WebSoc
 
 <<< @/../examples/first-call.ts
 
-`getSymbolPriceTicker()` returns response data directly. Its return type allows one ticker or an array; this single-symbol example rejects an unexpected array before reading `price`.
+`getSymbolPriceTicker()` returns response data directly. The example checks for a single ticker before reading its `price`.
 
 ## WebSocket subscriptions
 

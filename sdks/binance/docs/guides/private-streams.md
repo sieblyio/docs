@@ -13,7 +13,7 @@ For production Spot, set `testnet: false` (or omit it) and use production creden
 
 ## Example: connect to Spot Testnet
 
-To run this example on Spot Testnet, use Node.js 24, install the [`binance`](https://www.npmjs.com/package/binance) npm package with `npm install binance`, and configure the credential variables from [order management](/guides/orders#set-up). Keep signing credentials in a secure server-side environment and out of browser bundles.
+Use Node.js 24 and install the SDK with `npm install binance`. Set the Spot Testnet credential variables from [order management](/guides/orders#set-up). Keep signing credentials on the server and out of browser bundles.
 
 Save this as `private-stream.ts`:
 
@@ -76,6 +76,6 @@ The SDK reconnects automatically after a dropped connection and restores the use
 
 The 60-second timer and Ctrl+C/SIGTERM end this demonstration explicitly. Closing the stream does not cancel orders.
 
-To stop just a user data subscription while keeping a connection, await `unsubscribeUserDataStream(WS_KEY_MAP.mainWSAPI)`. To end all connections owned by this API client, call `disconnectAll()`. A dedicated finite client, as above, can simply close its connections. Remove application timers and signal listeners during shutdown.
+To stop just a user data subscription while keeping a connection, await `unsubscribeUserDataStream(WS_KEY_MAP.mainWSAPI)`. To end all connections owned by this API client, call `disconnectAll()`. This example uses a dedicated client, so it closes all its connections. Remove application timers and signal listeners during shutdown.
 
 [Order management](/guides/orders) · [WebSocket API client reference](/api/classes/WebsocketAPIClient) · [Binance subscription methods](https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-data-stream-requests)

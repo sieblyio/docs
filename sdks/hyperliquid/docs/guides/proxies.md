@@ -34,7 +34,7 @@ Hyperliquid uses `webSocketConstructor`, not `wsOptions.agent`. This constructor
 
 <<< @/../examples/proxy-websocket.ts
 
-The constructor assertion bridges the SDK's portable WebSocket interface and Node `ws`'s richer event declarations. The same `webSocketConstructor` option configures `WebsocketAPIClient`'s WebSocket transport.
+The type assertion lets the SDK use the Node `ws` constructor despite differences in their WebSocket event types. The same `webSocketConstructor` option configures `WebsocketAPIClient`'s WebSocket transport.
 
 ## SOCKS5
 

@@ -11,7 +11,7 @@ Public market data needs no API credentials. Private account queries and trading
 
 <<< @/../examples/authenticated-client.ts
 
-Keep API credentials in a secure server-side environment, supplied through protected environment variables or a secret manager. Do not include them in source files or browser bundles. Creating a client alone does not verify access.
+Supply API credentials through protected server-side environment variables or a secret manager. Keep them out of source files and browser bundles. Creating a client alone does not verify access.
 
 ## Verify account access
 

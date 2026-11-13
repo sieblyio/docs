@@ -5,7 +5,7 @@ description: "Use Global derivatives HTTP JSON-RPC, WebSocket API methods and su
 
 # Global derivatives
 
-Use this section for the Coinbase Global derivatives gateway, not Advanced Trade spot trading. Access requires product eligibility and the appropriate account permissions.
+Use `CBAdvancedTradeGlobalClient` for Coinbase Global derivatives. For spot trading, use the [Advanced Trade guide](/getting-started). Access requires product eligibility and the appropriate account permissions.
 
 ## Setup {#setup}
 
@@ -17,7 +17,7 @@ Install the package with `npm install coinbase-api`. Save each example with the 
 
 <<< @/../examples/global-market-data.ts
 
-Use the returned instrument names for Global requests. Do not replace them with Advanced Trade spot product IDs such as `BTC-USD`. Global prices and sizes are JSON numbers, order enums are lowercase, and `label` is not a unique equivalent of `client_order_id`. Use the Global types rather than translating an Advanced Trade order mechanically.
+Use the returned instrument names for Global requests. Do not replace them with Advanced Trade spot product IDs such as `BTC-USD`. Global prices and sizes are JSON numbers, order enums are lowercase, and `label` is not a unique equivalent of `client_order_id`. Build requests with the Global types rather than copying an Advanced Trade order.
 
 ## Public WebSocket subscriptions {#public-streams}
 
@@ -39,7 +39,7 @@ Set `COINBASE_GLOBAL_API_KEY` to your CDP key name and `COINBASE_GLOBAL_API_SECR
 
 <<< @/../examples/global-account.ts
 
-For live trading, `submitBuy()` and `submitSell()` submit Global orders, `getOrderState()` resolves a specific unknown order, and `cancelOrder()` requests cancellation. These are live actions, not preview operations. Save exchange order IDs, inspect results and use private updates to track execution. A non-unique label alone is not sufficient duplicate protection.
+For live trading, `submitBuy()` and `submitSell()` submit Global orders, `getOrderState()` resolves a specific unknown order, and `cancelOrder()` requests cancellation. Submission and cancellation change live orders. Save exchange order IDs, inspect results and use private updates to track execution. A non-unique label alone is not sufficient duplicate protection.
 
 ## Private WebSocket subscriptions {#private-streams}
 
@@ -49,7 +49,7 @@ Save as `global-private-stream.ts` and run with the same Global environment vari
 
 <<< @/../examples/global-private-stream.ts
 
-This example observes USDC futures order, trade and portfolio changes without placing an order. Adapt currency and product kind to your account. Apply updates passively to account state; use REST for starting state and specific gaps rather than polling. Mark state stale on `reconnect`; `reconnected` alone does not prove authentication, subscription or state recovery has completed. See [Account State](https://siebly.io/reference/glossary#accountstate).
+This example observes USDC futures order, trade and portfolio changes without placing an order. Adapt currency and product kind to your account. Update account state from these events; use REST for initial state and specific gaps rather than polling. Mark state stale on `reconnect`; `reconnected` alone does not prove authentication, subscription or state recovery has completed. See [Account State](https://siebly.io/reference/glossary#accountstate).
 
 ## Global WebSocket API {#ws-api}
 
@@ -57,9 +57,9 @@ This example observes USDC futures order, trade and portfolio changes without pl
 
 <<< @/../examples/global-ws-api.ts
 
-`advTradeGlobalWSAPI` is a dedicated request-response connection, separate from private subscriptions even though both use `drb.coinbase.com`. Read `response.result`; unlike the Global HTTP client, this API returns the envelope. `getWSClient()` exposes the underlying event and connection client. `connectWSAPI()` optionally warms up an authenticated session; public calls do not require this authentication step.
+`advTradeGlobalWSAPI` is a dedicated request-response connection, separate from private subscriptions even though both use `drb.coinbase.com`. Read `response.result`; unlike the Global HTTP client, this API returns the envelope. `getWSClient()` exposes the underlying event and connection client. `connectWSAPI()` can establish an authenticated session before your first request; public calls do not require this authentication step.
 
-Private calls authenticate the socket automatically. The SDK manages session renewal and can reauthenticate after reconnect. `wsAPITimeout` controls the reply wait after sending (default 10 seconds); connection/authentication use their own lifecycle handling. Pending requests are rejected if their connection is lost. `reauthWSAPIOnReconnect` defaults to enabled for a previously authenticated API session. A new session does not establish the outcome of a command sent on the old one.
+Private calls authenticate the socket automatically. The SDK manages session renewal and can reauthenticate after reconnect. `wsAPITimeout` controls the reply wait after sending (default 10 seconds); connection and authentication are handled separately. Pending requests are rejected if their connection is lost. `reauthWSAPIOnReconnect` defaults to enabled for a previously authenticated API session. A new session does not establish the outcome of a command sent on the old one.
 
 ## Errors and uncertain outcomes {#errors}
 

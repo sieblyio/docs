@@ -25,9 +25,9 @@ BYBIT_API_KEY=example_testnet_key
 BYBIT_API_SECRET=example_testnet_secret
 ```
 
-Exclude `.env` from version control and leave `BYBITTRACE` unset to avoid logging signed requests. This example only reads account data.
+Exclude `.env` from version control and leave `BYBITTRACE` unset to avoid logging signed requests.
 
-This example queries a Unified Trading Account with `accountType: 'UNIFIED'`. Use an account type supported by your account; see the [wallet-balance endpoint documentation](https://bybit-exchange.github.io/docs/v5/account/wallet-balance).
+The read-only example below queries a Unified Trading Account with `accountType: 'UNIFIED'`. Use an account type supported by your account; see the [wallet-balance endpoint documentation](https://bybit-exchange.github.io/docs/v5/account/wallet-balance).
 
 After installing the SDK, save this plain JavaScript example as `account.mjs`:
 
@@ -39,9 +39,7 @@ Run it with Node.js 24:
 node --env-file=.env account.mjs
 ```
 
-If you already supplied the variables through your server environment, use `node account.mjs` instead. A successful request prints `Account access verified.` and the number of returned records. Use the returned account data to inspect balances in your application.
-
-The response includes `result.list[].coin` for your application to inspect. See [`getWalletBalance()`](/api/classes/RestClientV5#getwalletbalance) for the response type and [Error handling](/guides/errors) for safe diagnostics.
+If you already supplied the variables through your server environment, use `node account.mjs` instead. A successful request prints `Account access verified.` and the number of returned coin records. Balances are in `result.list[].coin`. See [`getWalletBalance()`](/api/classes/RestClientV5#getwalletbalance) for the response type and [Error handling](/guides/errors) for safe diagnostics.
 
 ## Match the environment and account
 

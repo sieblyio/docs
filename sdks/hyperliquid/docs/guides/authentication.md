@@ -43,4 +43,4 @@ Pass `signer` instead of `privateKey` to supply a [`HyperliquidSigner`](/api/int
 
 ## Next steps
 
-[Order management](/guides/orders), or [subscribe to account order updates](/guides/private-streams).
+[Place and cancel an order](/guides/orders), or [subscribe to account order updates](/guides/private-streams).

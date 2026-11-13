@@ -5,11 +5,21 @@ description: "Subscribe to public market updates and handle connection recovery.
 
 # WebSocket subscriptions
 
-`WebsocketClient` opens connections as needed, maintains heartbeats and resubscribes after reconnects. This public example runs until Ctrl+C:
+`WebsocketClient` opens connections as needed, maintains heartbeats and resubscribes after reconnects.
+
+## Subscribe to ticker updates
+
+Install `okx-api` and save this example as `stream.ts`. It subscribes to public BTC-USDT Spot ticker updates without credentials.
 
 <<< @/../examples/stream.ts
 
-Use `node stream.ts` on Node.js 24 after installing `okx-api`, or compile with your TypeScript project.
+Run it on Node.js 24, or compile it with your TypeScript project:
+
+```sh
+node stream.ts
+```
+
+The example logs subscription responses and incoming market updates. Leave it running to receive new prices, then press Ctrl+C to close the connection.
 
 ## Subscription acknowledgements and data
 
@@ -21,8 +31,8 @@ Subscribe to multiple channels with an array. Use `unsubscribe()` with the same 
 
 ## Connection recovery
 
-Treat data as stale on `reconnect` and unexpected closure. On `reconnected`, wait for restored subscriptions and fresh data. For incremental books, rebuild according to the channel contract; for accounts, [reconcile missed state](/guides/private-streams#recover-after-a-gap).
+Treat data as stale on `reconnect` and unexpected closure. On `reconnected`, wait for restored subscriptions and fresh data. For incremental books, rebuild according to the channel documentation; for accounts, [reconcile missed state](/guides/private-streams#recover-after-a-gap).
 
-Call `closeAll()` during deliberate shutdown to stop connections. This does not cancel orders.
+Call `closeAll()` when shutting down to stop connections. This does not cancel orders.
 
 [Private account updates](/guides/private-streams) · [WebsocketClient reference](/api/classes/WebsocketClient)

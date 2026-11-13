@@ -5,7 +5,7 @@ description: "Manage connection health, account-state recovery, request policy a
 
 # Production usage
 
-Use long-lived clients with a consistent region and environment. Keep credentials on the server, use the minimum permissions and an IP allowlist, synchronize time and rotate keys according to your operational policy.
+Use long-lived clients with a consistent region and environment. Keep credentials on the server, use the minimum permissions and an IP allowlist, synchronize time and rotate keys regularly.
 
 <!--@include: @/.vitepress/shared/production/request-policy.md-->
 
@@ -15,7 +15,7 @@ OKX limits vary by endpoint, instrument, account and operation. Some trading lim
 
 ## OKX recovery events
 
-Use `reconnect` and unexpected `close` events to invalidate affected state and `reconnected` to start recovery, not to mark it complete. Confirm private authentication and all required subscription acknowledgements. The `orders` channel does not initialize open orders, so combine REST bootstrap and history/fill repair with buffered stream events. See [Private account updates](/guides/private-streams).
+Mark affected state stale on `reconnect` or unexpected `close` events. On `reconnected`, confirm authentication and subscriptions, then recover missed updates. The `orders` channel does not send an initial list of open orders. Load them through REST and combine order history and fills with events buffered during recovery. See [Private account updates](/guides/private-streams).
 
 For derivatives, key state by account, instrument and position side where applicable. Derivative contract sizes and Spot quantities are not interchangeable. Keep balance, order and position events separate rather than assuming they arrive together.
 
@@ -30,4 +30,4 @@ Record operation names, sanitized response codes, duration, retries and reconnec
 <!--@include: @/.vitepress/shared/production/upgrading.md-->
 
 
-Recheck regional and demo support, request/response types and order error handling when upgrading. Public connectivity checks do not validate private permissions or trading behavior.
+Recheck regional and demo support, request/response types and order error handling when upgrading. Test account permissions and order handling separately from public connectivity.

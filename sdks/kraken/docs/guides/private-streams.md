@@ -23,7 +23,7 @@ The channel sends snapshots and subsequent updates. Apply these events to local 
 
 Use the balance channel when your application also needs balance changes. Load any starting state not covered by the snapshots, then let private events keep it up to date. Do not query REST after every order. See [account state](/guides/production#keep-account-state-up-to-date).
 
-The example logs all messages for inspection, including messages your application does not yet handle. Follow the [executions channel schema](https://docs.kraken.com/api/docs/websocket-v2/executions/) when adding typed handlers.
+The example logs all messages so you can inspect them before adding handlers. Follow the [executions channel schema](https://docs.kraken.com/api/docs/websocket-v2/executions/) when adding typed handlers.
 
 ## Recover after a gap
 

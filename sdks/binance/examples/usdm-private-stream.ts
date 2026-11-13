@@ -16,7 +16,7 @@ async function main() {
     beautify: false,
   });
   let stopped = false;
-  // Bound the example, including initial listen-key and connection setup.
+  // Stop after 60 seconds, including listen-key and connection setup.
   const timer = setTimeout(stop, 60_000);
   function stop() {
     if (stopped) return;

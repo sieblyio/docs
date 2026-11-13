@@ -9,7 +9,7 @@ description: "Read Commerce charges and checkouts, inspect payment state, and ke
 
 ## Setup {#setup}
 
-Install the package with `npm install coinbase-api`. Save each example with the shown filename and run it with Node.js 24. Public examples need no credentials; for authenticated examples, add the named variables to a private `.env` file excluded from Git, then use `node --env-file=.env filename.ts`. Keep account output private.
+Install `coinbase-api` with `npm install coinbase-api` and use Node.js 24 to run the examples. Add the credentials below to a private `.env` file excluded from Git. Run each saved example with `node --env-file=.env filename.ts`, replacing `filename.ts` with its filename. Keep account output private.
 
 ## Configure your Commerce key {#authentication}
 
@@ -19,7 +19,7 @@ Set a Commerce API key in your private environment:
 COINBASE_COMMERCE_API_KEY=your-commerce-api-key
 ```
 
-No API secret or passphrase is required. For these GET requests, supply `X-CC-Api-Key` explicitly through the REST client's second constructor argument. Do not invent a secret to force a signing path.
+No API secret or passphrase is required. For these GET requests, supply `X-CC-Api-Key` explicitly through the REST client's second constructor argument. Do not supply an API secret.
 
 ## List charges {#charges}
 
@@ -27,7 +27,7 @@ Save as `commerce-read.ts`:
 
 <<< @/../examples/commerce-read.ts
 
-Inspect the charge resources and returned pagination metadata. Preserve the charge ID/code used by your application; do not substitute a checkout ID or an on-chain transaction hash.
+Inspect the charge resources and returned pagination metadata. Save the charge ID or code used by your application; do not substitute a checkout ID or an on-chain transaction hash.
 
 ## Read one payment {#payment-state}
 
@@ -35,9 +35,9 @@ Set `COINBASE_COMMERCE_CHARGE_ID` to a charge ID or code from the list, then sav
 
 <<< @/../examples/commerce-charge.ts
 
-Inspect the charge's current payment state and timeline according to the Commerce schema before treating an invoice as paid. A successful charge lookup proves that the resource was retrieved, not that payment has completed.
+Inspect the charge's current payment state and timeline according to the Commerce schema before treating an invoice as paid. Retrieving a charge does not mean it has been paid.
 
-Use this targeted read for a specific unresolved payment or to recover missing state. If a webhook integration supplies payment events, validate those events according to Commerce's webhook requirements, deduplicate them and update local payment state passively. Do not mistake a duplicate event for an additional payment.
+Use this targeted read for a specific unresolved payment or to recover missing state. If a webhook integration supplies payment events, validate those events according to Commerce's webhook requirements, deduplicate them and update local payment state. Do not mistake a duplicate event for an additional payment.
 
 ## Checkouts and events {#events}
 
@@ -45,7 +45,7 @@ Use this targeted read for a specific unresolved payment or to recover missing s
 - `getCheckout({ checkout_id })` retrieves a specific checkout.
 - `listEvents()` and `showEvent()` expose event resources; their signatures require an `X-CC-Version` argument. Use the Commerce API version selected for your integration.
 
-Charges, checkouts and events have different identifiers. Store their relationships explicitly so a payment event updates the right invoice or purchase. Handle pagination and API errors without assuming the broad response types validate payment state for you.
+Charges, checkouts and events have different identifiers. Store their relationships explicitly so a payment event updates the right invoice or purchase. Handle pagination and API errors, and check payment state explicitly; the response types do not validate it.
 
 ## Creating payment resources {#payments}
 

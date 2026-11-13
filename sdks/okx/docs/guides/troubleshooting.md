@@ -11,11 +11,11 @@ Check all three credential fields: `apiKey`, `apiSecret` and `apiPass`. Confirm 
 
 ## Successful response but order rejected
 
-REST returns the unwrapped `data` array. Check each order result's `sCode` and `sMsg`, not a nonexistent top-level `response.code`. For WebSocket API commands, check both the envelope code and item codes. Verify instrument metadata, trading mode, available balance and current exchange limits.
+REST returns the unwrapped `data` array. Check each order result's `sCode` and `sMsg`, rather than `response.code`, which is removed by the REST client. For WebSocket API commands, check both the envelope code and item codes. Verify instrument metadata, trading mode, available balance and current exchange limits.
 
 ## No private order updates after connecting
 
-An open connection is not an authenticated, subscribed connection. Check login and subscription responses and the exact instrument type. The orders channel sends changes, not an initial open-order snapshot. An account with no new activity can legitimately be quiet. Initialize orders through REST without polling after each submission.
+Check login and subscription responses, then confirm the instrument type. Opening a connection alone does not authenticate it or confirm a subscription. The orders channel sends changes, not an initial open-order snapshot. An account with no new activity can legitimately be quiet. Initialize orders through REST without polling after each submission.
 
 ## Reconnected but state is wrong
 
@@ -27,7 +27,7 @@ Treat the outcome as unknown. Look for matching private events, then query by th
 
 ## Browser or mobile request fails
 
-Keep private requests on a server. Browser CORS, mobile network policy and framework bundling are separate concerns from whether a package can be imported. Follow the relevant [runtime guide](/compatibility); do not expose secrets or disable transport security to make a client-side request work.
+Keep private requests on a server. A successful import does not guarantee a working connection. Check browser CORS, mobile network restrictions and the framework configuration in the [runtime guide](/compatibility). Do not expose secrets or disable transport security to make a client-side request work.
 
 ## Proxy or connection problem
 
