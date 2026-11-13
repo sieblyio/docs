@@ -7,7 +7,6 @@ export default {
     if (!env.ORDER_TOKEN || request.headers.get('Authorization') !== 'Bearer ' + env.ORDER_TOKEN) {
       return new Response('Unauthorized', { status: 401 });
     }
-    if (env.ALLOW_LIVE_ORDERS !== 'true') return new Response('Live orders disabled', { status: 403 });
     const { price, quantity, clientOrderId } = await request.json();
     const positiveDecimal = value => typeof value === 'string' && /^\d+(\.\d+)?$/.test(value) && Number(value) > 0 && Number.isFinite(Number(value));
     if (!positiveDecimal(price) || !positiveDecimal(quantity)) {
