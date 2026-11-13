@@ -1,6 +1,6 @@
 ---
 title: "Coinbase private account updates"
-description: "Observe Advanced Trade user order updates and recover passive account state."
+description: "Track Advanced Trade orders through WebSocket updates and restore missing state after a disconnect."
 ---
 
 # Private account updates

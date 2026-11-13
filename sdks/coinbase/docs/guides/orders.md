@@ -31,7 +31,7 @@ Connect and confirm the [private user stream](/guides/private-streams) before su
 
 ### Application functions
 
-These functions send live requests when called; loading the module does not place or cancel an order. Generate and persist the client order ID before passing the request to `submitReviewedOrder()`. Handle rejected promises at your application's boundary; a transport failure may leave the result unknown.
+These functions send live requests when called; loading the module does not place or cancel an order. Generate and persist the client order ID before passing the request to `submitReviewedOrder()`. Catch errors when calling these functions. If the connection fails, resolve the order outcome before retrying.
 
 <<< @/../examples/manage-orders.ts
 
