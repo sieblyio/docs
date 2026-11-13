@@ -21,12 +21,6 @@ if (sdk.compatibilityPage === 'authored') {
     'See [Runtime setup](/compatibility) for project recipes and required configuration.',
   ));
 }
-if (sdk.environmentGuides?.length) {
-  const setupFragment = path.join(ctx.docs, '.vitepress/shared/getting-started/environments.md');
-  const content = await readFile(setupFragment, 'utf8');
-  const rows = sdk.environmentGuides.map(({ text, link }) => `| ${text} | [Setup guide](${link}) |`).join('\n');
-  await writeFile(setupFragment, content.replace(/(\|[^\n]+\|)\n(?=\n)/, `$1\n${rows}\n`));
-}
 await cp(path.join(ctx.content, 'examples'), path.join(projectRoot, 'examples'), { recursive: true });
 await cp(path.join(root, 'shared/public'), path.join(ctx.docs, 'public'), { recursive: true });
 if (sdk.compatibilityPage !== 'authored') await generateCompatibility(ctx, root);

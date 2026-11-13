@@ -1,3 +1,4 @@
+import { workerFiles, workerGuideFields } from '../shared/environments/cloudflare-workers/recipe.mjs';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { create, list } from 'tar';
@@ -8,8 +9,8 @@ import { programFiles, screenFile } from '../shared/environments/direct/render.m
 import { exchanges } from '../shared/environments/direct/exchanges.mjs';
 import { guideFields } from './environment-guides.mjs';
 
-export const environments = ['node', 'typescript', 'react', 'vite', 'next', 'expo', 'bun', 'deno'];
-export const environmentTitles = { node: 'Node.js / JavaScript', typescript: 'Node.js / TypeScript', react: 'React', vite: 'Vite (plain JavaScript)', next: 'Next.js', expo: 'React Native / Expo', bun: 'Bun', deno: 'Deno' };
+export const environments = ['node', 'typescript', 'react', 'vite', 'next', 'expo', 'bun', 'deno', 'cloudflare-workers'];
+export const environmentTitles = { node: 'Node.js / JavaScript', typescript: 'Node.js / TypeScript', react: 'React', vite: 'Vite (plain JavaScript)', next: 'Next.js', expo: 'React Native / Expo', bun: 'Bun', deno: 'Deno', 'cloudflare-workers': 'Cloudflare Workers' };
 const reactPluginVersion = '4.7.0';
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const source = relative => readFile(path.join(root, relative), 'utf8');
@@ -32,7 +33,11 @@ export async function environmentFiles(id, sdk, environment) {
     dependencies: { [sdk.packageName]: 'latest' },
   };
 
-  if (environment === 'node') {
+  if (environment === 'cloudflare-workers') {
+    for (const [name, content] of workerFiles(id, sdk)) files.set(name, content);
+    pkg.scripts = { dev: 'wrangler dev', 'dev:orders': 'wrangler dev src/order.js' };
+    pkg.devDependencies = { wrangler: '4.161.0' };
+  } else if (environment === 'node') {
     for (const [name, content] of await programFiles(id, sdk)) {
       files.set(name, content);
     }
@@ -220,7 +225,7 @@ export async function generateEnvironments(ctx) {
       PRICE_KIND: ctx.id === 'hyperliquid' ? 'Prices are BTC mid prices.' : `Prices are ${exchanges[ctx.id].symbol} last traded prices.`,
       SYMBOL: exchanges[ctx.id].symbol,
       EXAMPLE_URL: `https://github.com/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}`,
-      ...guideFields(ctx.id, ctx.sdk, environment, files),
+      ...(environment === 'cloudflare-workers' ? workerGuideFields(ctx.id, files) : guideFields(ctx.id, ctx.sdk, environment, files)),
       TYPESCRIPT: JSON.parse(await source('package.json')).devDependencies.typescript, REACT_PLUGIN: reactPluginVersion, VITE: frameworkVersions.vite, NEXT: frameworkVersions.next, REACT: frameworkVersions.react,
       EXPO: nativeVersions.expo, RN: nativeVersions.reactNative, NATIVE_REACT: nativeVersions.react,
       CONFIG_NOTE: configured
@@ -248,7 +253,7 @@ export async function generateEnvironments(ctx) {
         .replace('A failed request or no update within 30 seconds needs a network check.', 'A failed request or a stream without updates needs a network check.')
         .replace('If a request fails or no update arrives within 30 seconds,', 'If a request fails or no stream updates arrive,');
     }
-    if (ctx.id === 'coinbase') {
+    if (ctx.id === 'coinbase' && environment !== 'cloudflare-workers') {
       const note = browser || environment === 'expo'
         ? 'This is a public-market-data recipe only: the supplied configuration disables the SDK’s Node-only JWT signing helper. Keep the configuration and, for Expo, `coinbase-public-auth.cjs`. Run authenticated calls on your Node.js server. Browser REST access also depends on Coinbase CORS policy.'
         : 'This project uses Advanced Trade public market data. Keep credentialed account and trading calls in a server-side application.';
@@ -257,7 +262,7 @@ export async function generateEnvironments(ctx) {
         .replace('See Runtime compatibility for recorded verification of this configuration.', 'Keep the public-auth helper alongside the Metro configuration.')
         .replaceAll('[Runtime compatibility](/compatibility) for tested versions', '[Runtime setup](/compatibility) for the other project recipes');
     }
-    if (ctx.id === 'okx') {
+    if (ctx.id === 'okx' && environment !== 'cloudflare-workers') {
       const note = browser
         ? 'Keep the supplied Vite configuration: it resolves EventEmitter and rejects Node-only HTTPS agents. Browsers manage connections, so omit `keepAlive`. REST access depends on OKX CORS policy; use a server route if blocked. Keep credentials on your server.'
         : 'These examples use public market data. Keep authenticated account and trading calls on your server. See [Runtime setup](/compatibility) for the scope of each recipe; a successful build does not verify live exchange access.';
@@ -266,7 +271,7 @@ export async function generateEnvironments(ctx) {
         .replace('See Runtime compatibility for recorded verification of this configuration.', 'See Runtime setup for the scope and limits of this recipe.')
         .replaceAll('[Runtime compatibility](/compatibility) for tested versions', '[Runtime setup](/compatibility) for setup details');
     }
-    if (ctx.id === 'kraken') {
+    if (ctx.id === 'kraken' && environment !== 'cloudflare-workers') {
       const note = browser
         ? 'The public GET client below omits two SDK request headers that trigger a failing Kraken CORS preflight. This is an example-specific setup for public reads, not general browser REST support. See [Browser REST and CORS](/guides/troubleshooting#browser-rest-and-cors) for the limitation and a server-side alternative.'
         : 'See [Runtime compatibility](/compatibility) for recorded verification coverage. Successful imports and builds alone do not verify live exchange access.';

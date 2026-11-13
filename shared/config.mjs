@@ -32,7 +32,7 @@ export default function siteConfig(data, docs) {
       { text: 'React Native / Expo', link: '/environments/expo' },
       { text: 'Bun', link: '/environments/bun' },
       { text: 'Deno', link: '/environments/deno' },
-      ...(sdk.environmentGuides || []),
+      { text: 'Cloudflare Workers', link: '/environments/cloudflare-workers' },
     ] },
     { text: 'API reference', items: [
       { text: 'Overview', link: '/reference' },

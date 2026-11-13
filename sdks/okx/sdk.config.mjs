@@ -5,7 +5,6 @@ export default {
   entryPoint: 'src/index.ts',
   tsconfig: 'tsconfig.json',
   compatibilityPage: 'authored',
-  environmentGuides: [{ text: 'Cloudflare Workers', link: '/environments/cloudflare-workers' }],
   clients: ['RestClient', 'WebsocketClient', 'WebsocketAPIClient'],
   website: 'https://siebly.io/sdk/okx/javascript',
   tutorial: 'https://siebly.io/sdk/okx/javascript/tutorial',
