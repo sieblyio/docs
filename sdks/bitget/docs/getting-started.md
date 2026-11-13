@@ -29,7 +29,7 @@ node prices.mjs
 BTCUSDT last price: 65000.1
 ```
 
-The price is illustrative. `getTickers()` returns the REST envelope. Its `data` is an array, and `lastPrice` is a decimal string. An empty array means this example has no ticker to print; do not interpret `undefined` as a price.
+Your price will differ. `getTickers()` returns tickers in `data`. The example reads `data[0]?.lastPrice`, a decimal string, or `undefined` if no ticker is returned.
 
 ## Module formats
 

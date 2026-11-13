@@ -5,7 +5,7 @@ description: "Browse generated UTA V3, Classic V2, WebSocket and typed request r
 
 # API reference
 
-Generated reference for the documented `bitget-api` release. JavaScript and TypeScript use the same methods; TypeScript additionally checks request and response shapes. Start with [client selection](/clients) to match your account and API generation.
+Client methods, parameters and response types exported by [`bitget-api`](https://www.npmjs.com/package/bitget-api). The same API works in JavaScript and TypeScript. Start with [client selection](/clients) to match your account and API version.
 
 ## Clients
 

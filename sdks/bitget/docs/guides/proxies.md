@@ -27,8 +27,8 @@ Set `PROXY_URL` in your private server environment, then use an agent for both t
 
 <<< @/../examples/proxy-agent.ts
 
-`proxy: false` disables Axios's separate proxy handling so the supplied agent owns routing. `keepAlive: false` prevents the SDK from replacing the custom agent. The examples use V3 clients; the same approach applies to Classic V2 clients.
+`proxy: false` disables Axios's separate proxy handling so the supplied agent routes requests. `keepAlive: false` prevents the SDK from replacing the custom agent. The examples use V3 clients; the same approach applies to Classic V2 clients.
 
-Do not print proxy URLs containing credentials, commit them, or put them in a browser bundle. Browser and Cloudflare Workers applications cannot use these Node.js agent examples as a networking workaround.
+Do not print proxy URLs containing credentials, commit them, or put them in a browser bundle. These Node.js agents are not supported in browsers or Cloudflare Workers.
 
 [Configuration](/guides/configuration) · [Production usage](/guides/production)

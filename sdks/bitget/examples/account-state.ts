@@ -23,6 +23,6 @@ async function main() {
 }
 
 main().catch(() => {
-  console.error('Account read failed. Inspect sanitized API diagnostics on your server.');
+  console.error('Account read failed. Check the API error code and message on your server without logging credentials.');
   process.exitCode = 1;
 });

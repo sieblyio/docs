@@ -15,10 +15,10 @@ ws.on('exception', (error) => {
   console.error('Private stream exception:', error);
 });
 ws.on('reconnect', () => {
-  console.log('Mark account state stale; pause dependent actions.');
+  console.log('Reconnecting; account state may be stale. Pause trading decisions until recovery completes.');
 });
 ws.on('reconnected', () => {
-  console.log('Confirm subscriptions, then reconcile missing state through REST.');
+  console.log('Connection restored. Confirm subscriptions and recover missed account updates through REST.');
 });
 
 Promise.all(ws.subscribe([

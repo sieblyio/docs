@@ -21,8 +21,8 @@ Subscribe to multiple channels with an array. Use `unsubscribe()` with the same 
 
 ## Connection recovery
 
-Treat data as stale on `reconnect` and unexpected closure. On `reconnected`, wait for restored subscriptions and fresh data. For incremental books, rebuild according to the channel contract; for accounts, [reconcile missed state](/guides/private-streams#recover-after-a-gap).
+Treat data as stale on `reconnect` and unexpected closure. On `reconnected`, wait for restored subscriptions and fresh data. For incremental books, rebuild according to the channel documentation; for accounts, [reconcile missed state](/guides/private-streams#recover-after-a-gap).
 
-Call `closeAll()` during deliberate shutdown to stop connections. This does not cancel orders.
+Call `closeAll()` when shutting down to stop connections. This does not cancel orders.
 
 [Private account updates](/guides/private-streams) · [WebsocketClient reference](/api/classes/WebsocketClient)

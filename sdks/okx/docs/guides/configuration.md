@@ -13,15 +13,15 @@ This example selects EEA live services. Remove the `market` option for the defau
 
 ## Regional services {#environments}
 
-The pinned SDK supports `market: 'GLOBAL'`, `'prod'` (the global default), `'OPENAPI_GLOBAL'`, `'EEA'` and `'US'`. `OPENAPI_GLOBAL` selects the alternative global REST host while using the same WebSocket routing as global.
+The SDK supports `market: 'GLOBAL'`, `'prod'` (the global default), `'OPENAPI_GLOBAL'`, `'EEA'` and `'US'`. `OPENAPI_GLOBAL` selects the alternative global REST host while using the same WebSocket routing as global.
 
-Use the SDK's `market` flag rather than copying API URLs. A region is not a way to bypass availability restrictions. Supported products, credentials and endpoints can differ by account registration and jurisdiction. Choose the same region for REST, subscriptions and WebSocket API commands.
+Set `market` to the region where your account is registered. The SDK selects the URLs for you. Products and endpoints vary by region; choosing another region does not change your account's eligibility. Use the same region for REST, subscriptions and WebSocket API commands.
 
 ## Demo trading
 
 Set `demoTrading: true` on each REST and WebSocket client to opt into simulated trading. Use API keys created for OKX demo trading, not live keys. The SDK supplies the REST simulation header and selects demo WebSocket routes; do not add manual headers or endpoint URLs.
 
-The default is live trading. Changing just the REST client does not change an existing WebSocket client. Check demo support for the selected region and feature against OKX's current documentation; a flag in the SDK does not guarantee every product is available in demo.
+The default is live trading. Changing just the REST client does not change an existing WebSocket client. Check OKX's documentation for demo support in your region and product.
 
 ## Timeouts and connections
 
@@ -29,6 +29,6 @@ Set Axios `timeout` in milliseconds in the second REST constructor argument. `ke
 
 WebSocket options include `pingInterval`, `pongTimeout`, `reconnectTimeout` and `wsOptions`. Keep heartbeat handling enabled. Avoid extremely short timeouts that turn transient network delays into reconnect storms.
 
-The REST `parse_exceptions` flag controls error post-processing; see [Error handling](/guides/errors). Regional routing, demo trading and proxy settings should come from one validated server configuration so clients cannot accidentally target different accounts or environments.
+The REST `parse_exceptions` flag controls error post-processing; see [Error handling](/guides/errors). Read region, demo trading and proxy settings from a shared server configuration to keep clients consistent.
 
 [Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions)

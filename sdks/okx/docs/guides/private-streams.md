@@ -1,11 +1,11 @@
 ---
 title: "OKX private account updates"
-description: "Observe orders, balances and positions with REST bootstrap and gap recovery."
+description: "Subscribe to orders, balances and positions, and recover missed updates after disconnects."
 ---
 
 # Private account updates
 
-Private subscriptions keep account state current without polling after every order. The example below only observes changes: it does not place, modify or cancel orders.
+Private subscriptions keep account state current without polling after every order. The example below reads updates only: it does not place, modify or cancel orders.
 
 Save it as `private-stream.ts` beside the [credential helper](/guides/authentication), then use the [compile instructions](/guides/authentication#compile-and-run-the-examples) with `private-stream.ts` as the entry file. It runs until Ctrl+C.
 
@@ -23,11 +23,11 @@ node --env-file=.env dist/private-stream.js
 
 For a derivatives workflow, subscribe to the corresponding order instrument type as well. Access and available channels depend on your account and region. Authentication success alone does not mean every requested channel was accepted: inspect each subscription acknowledgement.
 
-The example prints events for inspection. It is not a complete account-state reducer or a reconciliation service. Keep private data out of shared logs.
+The example prints events for inspection. It does not store account state or recover missed events. Keep private data out of shared logs.
 
 ## Initialize without losing changes
 
-Connect and confirm the needed subscriptions, buffering incoming updates while loading REST starting state. Use [`getBalance()`](/api/classes/RestClient#getbalance), [`getOrderList()`](/api/classes/RestClient#getorderlist) and [`getPositions()`](/api/classes/RestClient#getpositions). Paginate open orders where necessary. The [account-state example](/guides/authentication#read-starting-account-state) shows these reads but deliberately does not merge concurrent events.
+Connect and confirm the needed subscriptions, buffering incoming updates while loading the initial account data through REST. Use [`getBalance()`](/api/classes/RestClient#getbalance), [`getOrderList()`](/api/classes/RestClient#getorderlist) and [`getPositions()`](/api/classes/RestClient#getpositions). Paginate open orders where necessary. The [account-state example](/guides/authentication#read-starting-account-state) shows these reads. You will need to merge updates received while they run.
 
 Combine snapshots with buffered updates using order IDs, update times and execution identifiers. Preserve terminal orders and cumulative fills so that an older REST row cannot overwrite a newer event. Do not treat the separate REST responses as one atomic snapshot. Deduplicate repeated events before triggering downstream work.
 
@@ -38,8 +38,8 @@ On `reconnect`, mark affected state stale and pause decisions that depend on it.
 1. Refresh balances, positions and all relevant open orders.
 2. Query recent order history and fills covering the outage, with overlap and pagination. An order missing from the open-order list may have filled or been cancelled while disconnected.
 3. Resolve uncertain commands by saved IDs. Merge and deduplicate buffered events and history before marking state current.
-4. Resume stream-driven updates. Keep recovery scoped and rate-limited rather than polling every order continuously.
+4. Resume stream-driven updates. Limit recovery requests to the affected account and time range, and respect rate limits.
 
-If private streaming is temporarily unavailable, use a bounded, rate-limited REST fallback appropriate to the account's limits and mark the reduced freshness explicitly. Once streams are restored, reconcile before turning polling off. Avoid acting on stale exposure merely because the socket is open.
+If private streaming is temporarily unavailable, use temporary REST polling within the account's rate limits and mark the data as potentially delayed. Once streams are restored, reconcile before turning polling off. Wait until balances and positions are current before making trading decisions.
 
 [Production usage](/guides/production) · [Order management](/guides/orders) · [OKX orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-order-channel)

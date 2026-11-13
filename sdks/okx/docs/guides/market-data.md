@@ -17,6 +17,6 @@ Keep price and size values as decimal strings when sending requests. Do not assu
 
 `getOrderBook()` is a REST snapshot. Book levels include price and size along with additional fields defined by OKX. A single snapshot is not a continuously maintained order book.
 
-For ongoing data use [WebSocket subscriptions](/guides/websockets). Snapshot channels such as `books5` simplify a small displayed book. Incremental book channels require the exchange's snapshot, sequence and checksum rules, plus recovery after gaps. The SDK transports messages; it does not maintain a verified local order book for you.
+For ongoing data use [WebSocket subscriptions](/guides/websockets). For a small order-book display, use a snapshot channel such as `books5`. Incremental book channels require the exchange's snapshot, sequence and checksum rules, plus recovery after gaps. Your application must apply these updates and check the resulting order book.
 
 [getInstruments reference](/api/classes/RestClient#getinstruments) · [getOrderBook reference](/api/classes/RestClient#getorderbook) · [OKX public data](https://www.okx.com/docs-v5/en/#public-data-rest-api-get-instruments)
