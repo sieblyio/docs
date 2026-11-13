@@ -93,6 +93,7 @@ function localArtifact(relative) {
   if (parts.at(-1) === '.DS_Store') return true;
   // Ignore installations and build output only inside a recognized project.
   if (parts.length < 3) return false;
+  if (parts[1] === 'cloudflare-workers' && (parts[2] === '.wrangler' || parts[2] === '.dev.vars' || parts[2].startsWith('.dev.vars.'))) return true;
   if (localDirectories.has(parts[2])) return true;
   return parts.length === 3 && (localFiles.has(parts[2]) || parts[2] === '.env' || parts[2].startsWith('.env.'));
 }
