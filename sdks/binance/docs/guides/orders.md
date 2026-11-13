@@ -7,7 +7,7 @@ description: "Place and cancel a Spot Testnet order through REST, and follow its
 
 Use `MainClient` to place one `LIMIT_MAKER` order and cancel its remaining quantity. Run the private user data stream alongside these REST commands to see the order accepted, filled or cancelled.
 
-The separate CLI commands make each step explicit. A persistent application can call the same SDK methods within one workflow, keeping the user data stream connected and tracking orders in local state. Use scoped REST reads to initialize state or recover gaps and uncertain outcomes, not after every order.
+The order script makes one REST request per command. In a persistent application, keep the user data stream connected and track orders locally. Use REST reads to initialize state or recover gaps and uncertain outcomes, not after every order.
 
 `LIMIT_MAKER` is post-only: Binance rejects it if it would immediately match as a taker. An accepted resting order can still fill, including before you cancel it.
 
@@ -46,7 +46,7 @@ Save this as `first-order.ts`. Node.js 24 can run it directly:
 
 <<< @/../examples/first-order.ts
 
-The example uses the SDK's numeric price and quantity fields and a post-only buy order. It makes one request per command, with no automatic retries, polling or cancellation.
+The example uses numeric price and quantity fields for a post-only buy order. It does not retry, poll or cancel automatically.
 
 ## Place and observe the order {#place-query-and-cancel}
 

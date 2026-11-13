@@ -7,7 +7,7 @@ description: "Read Binance Spot prices and order-book snapshots with binance."
 
 Public prices and order books do not require API keys. These examples use BTCUSDT in the Spot market.
 
-These REST examples read a snapshot or historical data. Use [WebSocket subscriptions](/guides/websockets) for ongoing price and order-book updates instead of polling REST.
+These REST requests return a snapshot. Use [WebSocket subscriptions](/guides/websockets) for ongoing price and order-book updates instead of polling REST.
 
 ## Read a ticker
 
@@ -19,7 +19,7 @@ These REST examples read a snapshot or historical data. Use [WebSocket subscript
 
 <<< @/../examples/order-book.ts
 
-Each bid and ask contains a price and quantity as decimal strings. The example returns `undefined` for an empty side.
+Each bid and ask contains a price and quantity as decimal strings. The example prints `undefined` for an empty side.
 
 If JavaScript numbers suit your application, the SDK can convert known numeric strings with `beautifyResponses: true`; see [response formatting](/guides/configuration#preserve-decimal-precision). The raw values above remain useful for exact decimal arithmetic.
 

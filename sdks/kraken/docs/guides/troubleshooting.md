@@ -17,7 +17,7 @@ The [Vite](/environments/vite) and [React](/environments/react) public-price exa
 
 This setup was checked with the published 1.1.10 package in Chrome using a public Spot ticker and WebSocket subscription. It does not establish support for every REST endpoint, browser or region. Kraken must still allow the browser's origin; never disable browser security or use `no-cors`, which prevents reading the response.
 
-For a server-side path, use the [Next.js API route](/environments/next): it constructs an ordinary `SpotClient` on the Node.js server and exposes the public price at `/api/price`. A browser application can request that same-origin route instead of calling Kraken REST directly. In production, expose only the operations your app needs, with suitable validation, rate limits and authentication. Keep API credentials on the server. Do not create an unrestricted forwarding proxy.
+To fetch prices on the server, use the [Next.js API route](/environments/next). It creates a `SpotClient` on the Node.js server and exposes the public price at `/api/price`. A browser application can request that same-origin route instead of calling Kraken REST directly. In production, expose only the operations your app needs, with suitable validation, rate limits and authentication. Keep API credentials on the server. Do not create an unrestricted forwarding proxy.
 
 ## Testnet is unavailable
 

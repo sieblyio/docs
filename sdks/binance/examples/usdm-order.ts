@@ -1,8 +1,7 @@
 import { USDMClient } from 'binance';
 
-// Subscribe to the matching account WebSocket stream before submitting orders.
-// Use its order and fill updates for ongoing state. The explicit status command
-// is a one-shot diagnostic for unresolved state, not a post-submit/cancel step.
+// Subscribe to account WebSocket updates before submitting orders.
+// Use the status command only when those updates leave an outcome unclear.
 
 function requiredEnvVar(name: string): string {
   const value = process.env[name];

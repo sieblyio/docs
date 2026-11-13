@@ -15,7 +15,7 @@ Start with the [authenticated account example](/guides/authentication#verify-acc
 
 Kraken Spot has no public testnet, and the Futures demo environment has been retired. This example uses Spot's `validate: true` option: Kraken checks the request without submitting an order to the market.
 
-Validation is not a fill simulation. It does not establish what price, liquidity or account state will be available for a later live order.
+Validation does not simulate fills or predict the price, liquidity or account state available for a later live order.
 
 ### Configure the request {#prepare-the-request}
 

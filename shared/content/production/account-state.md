@@ -15,7 +15,14 @@ Where the exchange and market provide position updates, they are useful triggers
 
 For signed position sizes, compare absolute exposure within the same direction and handle a direction change separately. Also resize or cancel obsolete protection when exposure shrinks or the position closes.
 
-Use a throttled debounce for this work: combine a burst of partial-fill updates into fewer API calls, but set a maximum wait so a continuous stream of updates cannot postpone the work indefinitely. Choose the interval and maximum wait for your exchange's limits and the delay your strategy can tolerate. When the work runs, recheck stream health and use the latest reconciled position and order state. Keep changes for the same position sequential, skip changes that are already satisfied, and pause dependent adjustments during state recovery. Include the account, market and position side in your state keys where applicable.
+Use a throttled debounce to combine bursts of partial-fill updates into fewer API calls. Set a maximum wait so continuous updates cannot postpone the work indefinitely. Choose both intervals to fit the exchange's limits and the delay your strategy can tolerate.
+
+When applying an adjustment:
+
+- Check stream health and use the latest reconciled position and order state.
+- Process changes for the same position sequentially and skip adjustments that are already satisfied.
+- Pause dependent adjustments while recovering account state.
+- Include the account, market and position side in state keys where applicable.
 
 ### Recover after a connection gap
 

@@ -31,7 +31,7 @@ node prices.mjs
 XXBTZUSD last price: 65000.00000
 ```
 
-The price is illustrative. `result` is keyed by Kraken's returned pair name, which can differ from the requested alias. The first entry in `c` is the last trade price. The loop uses the returned keys rather than assuming a specific response key.
+Your price will differ. The loop reads each returned pair name from `result`, since Kraken may return a different name from the requested alias. The first entry in `c` is the last trade price.
 
 ## Module formats
 

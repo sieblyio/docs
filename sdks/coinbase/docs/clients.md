@@ -5,7 +5,7 @@ description: "Choose a Coinbase REST client, shared WebSocket subscriptions or t
 
 # Coinbase clients
 
-Choose the client for your Coinbase product. The main walkthroughs use Advanced Trade spot; the other product guides keep their accounts, credentials and protocols separate.
+Choose the client for your Coinbase product. The main guides use Advanced Trade spot. Each other product has its own guide, credentials and account identifiers.
 
 <!-- #region client-list -->
 | Client | Purpose |
@@ -43,6 +43,6 @@ Register listeners before calling `subscribe()`. `WebsocketClient` manages conne
 
 ## Global WebSocket API
 
-`WebsocketAPIClient` provides awaitable request-response methods for Global derivatives, with the convenience of REST-style calls over a persistent WebSocket connection. It uses the dedicated `advTradeGlobalWSAPI` connection, separate from subscriptions. It is not an Advanced Trade spot order-entry client. See the [Global WebSocket API guide](/products/global#ws-api).
+`WebsocketAPIClient` lets you await Global derivatives requests over a persistent WebSocket connection. It uses the dedicated `advTradeGlobalWSAPI` connection, separate from subscriptions. It is not an Advanced Trade spot order-entry client. See the [Global WebSocket API guide](/products/global#ws-api).
 
 [Advanced Trade reference](/reference) · [Choose a Coinbase API](/products)
