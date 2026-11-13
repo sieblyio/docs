@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/ws": "8.18.1",
     "https-proxy-agent": "7.0.6",
+    "prettier": "3.3.2",
     "tar": "7.5.22",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.14.1",
