@@ -1,4 +1,22 @@
 export const exchanges = {
+  okx: {
+    restClient: 'RestClient',
+    symbol: 'BTC-USDT',
+    continuous: true,
+    cliSubscription: "Promise.all(ws.subscribe({ channel: 'tickers', instId: 'BTC-USDT' })).catch((error) => {\n  console.error('WebSocket subscription failed:', error);\n})",
+    request: `const client = new RestClient();
+const tickers = await client.getTicker({ instId: 'BTC-USDT' });
+const price = tickers[0]?.last;`,
+    event: 'update',
+    update: `if (message.arg?.channel !== 'tickers') {
+  console.log('WebSocket update:', message);
+  return;
+}
+
+const price = message.data?.[0]?.last;`,
+    websocket: 'new WebsocketClient()',
+    subscription: "Promise.all(ws.subscribe({ channel: 'tickers', instId: 'BTC-USDT' }))",
+  },
   coinbase: {
     restClient: 'CBAdvancedTradeClient',
     symbol: 'BTC-USD',

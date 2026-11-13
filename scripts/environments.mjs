@@ -240,13 +240,15 @@ export async function generateEnvironments(ctx) {
       if (!(key in substitutions)) throw new Error(`Missing environment template field: ${key}`);
       return substitutions[key];
     });
-    if (ctx.id === 'coinbase') {
+    if (exchanges[ctx.id].continuous) {
       rendered = rendered
         .replace('The script prints the first update, closes its WebSocket and exits.', 'The script keeps streaming until Ctrl+C. Exceptions and reconnections are logged; signal handlers close the client.')
         .replace('The script receives one update, closes the client in `finally` and exits.', 'The script keeps streaming until Ctrl+C. Exceptions and reconnections are logged; signal handlers close the client.');
       rendered = rendered
         .replace('A failed request or no update within 30 seconds needs a network check.', 'A failed request or a stream without updates needs a network check.')
         .replace('If a request fails or no update arrives within 30 seconds,', 'If a request fails or no stream updates arrive,');
+    }
+    if (ctx.id === 'coinbase') {
       const note = browser || environment === 'expo'
         ? 'This is a public-market-data recipe only: the supplied configuration disables the SDK’s Node-only JWT signing helper. Keep the configuration and, for Expo, `coinbase-public-auth.cjs`. Run authenticated calls on your Node.js server. Browser REST access also depends on Coinbase CORS policy.'
         : 'This project uses Advanced Trade public market data. Keep credentialed account and trading calls in a server-side application.';
@@ -254,6 +256,15 @@ export async function generateEnvironments(ctx) {
         .replace('## Create the project', note + '\n\n## Create the project')
         .replace('See Runtime compatibility for recorded verification of this configuration.', 'Keep the public-auth helper alongside the Metro configuration.')
         .replaceAll('[Runtime compatibility](/compatibility) for tested versions', '[Runtime setup](/compatibility) for the other project recipes');
+    }
+    if (ctx.id === 'okx') {
+      const note = browser
+        ? 'Keep the supplied Vite configuration: it resolves EventEmitter and rejects Node-only HTTPS agents. Browsers manage connections, so omit `keepAlive`. REST access depends on OKX CORS policy; use a server route if blocked. Keep credentials on your server.'
+        : 'These examples use public market data. Keep authenticated account and trading calls on your server. See [Runtime setup](/compatibility) for the scope of each recipe; a successful build does not verify live exchange access.';
+      rendered = rendered
+        .replace('## Create the project', note + '\n\n## Create the project')
+        .replace('See Runtime compatibility for recorded verification of this configuration.', 'See Runtime setup for the scope and limits of this recipe.')
+        .replaceAll('[Runtime compatibility](/compatibility) for tested versions', '[Runtime setup](/compatibility) for setup details');
     }
     if (ctx.id === 'kraken') {
       const note = browser

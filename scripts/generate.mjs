@@ -61,6 +61,13 @@ const app = await Application.bootstrapWithPlugins({
 });
 // Filter the documentation model before TypeDoc builds its groups and categories.
 app.converter.on(Converter.EVENT_RESOLVE_BEGIN, ({ project }) => {
+  for (const name of sdk.referenceExcludeMembers || []) {
+    const reflection = project.getChildByName(name.split('.'));
+    if (!reflection) {
+      throw new Error(`Missing excluded member: ${name}`);
+    }
+    project.removeReflection(reflection);
+  }
   for (const reflection of Object.values(project.reflections)) {
     if (reflection.kind === ReflectionKind.Property && sdk.referenceExcludeProperties?.includes(reflection.name)) {
       project.removeReflection(reflection);

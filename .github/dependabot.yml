@@ -14,6 +14,7 @@ updates:
       - dependency-name: binance
       - dependency-name: '@siebly/kraken-api'
       - dependency-name: coinbase-api
+      - dependency-name: okx-api
     groups:
       sdk-releases:
         patterns:
@@ -22,6 +23,7 @@ updates:
           - binance
           - '@siebly/kraken-api'
           - coinbase-api
+          - okx-api
     cooldown:
       exclude:
         - '@siebly/hyperliquid-api'
@@ -29,3 +31,4 @@ updates:
         - binance
         - '@siebly/kraken-api'
         - coinbase-api
+        - okx-api
