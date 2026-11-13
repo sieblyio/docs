@@ -1,6 +1,6 @@
 import { RestClient, WebsocketClient } from 'okx-api';
 
-// Select the region where your account is registered on both transports.
+// Set both REST and WebSocket clients to the region where your account is registered.
 export const client = new RestClient(
   { market: 'EEA', demoTrading: false, keepAlive: true },
   { timeout: 20_000 },
