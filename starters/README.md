@@ -12,6 +12,7 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [React Native / Expo](./hyperliquid/expo/)
 - [Bun](./hyperliquid/bun/)
 - [Deno](./hyperliquid/deno/)
+- [Cloudflare Workers](./hyperliquid/cloudflare-workers/)
 
 ## Bybit
 
@@ -23,6 +24,7 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [React Native / Expo](./bybit/expo/)
 - [Bun](./bybit/bun/)
 - [Deno](./bybit/deno/)
+- [Cloudflare Workers](./bybit/cloudflare-workers/)
 
 ## Binance
 
@@ -34,6 +36,7 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [React Native / Expo](./binance/expo/)
 - [Bun](./binance/bun/)
 - [Deno](./binance/deno/)
+- [Cloudflare Workers](./binance/cloudflare-workers/)
 
 ## Kraken
 
@@ -45,6 +48,7 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [React Native / Expo](./kraken/expo/)
 - [Bun](./kraken/bun/)
 - [Deno](./kraken/deno/)
+- [Cloudflare Workers](./kraken/cloudflare-workers/)
 
 ## Coinbase
 
@@ -56,6 +60,7 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [React Native / Expo](./coinbase/expo/)
 - [Bun](./coinbase/bun/)
 - [Deno](./coinbase/deno/)
+- [Cloudflare Workers](./coinbase/cloudflare-workers/)
 
 ## OKX
 
@@ -67,6 +72,7 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [React Native / Expo](./okx/expo/)
 - [Bun](./okx/bun/)
 - [Deno](./okx/deno/)
+- [Cloudflare Workers](./okx/cloudflare-workers/)
 
 ## Maintaining these examples
 

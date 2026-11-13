@@ -11,7 +11,7 @@ const ignoreFile = `${[...localDirectories].map(name => `${name}/`).join('\n')}\
 function readme(sdk, environment) {
   const install = environment === 'bun' ? 'bun install' : environment === 'deno' ? 'deno install' : 'npm install';
   const start = environment === 'bun' ? 'bun run start' : environment === 'deno' ? 'deno task start'
-    : ['react', 'vite', 'next'].includes(environment) ? 'npm run dev' : 'npm start';
+    : ['react', 'vite', 'next', 'cloudflare-workers'].includes(environment) ? 'npm run dev' : 'npm start';
   const streaming = ['node', 'typescript', 'bun', 'deno'].includes(environment);
   const stream = environment === 'bun' ? 'bun run stream' : environment === 'deno' ? 'deno task stream' : 'npm run stream';
   const prerequisite = environment === 'bun' || environment === 'deno'
@@ -22,12 +22,12 @@ function readme(sdk, environment) {
   const commonjs = environment === 'node' ? '\nFor CommonJS instead, run `node price.cjs` or `node stream.cjs`.\n' : '';
   const browserNote = sdk.id === 'kraken' && ['react', 'vite'].includes(environment)
     ? '\nThe public GET client removes the SDK’s `UserAgent` and `locale` headers to avoid Kraken’s failing CORS preflight. Keep this configuration for these public reads only. Run authenticated REST calls on your server, never in a browser bundle. See the guide for the server-side alternative.\n' : '';
-  const coinbaseNote = sdk.id === 'coinbase'
+  const coinbaseNote = sdk.id === 'coinbase' && environment !== 'cloudflare-workers'
     ? '\nThese examples use Advanced Trade public market data. Keep credentialed calls on your Node.js server.\n'
       + (['react', 'vite'].includes(environment) ? '\nKeep `sdk.vite.config.js`: it excludes Node-only JWT signing from this public-data application. Browser REST access depends on Coinbase CORS policy.\n' : '')
       + (environment === 'expo' ? '\nRetain `coinbase-public-auth.cjs` and both Metro files: they supply the public-data configuration and exclude Node-only JWT signing.\n' : '')
     : '';
-  const okxNote = sdk.id === 'okx'
+  const okxNote = sdk.id === 'okx' && environment !== 'cloudflare-workers'
     ? '\nKeep authenticated calls on your server. Browser projects must retain the Vite configuration and omit Node-only `keepAlive`; browser REST access depends on OKX CORS policy. See the guide for runtime setup limits.\n' : '';
   return `# ${sdk.name}: ${environmentTitles[environment]}\n\nA runnable public-price example using \`${sdk.packageName}\`. No API key is required.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${okxNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
@@ -36,7 +36,7 @@ export async function starterFiles(id, sdk, environment) {
   return new Map([
     ...await environmentFiles(id, sdk, environment),
     ['README.md', readme({ id, ...sdk }, environment)],
-    ['.gitignore', ignoreFile],
+    ['.gitignore', ignoreFile + (environment === 'cloudflare-workers' ? '.dev.vars\n.dev.vars.*\n.wrangler/\n' : '')],
   ]);
 }
 
@@ -93,6 +93,7 @@ function localArtifact(relative) {
   if (parts.at(-1) === '.DS_Store') return true;
   // Ignore installations and build output only inside a recognized project.
   if (parts.length < 3) return false;
+  if (parts[1] === 'cloudflare-workers' && (parts[2] === '.wrangler' || parts[2] === '.dev.vars' || parts[2].startsWith('.dev.vars.'))) return true;
   if (localDirectories.has(parts[2])) return true;
   return parts.length === 3 && (localFiles.has(parts[2]) || parts[2] === '.env' || parts[2].startsWith('.env.'));
 }
