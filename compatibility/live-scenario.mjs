@@ -14,7 +14,7 @@ export async function liveScenario({loadSdk,adapter,onCheck,importCheck='import'
     onCheck?.([...checks]);
   };
   let sdk;
-  await check(importCheck,async()=>{sdk=await loadSdk();if(typeof sdk.WebsocketClient!=='function')throw Error('WebsocketClient export missing');});
+  await check(importCheck,async()=>{sdk=await loadSdk();const name=adapter.websocketExport||'WebsocketClient';if(typeof sdk[name]!=='function')throw Error(`${name} export missing`);});
   if(!sdk)return checks;
   await check('rest',async()=>{
     const price=await adapter.read(adapter.client(sdk));

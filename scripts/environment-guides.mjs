@@ -95,7 +95,7 @@ export function guideFields(id, sdk, environment, files) {
     app = orderedSteps(names, files);
   }
 
-  if (id === 'coinbase' || id === 'okx') {
+  if (id === 'coinbase' || id === 'okx' || id === 'bitget') {
     streamFiles = streamFiles
       .replace('it closes the client after the first price or a failure.', 'it streams prices until you press Ctrl+C. Exceptions and reconnections are logged without stopping the client.')
       .replace('when you want a live update. Its promise resolves to a price string and its `finally` block closes the client.', 'to stream prices until Ctrl+C. Signal handlers close the client; exceptions and reconnections are logged without stopping it.')

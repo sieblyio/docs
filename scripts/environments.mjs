@@ -262,9 +262,9 @@ export async function generateEnvironments(ctx) {
         .replace('See Runtime compatibility for recorded verification of this configuration.', 'Keep the public-auth helper alongside the Metro configuration.')
         .replaceAll('[Runtime compatibility](/compatibility) for tested versions', '[Runtime setup](/compatibility) for the other project recipes');
     }
-    if (ctx.id === 'okx' && environment !== 'cloudflare-workers') {
+    if (['okx', 'bitget'].includes(ctx.id) && environment !== 'cloudflare-workers') {
       const note = browser
-        ? 'Keep the supplied Vite configuration: it resolves EventEmitter and rejects Node-only HTTPS agents. Browsers manage connections, so omit `keepAlive`. REST access depends on OKX CORS policy; use a server route if blocked. Keep credentials on your server.'
+        ? 'Keep the supplied Vite configuration: it resolves EventEmitter and rejects Node-only HTTPS agents. Browsers manage connections, so omit `keepAlive`. REST access depends on EXCHANGE CORS policy; use a server route if blocked. Keep credentials on your server.'.replace('EXCHANGE', ctx.sdk.name)
         : 'These examples use public market data. Keep authenticated account and trading calls on your server. See [Runtime setup](/compatibility) for the scope of each recipe; a successful build does not verify live exchange access.';
       rendered = rendered
         .replace('## Create the project', note + '\n\n## Create the project')
