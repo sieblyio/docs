@@ -5,14 +5,13 @@ async function main() {
   const api_secret = process.env.BINANCE_API_SECRET;
   if (!api_key || !api_secret) {
     throw new Error(
-      'Set USD-M Demo credentials in BINANCE_API_KEY and BINANCE_API_SECRET.',
+      'Set USD-M Futures credentials in BINANCE_API_KEY and BINANCE_API_SECRET.',
     );
   }
 
   const ws = new WebsocketClient({
     api_key,
     api_secret,
-    demoTrading: true,
     beautify: false,
   });
   let stopped = false;
@@ -54,7 +53,7 @@ async function main() {
       ws.closeAll(true);
       return;
     }
-    console.log('USD-M Demo user data connected. Waiting for account events.');
+    console.log('USD-M Futures user data connected. Waiting for account events.');
   });
   ws.on('exception', (error) => {
     console.error('USD-M user data stream exception:', error);

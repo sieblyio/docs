@@ -12,13 +12,13 @@ function requiredEnvVar(name: string): string {
   return value;
 }
 
-function createTestnetClient(action: string): RestClient {
+function createClient(action: string): RestClient {
   const accountAddress = requiredEnvVar('HYPERLIQUID_ACCOUNT_ADDRESS');
   // Status queries do not require a signing key.
   const privateKey =
     action === 'status' ? undefined : requiredEnvVar('HYPERLIQUID_PRIVATE_KEY');
   return new RestClient(
-    { testnet: true, accountAddress, privateKey },
+    { accountAddress, privateKey },
     { timeout: 10_000 },
   );
 }
@@ -52,7 +52,7 @@ async function main() {
   if (!['place', 'status', 'cancel'].includes(action)) {
     throw new Error('Usage: orders.mts place|status|cancel');
   }
-  const client = createTestnetClient(action);
+  const client = createClient(action);
 
   if (action === 'place') {
     await placeOrder(client);

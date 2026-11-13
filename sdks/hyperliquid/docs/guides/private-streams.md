@@ -7,9 +7,9 @@ description: Receive account order changes and fills with WebsocketClient on Mai
 
 Use `WebsocketClient` to receive `orderUpdates` and `userFills` for a Hyperliquid account. These subscriptions work on Mainnet and Testnet, use the managed account address and do not require a private key or signature.
 
-## Example: connect to Testnet
+## Connect to the account stream
 
-This example sets `testnet: true`. For production (Mainnet), set `testnet: false` (or omit it) and use the Mainnet account address. Use Node.js 24 with the [`@siebly/hyperliquid-api`](https://www.npmjs.com/package/@siebly/hyperliquid-api) npm package installed. Set the account address in a local `.env` file:
+This example uses Mainnet. To use Testnet, set `testnet: true` and use the Testnet account address. Use Node.js 24 with the [`@siebly/hyperliquid-api`](https://www.npmjs.com/package/@siebly/hyperliquid-api) npm package installed. Set the account address in a local `.env` file:
 
 ```dotenv
 HYPERLIQUID_ACCOUNT_ADDRESS=0x1111111111111111111111111111111111111111 # Use your managed account address

@@ -40,7 +40,7 @@ Select the product and environment in [Configuration](/guides/configuration), wi
 
 ## USD-M futures
 
-Use `USDMClient` for USD-M futures, separately from Spot and COIN-M. The [futures order walkthrough](/guides/usdm-orders) covers account reads, placement, status and cancellation using Demo Trading, with the corresponding production configuration.
+Use `USDMClient` for USD-M futures, separately from Spot and COIN-M. The [futures order walkthrough](/guides/usdm-orders) covers account reads, placement, status and cancellation on production USD-M Futures, with optional Demo Trading configuration.
 
 | Task | Method |
 | --- | --- |

@@ -13,7 +13,7 @@ For HTTP, HTTPS or SOCKS routing in Node.js, see [Use a proxy](/guides/proxies).
 
 The first constructor argument contains SDK settings such as `testnet`, `key`, `secret` and `recv_window`. The second contains Axios request options, including `timeout` in milliseconds.
 
-The example selects Testnet and a ten-second HTTP timeout. `recv_window` controls the signed request acceptance window; it is not the HTTP timeout.
+The example uses Mainnet, the SDK default, and a ten-second HTTP timeout. `recv_window` controls the signed request acceptance window; it is not the HTTP timeout.
 
 ## Select an environment
 

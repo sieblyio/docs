@@ -9,14 +9,14 @@ Use `RestClientV5` to place one BTCUSDT perpetual limit order and cancel any unf
 
 The example uses separate commands to place, cancel and check an order. In a persistent application, keep the private stream connected and track orders locally. Use REST reads for startup, recovery and unresolved requests rather than after every order.
 
-This walkthrough uses Bybit Testnet and test funds to avoid accidental live trades. The same methods work on Mainnet, Bybit's production markets. Remove `testnet` or set it to `false`, leave `demoTrading` disabled and use Mainnet credentials to execute against live markets. To test your system with simulated orders instead, set `demoTrading: true`, keep `testnet: false` and use Bybit Demo Trading credentials.
+This walkthrough uses Mainnet, the SDK default. The place command submits a live order that can fill and affect your balance. To use Testnet or demo trading instead, select that environment explicitly in both the REST and WebSocket clients and use matching credentials; see [configuration](/guides/configuration#select-an-environment).
 
 Before placing orders, use the [authenticated account read](/guides/authentication) to check balances and account access.
 
 ## Before you start
 
 - Use Node.js 24 and install the [`bybit-api`](https://www.npmjs.com/package/bybit-api) npm package with `npm install bybit-api`.
-- To run this example on Testnet, create Bybit Testnet credentials with derivatives trading and account-read permissions, and fund the Testnet account with test assets.
+- Use Bybit Mainnet credentials with derivatives trading and account-read permissions, and sufficient account margin for the order.
 - Use a Unified Trading Account with BTCUSDT in one-way position mode (`positionIdx: 0`). The example does not change your account's position mode or leverage.
 - Use a private `.env` file excluded from version control for local development, and a secure server-side environment for deployment. Leave `BYBITTRACE` unset to avoid logging signed requests.
 
@@ -27,14 +27,14 @@ A PostOnly order is cancelled if it would immediately take liquidity. A resting 
 Create a `.env` file:
 
 ```dotenv
-# Use your own Bybit Testnet credentials.
-BYBIT_API_KEY=example_testnet_key
-BYBIT_API_SECRET=example_testnet_secret
+# Use your own Bybit Mainnet credentials.
+BYBIT_API_KEY=example_key
+BYBIT_API_SECRET=example_secret
 BYBIT_LIMIT_PRICE=60000 # Illustrative USDT price; choose for the current market.
 BYBIT_ORDER_QTY=0.001 # Illustrative BTC quantity; current symbol filters apply.
 ```
 
-Set the buy price below the current Testnet BTCUSDT best bid and specify quantity in BTC. Use decimal strings that satisfy the current price increments, quantity increments and minimum order value from [`getInstrumentsInfo()`](/api/classes/RestClientV5#getinstrumentsinfo). This example sends your values unchanged; Bybit validates them, account margin and dynamic price limits. Prices can move before submission.
+Set the buy price below the current BTCUSDT best bid and specify quantity in BTC. Use decimal strings that satisfy the current price increments, quantity increments and minimum order value from [`getInstrumentsInfo()`](/api/classes/RestClientV5#getinstrumentsinfo). This example sends your values unchanged; Bybit validates them, account margin and dynamic price limits. Prices can move before submission.
 
 ## Place and observe the order {#place-query-and-cancel}
 
@@ -42,7 +42,7 @@ Save this as `first-order.ts`:
 
 <<< @/../examples/first-order.ts
 
-Start the [private order stream](/guides/private-streams) in another terminal using the same Testnet account. Wait for `Private stream authenticated.` and `Subscribed to order.linear.` before continuing. Keep the stream running while you try the commands; the demonstration stops after 60 seconds.
+Start the [private order stream](/guides/private-streams) in another terminal using the same account. Wait for `Private stream authenticated.` and `Subscribed to order.linear.` before continuing. Keep the stream running while you try the commands; the demonstration stops after 60 seconds.
 
 Place the order:
 

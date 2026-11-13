@@ -9,7 +9,7 @@ Use `USDMClient` for Binance's USD-M futures markets. This walkthrough reads sta
 
 The order script makes one REST request per command. In a persistent application, keep the user data stream connected and track account and order state locally. Use REST reads to initialize state, recover missed updates or resolve uncertain outcomes, not after every order.
 
-The examples use Futures Demo Trading and virtual funds to avoid accidental live trades. The same methods work on Mainnet, Binance's production markets. Remove `demoTrading` or set it to `false`, leave `testnet` disabled and use production credentials to execute against live markets.
+The examples use production USD-M Futures. The `place` command submits a real order.
 
 ## Set up
 
@@ -19,15 +19,15 @@ Use Node.js 24 and install the [`binance`](https://www.npmjs.com/package/binance
 npm install binance
 ```
 
-Create credentials in **API Management** within [Binance Futures Demo Trading](https://www.binance.com/en/support/faq/detail/ab78f9a1b8824cf0a106b4229c76496d). Use that account's virtual futures balance and permissions to read account state and trade. These are not Spot Testnet or production credentials.
+Use production Futures API credentials with permissions to read account state and trade.
 
-The examples select the environment with `demoTrading: true`. Leave `testnet` false or omitted; the flags are alternatives, not a combination.
+For [Futures Demo Trading](https://www.binance.com/en/support/faq/detail/ab78f9a1b8824cf0a106b4229c76496d), set `demoTrading: true` on the REST and WebSocket clients and use Demo credentials. Leave `testnet` false or omitted; the flags select different environments.
 
 Create a private `.env` file and exclude it from version control. Keep API credentials in a secure server-side environment:
 
 ```dotenv
-BINANCE_API_KEY=demo_key_a1b2c3d4e5f6 # Illustrative; use your Demo Trading key
-BINANCE_API_SECRET=demo_secret_7f8e9d0c1b2a # Illustrative; use its secret
+BINANCE_API_KEY=example_key # Illustrative; use your Futures key
+BINANCE_API_SECRET=example_secret # Illustrative; use its secret
 BINANCE_USDM_PRICE=60000 # USDT per BTC; choose for the current market
 BINANCE_USDM_QUANTITY=0.002 # BTC; adjust for your available margin
 ```
@@ -48,7 +48,7 @@ This prints the account's trading permission and margin balances, balance record
 
 ## Follow account changes
 
-Save the following as `usdm-private-stream.ts` and run it in another terminal with the same Demo Trading credentials:
+Save the following as `usdm-private-stream.ts` and run it in another terminal with the same Futures credentials:
 
 <<< @/../examples/usdm-private-stream.ts
 

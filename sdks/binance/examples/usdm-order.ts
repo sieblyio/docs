@@ -29,7 +29,6 @@ async function main() {
     {
       api_key: requiredEnvVar('BINANCE_API_KEY'),
       api_secret: requiredEnvVar('BINANCE_API_SECRET'),
-      demoTrading: true,
     },
     { timeout: 10_000 },
   );

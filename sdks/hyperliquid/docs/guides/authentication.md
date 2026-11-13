@@ -21,7 +21,7 @@ Account methods resolve addresses in this order: request `user`, `vaultAddress`,
 
 ## Configure a private key
 
-Pass `privateKey` and the managed account address to `RestClient`. This example configures Testnet. For production (Mainnet), set `testnet: false` (or omit it), use the Mainnet account address and a signer authorized for that account.
+Pass `privateKey` and the managed account address to `RestClient`. This example uses Mainnet. Use the managed account address and a signer authorized for that account. For Testnet, set `testnet: true` and use the corresponding account and signer.
 
 <<< @/../examples/authenticated-client.ts
 
