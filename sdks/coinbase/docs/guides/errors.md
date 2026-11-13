@@ -15,7 +15,7 @@ Set `parseExceptions: false` in the first constructor argument if your applicati
 
 The SDK redacts configured credentials from its normalized options, but request parameters, bodies and headers can still contain private data. Avoid dumping full errors into public logs or issue reports.
 
-## Successful HTTP responses can still fail
+## Check the response body {#successful-http-responses-can-still-fail}
 
 - Advanced Trade order submission: inspect `success` and `error_response`.
 - Order preview: inspect `errs` and `warning`.
@@ -27,6 +27,6 @@ Attach an `exception` listener before subscribing. Inspect `response` for subscr
 
 ## Retry policy
 
-Retry transient read failures with bounded backoff and jitter, respecting rate-limit responses. Correct invalid parameters or credentials rather than repeatedly retrying them. For writes, first resolve any uncertain outcome using private events and targeted REST reads.
+Retry transient read failures with bounded backoff and jitter, respecting rate-limit responses. Correct invalid parameters or credentials rather than repeatedly retrying them. Before retrying a write, check private events and targeted REST reads to find out whether it succeeded.
 
 [Production usage](/guides/production) · [Troubleshooting](/guides/troubleshooting)

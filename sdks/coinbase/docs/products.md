@@ -7,7 +7,7 @@ description: "Choose Advanced Trade, Global derivatives, Exchange, INTX, Prime, 
 
 Start with [Advanced Trade](/getting-started) for the main market-data, account and order walkthroughs.
 
-Choose one product group and keep its clients, keys and account identifiers together. A Coinbase login or a shared hostname does not make API access interchangeable.
+Use the client, keys and account identifiers for your product. A Coinbase login or a shared hostname does not make API access interchangeable.
 
 | Product | Start here |
 | --- | --- |
@@ -19,4 +19,4 @@ Choose one product group and keep its clients, keys and account identifiers toge
 | Coinbase App | [App guide](/products/app): wallet accounts and transactions. |
 | Commerce | [Commerce guide](/products/commerce): charges and checkouts. |
 
-The product guides describe their own authentication, environments and reference entry points. The main tutorials remain focused on Advanced Trade.
+Each product guide covers authentication, environments and links to its API reference.

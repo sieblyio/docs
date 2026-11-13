@@ -7,7 +7,7 @@ description: "Submit and cancel a PostOnly limit order through REST, and follow 
 
 Use `RestClientV5` to place one BTCUSDT perpetual limit order and cancel any unfilled quantity. Run the private order stream alongside these REST commands to follow its status.
 
-The separate CLI commands make each step explicit. A persistent application can call the same SDK methods within one workflow, keeping the private stream connected and tracking orders in local state. Use scoped REST reads to initialize state or recover gaps and uncertain outcomes, not after every order.
+The example uses separate commands to place, cancel and check an order. In a persistent application, keep the private stream connected and track orders locally. Use REST reads for startup, recovery and unresolved requests rather than after every order.
 
 This walkthrough uses Bybit Testnet and test funds to avoid accidental live trades. The same methods work on Mainnet, Bybit's production markets. Remove `testnet` or set it to `false`, leave `demoTrading` disabled and use Mainnet credentials to execute against live markets. To test your system with simulated orders instead, set `demoTrading: true`, keep `testnet: false` and use Bybit Demo Trading credentials.
 
@@ -68,7 +68,7 @@ node --env-file=.env first-order.ts cancel
 
 Submission and cancellation responses acknowledge requests. Follow the private stream to see the resulting order state; cancellation can race with a fill. `cumExecQty` includes earlier fills even when the final status is `Cancelled`; resulting positions are separate from the remaining order quantity.
 
-See Bybit's [create-order](https://bybit-exchange.github.io/docs/v5/order/create-order) and [cancel-order](https://bybit-exchange.github.io/docs/v5/order/cancel-order) contracts. Use the execution and position topics as well when your application needs fills and position changes, rather than repeatedly querying them through REST.
+See Bybit's [create-order](https://bybit-exchange.github.io/docs/v5/order/create-order) and [cancel-order](https://bybit-exchange.github.io/docs/v5/order/cancel-order) documentation. Use the execution and position topics as well when your application needs fills and position changes, rather than repeatedly querying them through REST.
 
 ## Recover an interrupted request
 

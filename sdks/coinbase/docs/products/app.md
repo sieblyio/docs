@@ -5,11 +5,11 @@ description: "Read Coinbase App prices, wallet balances and transactions with Ap
 
 # Coinbase App
 
-`CBAppClient` provides Coinbase App wallet/account and transaction endpoints on `api.coinbase.com`. It is a wallet API, not an exchange order client.
+`CBAppClient` accesses Coinbase App wallet accounts and transactions on `api.coinbase.com`. It is a wallet API, not an exchange order client.
 
 ## Setup {#setup}
 
-Install the package with `npm install coinbase-api`. Save each example with the shown filename and run it with Node.js 24. Public examples need no credentials; for authenticated examples, add the named variables to a private `.env` file excluded from Git, then use `node --env-file=.env filename.ts`. Keep account output private.
+Install `coinbase-api` with `npm install coinbase-api` and use Node.js 24 to run the examples. Public REST examples need no credentials. For authenticated examples, add the variables below to a private `.env` file excluded from Git and run `node --env-file=.env filename.ts`, replacing `filename.ts` with its filename. Keep account output private.
 
 ## Public prices {#market-data}
 
@@ -56,6 +56,6 @@ Review the recipient or destination account, currency, amount, fees and permissi
 
 ## Transport and environments {#environments}
 
-There is no mapped App sandbox, App WebSocket feed or App WebSocket request API in this SDK. Load wallet state through REST at the workflow points that need it. If your application receives account events through another authorized integration, apply those passively and use targeted reads for gaps; exchange market streams do not cover App wallet transactions.
+There is no mapped App sandbox, App WebSocket feed or App WebSocket request API in this SDK. Read wallet state through REST when your application needs it. If your application receives account events through another authorized integration, update local state from those events and use targeted reads to fill gaps; exchange market streams do not cover App wallet transactions.
 
 [App client reference](/api/classes/CBAppClient) · [Choose another API](/products)

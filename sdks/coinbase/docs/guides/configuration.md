@@ -17,11 +17,11 @@ The first constructor argument configures SDK behavior and credentials. The seco
 - `parseExceptions` defaults to `true`; see [Errors](/guides/errors).
 - `baseUrl` overrides the REST origin. Only use a trusted destination because authenticated requests can carry credentials or tokens.
 
-The SDK's default REST timeout is five minutes. Choose a shorter application-specific timeout where appropriate. A timeout does not establish that a state-changing request failed.
+The SDK's default REST timeout is five minutes. Choose a shorter timeout if your application needs one. A timeout does not prove that a write failed.
 
 ## Environments {#environments}
 
-Set `useSandbox: true` on `CBAdvancedTradeClient` to use the static REST sandbox at `api-sandbox.coinbase.com`. It supplies mocked accounts/orders, not a matching engine or live account behavior. This flag changes the host, not the client's signing and request-building behavior. Do not use this static service to validate live authentication or execution.
+Set `useSandbox: true` on `CBAdvancedTradeClient` to use the static REST sandbox at `api-sandbox.coinbase.com`. It returns mocked account and order responses; it does not run a matching engine or simulate a live account. This flag changes the host, not the client's signing and request-building behavior. Do not use this static service to validate live authentication or execution.
 
 There is **no Advanced Trade WebSocket sandbox**. Do not set `useSandbox` on the Advanced Trade stream clients. Leave it unset for the mainnet quickstart.
 

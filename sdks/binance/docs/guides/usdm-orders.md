@@ -7,7 +7,7 @@ description: Initialize futures account state, observe private WebSocket events,
 
 Use `USDMClient` for Binance's USD-M futures markets. This walkthrough reads starting account state, follows private WebSocket updates, and uses REST to place and cancel a BTCUSDT perpetual order.
 
-The separate CLI commands make each step explicit. A persistent application can call the same SDK methods within one workflow, keeping the user data stream connected and tracking account and order state locally. Use scoped REST reads to initialize state or recover gaps and uncertain outcomes, not after every order.
+The order script makes one REST request per command. In a persistent application, keep the user data stream connected and track account and order state locally. Use REST reads to initialize state, recover missed updates or resolve uncertain outcomes, not after every order.
 
 The examples use Futures Demo Trading and virtual funds to avoid accidental live trades. The same methods work on Mainnet, Binance's production markets. Remove `demoTrading` or set it to `false`, leave `testnet` disabled and use production credentials to execute against live markets.
 
@@ -44,7 +44,7 @@ Save this as `usdm-account.ts`:
 node --env-file=.env usdm-account.ts
 ```
 
-This prints the account's trading permission and margin balances, balance records, BTCUSDT positions and position mode. It uses the current V3 account methods and makes no account changes. No open BTCUSDT position may mean an empty positions list.
+This prints the account's trading permission and margin balances, balance records, BTCUSDT positions and position mode. It uses the current V3 account methods and makes no account changes. The positions list may be empty if there is no open BTCUSDT position.
 
 ## Follow account changes
 

@@ -9,7 +9,7 @@ The SDK signs requests for you. Keep secrets on your server, grant only the perm
 
 ## Advanced Trade credentials
 
-Use a CDP API key name and its private key, not an account password. An ECDSA key is the straightforward choice for Advanced Trade. Preserve the complete PEM, including its header, footer and newlines.
+Use a CDP API key name and its private key, not an account password. Use an ECDSA key for Advanced Trade. Preserve the complete PEM, including its header, footer and newlines.
 
 Set `COINBASE_API_KEY` and `COINBASE_API_SECRET` in your environment, then save this as `authenticated-client.ts`:
 
@@ -17,7 +17,7 @@ Set `COINBASE_API_KEY` and `COINBASE_API_SECRET` in your environment, then save 
 
 The REST client also accepts `cdpApiKey: { name, privateKey }`, matching the exported CDP JSON fields. This is a REST option; `WebsocketClient` expects `apiKey` and `apiSecret` separately. The REST client normalizes literal `\n` sequences in the secret. The WebSocket client does not; the private-stream example normalizes these explicitly before passing the key.
 
-The signer supports ECDSA PEM and supported base64 Ed25519 formats. That does not establish that every Coinbase product or endpoint accepts both key types. Use the key type required by the API family; do not infer support from successful local signing.
+The signer supports ECDSA PEM and supported base64 Ed25519 formats, but Coinbase products differ in which key types they accept. Use the type required by your API; successful local signing does not confirm endpoint support.
 
 ## Run authenticated examples
 
@@ -28,7 +28,7 @@ COINBASE_API_KEY=organizations/your-organization/apiKeys/your-key
 COINBASE_API_SECRET="your-full-PEM-private-key-with-\n-line-breaks"
 ```
 
-Use actual credentials in your local file, never in shared code. The values above are placeholders. In the actual local value, retain the complete original PEM header, footer and line breaks, using escaped `\n` where needed. For examples with the local `authenticated-client.js` import, install TypeScript and compile both files into a separate output directory:
+Replace these placeholders in your local file, never in shared code. Keep the original PEM header, footer and line breaks, using escaped `\n` where needed. For examples with the local `authenticated-client.js` import, install TypeScript and compile both files into a separate output directory:
 
 ```sh
 npm install --save-dev typescript @types/node
@@ -44,7 +44,7 @@ Save this as `account-state.ts` alongside `authenticated-client.ts`, then use th
 
 <<< @/../examples/account-state.ts
 
-Check the returned permissions before enabling trading. `getAccounts()` is paginated: follow `cursor` while `has_next` is true when loading all accounts. Never assume one page represents the whole account.
+Check the returned permissions before enabling trading. `getAccounts()` is paginated: follow `cursor` while `has_next` is true when loading all accounts.
 
 ## Keep product credentials separate
 

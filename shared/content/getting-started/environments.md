@@ -1,6 +1,6 @@
 ## Choose your setup {#environment-quickstarts}
 
-Follow the guide for your runtime or framework. Each includes a complete project and setup and run commands.
+Follow the guide for your runtime or framework. Each includes a complete project with commands to install dependencies and run it.
 
 | Setup | Guides |
 | --- | --- |

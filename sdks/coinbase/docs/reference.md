@@ -12,7 +12,7 @@ Methods, parameters and response types exported by [`coinbase-api`](https://www.
 - [CBAdvancedTradeClient](/api/classes/CBAdvancedTradeClient): REST methods.
 - [WebsocketClient](/api/classes/WebsocketClient): use Advanced Trade feed keys.
 
-For other products, use their [separate reference entry points](/products).
+For other products, follow the reference links in their [product guides](/products).
 
 ## Advanced Trade tasks
 
@@ -29,6 +29,6 @@ For other products, use their [separate reference entry points](/products).
 | List fills | [`getFills()`](/api/classes/CBAdvancedTradeClient#getfills) |
 | Cancel orders | [`cancelOrders()`](/api/classes/CBAdvancedTradeClient#cancelorders) |
 
-Use [Authentication](/guides/authentication), [Orders](/guides/orders) and [Private account updates](/guides/private-streams) for working context. Search methods and types with **⌘K / Ctrl+K**.
+Use [Authentication](/guides/authentication), [Orders](/guides/orders) and [Private account updates](/guides/private-streams) for setup instructions and examples. Search methods and types with **⌘K / Ctrl+K**.
 
 [Reference index](/api/) · [Coinbase developer documentation](https://docs.cdp.coinbase.com/)

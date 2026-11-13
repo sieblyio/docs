@@ -9,7 +9,7 @@ description: "Read Exchange prices, stream public and private updates, and manag
 
 ## Setup {#setup}
 
-Install the package with `npm install coinbase-api`. Save each example with the shown filename and run it with Node.js 24. Public examples need no credentials; for authenticated examples, add the named variables to a private `.env` file excluded from Git, then use `node --env-file=.env filename.ts`. Keep account output private.
+Install `coinbase-api` with `npm install coinbase-api` and use Node.js 24 to run the examples. Public REST examples need no credentials. For authenticated examples, add the variables below to a private `.env` file excluded from Git and run `node --env-file=.env filename.ts`, replacing `filename.ts` with its filename. Keep account output private.
 
 ## Public REST {#market-data}
 
@@ -62,9 +62,9 @@ Save as `exchange-private-stream.ts` and run with the Exchange environment varia
 
 This subscribes to the authenticated Exchange `user` channel through `exchangeDirectMarketData`. The SDK signs the subscription using the Exchange key, secret and passphrase. `exchangeMarketData` is the public route; supplying credentials alone does not turn that route into this authenticated subscription.
 
-Load starting orders and account state, then apply user order events passively. For balance updates, the authenticated `balance` channel takes `payload.account_ids` containing Exchange account IDs. Do not assume the `user` channel itself is a full balance ledger.
+Load initial orders and account state, then update them from user order events. For balance updates, the authenticated `balance` channel takes `payload.account_ids` containing Exchange account IDs. Do not assume the `user` channel itself is a full balance ledger.
 
-Mark state stale on `reconnect`. On `reconnected`, confirm subscription recovery and reconcile missing orders/fills/balances through targeted REST reads, accounting for events received during recovery. Resume dependent actions only when state is current. See [Account State](https://siebly.io/reference/glossary#accountstate).
+Mark state stale on `reconnect`. On `reconnected`, confirm subscription recovery and reconcile missing orders/fills/balances through targeted REST reads, accounting for events received during recovery. Resume trading only when the account state it depends on is current. See [Account State](https://siebly.io/reference/glossary#accountstate).
 
 ## Environments and reference {#environments}
 
