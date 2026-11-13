@@ -34,7 +34,7 @@ export async function environmentFiles(id, sdk, environment) {
   };
 
   if (environment === 'cloudflare-workers') {
-    for (const [name, content] of workerFiles(id, sdk)) files.set(name, content);
+    for (const [name, content] of await workerFiles(id, sdk)) files.set(name, content);
     pkg.scripts = { dev: 'wrangler dev', 'dev:orders': 'wrangler dev src/order.js' };
     pkg.devDependencies = { wrangler: '4.161.0' };
   } else if (environment === 'node') {
