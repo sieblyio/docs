@@ -6,8 +6,8 @@ const orders = {
   bitget: {
     credentials: ['BITGET_API_KEY', 'BITGET_API_SECRET', 'BITGET_API_PASSPHRASE'],
     options: 'apiKey: env.BITGET_API_KEY, apiSecret: env.BITGET_API_SECRET, apiPass: env.BITGET_API_PASSPHRASE',
-    environment: 'Bitget Spot production',
-    request: "await client.spotSubmitOrder({ symbol: 'BTCUSDT', side: 'buy', orderType: 'limit', force: 'post_only', price, size: quantity })",
+    environment: 'Bitget UTA Spot production',
+    request: "await client.submitNewOrder({ category: 'SPOT', symbol: 'BTCUSDT', side: 'buy', orderType: 'limit', timeInForce: 'post_only', price, qty: quantity, autoBorrow: 'no' })",
   },
   hyperliquid: {
     credentials: ['HYPERLIQUID_PRIVATE_KEY', 'HYPERLIQUID_ACCOUNT_ADDRESS'],

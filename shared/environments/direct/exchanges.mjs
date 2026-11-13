@@ -1,24 +1,25 @@
 export const exchanges = {
   bitget: {
-    restClient: 'RestClientV2',
-    websocketClient: 'WebsocketClientV2',
+    restClient: 'RestClientV3',
+    websocketClient: 'WebsocketClientV3',
     symbol: 'BTCUSDT',
     continuous: true,
-    cliSubscription: "ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT').catch((error) => {\n  console.error('WebSocket subscription failed:', error);\n})",
-    request: `const client = new RestClientV2();
-const response = await client.getSpotTicker({
+    cliSubscription: "ws.subscribe({\n  topic: 'ticker',\n  payload: {\n    instType: 'spot',\n    symbol: 'BTCUSDT',\n  },\n}, 'v3Public').catch((error) => {\n  console.error('WebSocket subscription failed:', error);\n})",
+    request: `const client = new RestClientV3();
+const response = await client.getTickers({
+  category: 'SPOT',
   symbol: 'BTCUSDT',
 });
-const price = response.data[0]?.lastPr;`,
+const price = response.data[0]?.lastPrice;`,
     event: 'update',
-    update: `if (message.arg?.channel !== 'ticker') {
+    update: `if (message.arg?.topic !== 'ticker') {
   console.log('WebSocket update:', message);
   return;
 }
 
-const price = message.data?.[0]?.lastPr;`,
-    websocket: 'new WebsocketClientV2()',
-    subscription: "ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT')",
+const price = message.data?.[0]?.lastPrice;`,
+    websocket: 'new WebsocketClientV3()',
+    subscription: "ws.subscribe({\n  topic: 'ticker',\n  payload: {\n    instType: 'spot',\n    symbol: 'BTCUSDT',\n  },\n}, 'v3Public')",
   },
   okx: {
     restClient: 'RestClient',

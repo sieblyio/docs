@@ -1,11 +1,11 @@
 ---
 title: "Bitget Node.js quickstart with JavaScript"
-description: "Install bitget-api and read a public BTCUSDT Spot ticker with RestClientV2."
+description: "Install bitget-api and read a public BTCUSDT Spot ticker with RestClientV3."
 ---
 
 # Node.js quickstart with JavaScript
 
-Read a live BTCUSDT Spot price using Bitget Classic V2 public market data. No API key, secret or passphrase is required.
+Read a live BTCUSDT Spot price using Bitget UTA V3 public market data. No API key, secret or passphrase is required.
 
 ## Installation
 
@@ -29,10 +29,10 @@ node prices.mjs
 BTCUSDT last price: 65000.1
 ```
 
-The price is illustrative. `getSpotTicker()` returns the REST envelope. Its `data` is an array, and `lastPr` is a decimal string. An empty array means this example has no ticker to print; do not interpret `undefined` as a price.
+The price is illustrative. `getTickers()` returns the REST envelope. Its `data` is an array, and `lastPrice` is a decimal string. An empty array means this example has no ticker to print; do not interpret `undefined` as a price.
 
 ## Module formats
 
-The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file and replace the import with `const { RestClientV2 } = require('bitget-api')`, retaining the async function. TypeScript uses the same import with the SDK's included types.
+The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file and replace the import with `const { RestClientV3 } = require('bitget-api')`, retaining the async function. TypeScript uses the same import with the SDK's included types.
 
-[Market data](/guides/market-data) · [Streaming](/guides/websockets) · [Choose Classic or UTA](/clients) · [Runtime setup](/compatibility)
+[Market data](/guides/market-data) · [Streaming](/guides/websockets) · [Choose UTA or Classic](/clients) · [Runtime setup](/compatibility)

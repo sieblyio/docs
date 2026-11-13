@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { RestClientV2, WebsocketClientV2 } from 'bitget-api';
+import { RestClientV3, WebsocketClientV3 } from 'bitget-api';
 
 function Prices() {
   const [restPrice, setRestPrice] = useState('Loading');
@@ -8,7 +8,7 @@ function Prices() {
 
   useEffect(() => {
     let mounted = true;
-    const ws = new WebsocketClientV2();
+    const ws = new WebsocketClientV3();
 
     function showError(error) {
       console.error(error);
@@ -18,11 +18,12 @@ function Prices() {
     }
 
     async function loadPrice() {
-      const client = new RestClientV2();
-      const response = await client.getSpotTicker({
+      const client = new RestClientV3();
+      const response = await client.getTickers({
+        category: 'SPOT',
         symbol: 'BTCUSDT',
       });
-      const price = response.data[0]?.lastPr;
+      const price = response.data[0]?.lastPrice;
 
       if (!price) {
         throw new Error('No price was returned.');
@@ -40,12 +41,12 @@ function Prices() {
     }, 30_000);
 
     ws.on('update', (message) => {
-      if (message.arg?.channel !== 'ticker') {
+      if (message.arg?.topic !== 'ticker') {
         console.log('WebSocket update:', message);
         return;
       }
 
-      const price = message.data?.[0]?.lastPr;
+      const price = message.data?.[0]?.lastPrice;
 
       if (mounted && price) {
         clearTimeout(timeout);
@@ -61,7 +62,13 @@ function Prices() {
       }
 
       try {
-        await ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT');
+        await ws.subscribe({
+          topic: 'ticker',
+          payload: {
+            instType: 'spot',
+            symbol: 'BTCUSDT',
+          },
+        }, 'v3Public');
       } finally {
         // Close again if pending setup completed after unmount.
         if (!mounted) {

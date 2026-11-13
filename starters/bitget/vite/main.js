@@ -1,4 +1,4 @@
-import { RestClientV2, WebsocketClientV2 } from 'bitget-api';
+import { RestClientV3, WebsocketClientV3 } from 'bitget-api';
 
 const restOutput = document.querySelector('#rest');
 const liveOutput = document.querySelector('#live');
@@ -8,7 +8,7 @@ let stopStream;
 let userStopped = false;
 
 function startStream() {
-  const ws = new WebsocketClientV2();
+  const ws = new WebsocketClientV3();
   let stopped = false;
   liveOutput.textContent = 'Connecting';
   errorOutput.textContent = '';
@@ -21,11 +21,12 @@ function startStream() {
   }
 
   async function loadPrice() {
-    const client = new RestClientV2();
-    const response = await client.getSpotTicker({
+    const client = new RestClientV3();
+    const response = await client.getTickers({
+      category: 'SPOT',
       symbol: 'BTCUSDT',
     });
-    const price = response.data[0]?.lastPr;
+    const price = response.data[0]?.lastPrice;
 
     if (!stopped) {
       restOutput.textContent = String(price);
@@ -39,12 +40,12 @@ function startStream() {
   }, 30_000);
 
   ws.on('update', (message) => {
-    if (message.arg?.channel !== 'ticker') {
+    if (message.arg?.topic !== 'ticker') {
       console.log('WebSocket update:', message);
       return;
     }
 
-    const price = message.data?.[0]?.lastPr;
+    const price = message.data?.[0]?.lastPrice;
 
     if (!stopped && price) {
       clearTimeout(timeout);
@@ -59,7 +60,13 @@ function startStream() {
     }
 
     try {
-      await ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT');
+      await ws.subscribe({
+        topic: 'ticker',
+        payload: {
+          instType: 'spot',
+          symbol: 'BTCUSDT',
+        },
+      }, 'v3Public');
     } finally {
       if (stopped) {
         ws.closeAll();

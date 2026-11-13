@@ -1,11 +1,11 @@
 ---
 title: "Bitget public WebSocket subscriptions"
-description: "Stream Classic V2 tickers and understand V3 subscription shapes and recovery."
+description: "Stream UTA V3 tickers and understand subscription acknowledgements, recovery and Classic V2 alternatives."
 ---
 
 # Public WebSocket subscriptions
 
-`WebsocketClientV2` connects when needed, maintains heartbeats and restores requested subscriptions after reconnects. This passive Classic Spot example runs until Ctrl+C without periodically polling or reconnecting:
+`WebsocketClientV3` connects when needed, maintains heartbeats and restores requested subscriptions after reconnects. This passive UTA Spot example runs until Ctrl+C without periodically polling or reconnecting:
 
 <<< @/../examples/stream.ts
 
@@ -13,13 +13,13 @@ Save as `stream.ts` and run `node stream.ts` on Node.js 24 after installing `bit
 
 ## Subscription acknowledgement and data
 
-`subscribeTopic()` returns a promise. Listen for `response` acknowledgements and `exception` failures as well as `update` messages; an open connection alone does not prove that the requested subscription succeeded. Route updates by their `arg` fields and inspect the channel and instrument before consuming the payload.
+`subscribe()` returns a promise. Listen for `response` acknowledgements and `exception` failures as well as `update` messages; an open connection alone does not prove that the requested subscription succeeded. Route updates using `arg.topic`, `arg.instType` and `arg.symbol`. For the ticker subscription, `data[0].lastPrice` is the latest price as a decimal string.
 
-For Classic V2, `subscribeTopic('SPOT', 'ticker', 'BTCUSDT')` selects the public connection. `unsubscribeTopic()` accepts the same topic arguments. For multiple requests, await each promise or collect them with `Promise.all`.
+`subscribe()` takes a topic/payload object and `WS_KEY_MAP.v3Public` as the second argument. For multiple topics on that connection, pass an array of objects. Use `unsubscribe()` with the same topic/payload and connection key when the subscription is no longer needed. See the [V3 reference](/api/classes/WebsocketClientV3#subscribe) and [official ticker channel contract](https://www.bitget.com/docs/uta/websocket/public/Tickers-Channel).
 
-## UTA public streams
+## Classic V2 alternative
 
-Use `WebsocketClientV3` for UTA. Its `subscribe()` takes a topic/payload object and `WS_KEY_MAP.v3Public` as the second argument. For a ticker, set `topic: 'ticker'`, with `instType: 'spot'` and `symbol: 'BTCUSDT'` inside `payload`. This differs from Classic V2's `instId` and uppercase `SPOT`. See the [V3 reference](/api/classes/WebsocketClientV3#subscribe) before translating a Classic subscription.
+Existing Classic integrations can use `WebsocketClientV2.subscribeTopic('SPOT', 'ticker', 'BTCUSDT')`, with `unsubscribeTopic()` for cleanup. Classic topics use `instId` and uppercase `SPOT`, unlike V3's `symbol` and lowercase `spot`. Classic ticker prices use `lastPr`, not V3's `lastPrice`. Do not mix the topic or response shapes between API generations.
 
 ## Recovery and shutdown
 

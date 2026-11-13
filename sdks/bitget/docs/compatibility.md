@@ -30,9 +30,9 @@ The [Expo guide](/environments/expo) supplies the native setup and polyfills. Ke
 
 ## Verification limits
 
-During this documentation update, the generated TypeScript starter passed `tsc --noEmit`, the configured Vite 5.4.21 starter produced a production bundle, and Wrangler 4.161.0 dry runs bundled the public and order Worker examples against `bitget-api` 3.2.8. These are type/bundle checks, not deployment or trading tests. No Worker was deployed by those checks.
+The setup guides use UTA V3 for public REST and WebSocket examples. Validate each recipe against the SDK version and runtime you will deploy. Type checking and successful bundling are separate from live connectivity, deployment and private trading verification.
 
-A live Node.js public REST ticker request also succeeded. Live WebSocket connectivity and native-device execution were not verified in this update.
+Live V3 REST/WebSocket connectivity and native-device execution are not claimed here. No Worker deployment or private trading operation was performed.
 
 Type checking verifies exported request/response types. Browser and Worker bundling does not establish live REST/WebSocket connectivity, private permissions, successful trading or recovery. Validate Bun, Deno, Next.js and mobile projects in their intended environments before relying on them.
 

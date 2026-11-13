@@ -1,4 +1,4 @@
-import { RestClientV2 } from 'bitget-api';
+import { RestClientV3 } from 'bitget-api';
 
 export default {
   async fetch(request, env) {
@@ -36,7 +36,7 @@ export default {
       return new Response('Missing exchange credentials', { status: 503 });
     }
 
-    const client = new RestClientV2(
+    const client = new RestClientV3(
       {
         apiKey: env.BITGET_API_KEY,
         apiSecret: env.BITGET_API_SECRET,
@@ -45,13 +45,15 @@ export default {
       { fetchOptions: { cache: 'no-store' } },
     );
 
-    const result = await client.spotSubmitOrder({
+    const result = await client.submitNewOrder({
+      category: 'SPOT',
       symbol: 'BTCUSDT',
       side: 'buy',
       orderType: 'limit',
-      force: 'post_only',
+      timeInForce: 'post_only',
       price,
-      size: quantity,
+      qty: quantity,
+      autoBorrow: 'no',
     });
 
     return Response.json(result);

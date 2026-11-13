@@ -1,6 +1,6 @@
-import { WebsocketClientV2 } from 'bitget-api';
+import { WebsocketClientV3, WS_KEY_MAP } from 'bitget-api';
 
-const ws = new WebsocketClientV2();
+const ws = new WebsocketClientV3();
 ws.on('update', (message) => {
   console.log('Market update:', message);
 });
@@ -17,7 +17,13 @@ ws.on('reconnected', () => {
   console.log('Connection restored; wait for subscriptions and fresh data.');
 });
 
-ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT').catch((error) => {
+ws.subscribe({
+  topic: 'ticker',
+  payload: {
+    instType: 'spot',
+    symbol: 'BTCUSDT',
+  },
+}, WS_KEY_MAP.v3Public).catch((error) => {
   console.error('Public subscription failed:', error);
   ws.closeAll();
   process.exitCode = 1;

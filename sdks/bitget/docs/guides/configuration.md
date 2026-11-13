@@ -5,11 +5,11 @@ description: "Configure production defaults, optional demo trading, timeouts and
 
 # Configuration and environments
 
-`RestClientV2` and `RestClientV3` take SDK options first and Axios request options second. Both versioned WebSocket clients and `WebsocketAPIClient` accept credentials directly as `apiKey`, `apiSecret` and `apiPass` options, not inside an accounts array.
+`RestClientV3` and `RestClientV2` take SDK options first and Axios request options second. Both versioned WebSocket clients and `WebsocketAPIClient` accept credentials directly as `apiKey`, `apiSecret` and `apiPass` options, not inside an accounts array.
 
 <<< @/../examples/configure-rest.ts
 
-This public configuration uses production defaults. `keepAlive` belongs in the first REST argument; `timeout` is an Axios option in the second argument, in milliseconds.
+This public V3 configuration uses production defaults. `keepAlive` belongs in the first REST argument; `timeout` is an Axios option in the second argument, in milliseconds.
 
 ## Production endpoints {#environments}
 

@@ -1,15 +1,15 @@
-import { WebsocketClientV2 } from 'bitget-api';
+import { WebsocketClientV3 } from 'bitget-api';
 import process from 'node:process';
 
-const ws = new WebsocketClientV2();
+const ws = new WebsocketClientV3();
 
 ws.on('update', (message) => {
-  if (message.arg?.channel !== 'ticker') {
+  if (message.arg?.topic !== 'ticker') {
     console.log('WebSocket update:', message);
     return;
   }
 
-  const price = message.data?.[0]?.lastPr;
+  const price = message.data?.[0]?.lastPrice;
 
   if (price) {
     console.log('BTCUSDT WebSocket price:', String(price));
@@ -37,6 +37,12 @@ function stop() {
 process.once('SIGINT', stop);
 process.once('SIGTERM', stop);
 
-ws.subscribeTopic('SPOT', 'ticker', 'BTCUSDT').catch((error) => {
+ws.subscribe({
+  topic: 'ticker',
+  payload: {
+    instType: 'spot',
+    symbol: 'BTCUSDT',
+  },
+}, 'v3Public').catch((error) => {
   console.error('WebSocket subscription failed:', error);
 });

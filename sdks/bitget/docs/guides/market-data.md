@@ -1,11 +1,11 @@
 ---
 title: "Bitget public market data with REST"
-description: "Read Classic Spot tickers, symbols and depth, and UTA instrument metadata."
+description: "Read UTA V3 tickers, instrument metadata and depth, with Classic V2 alternatives."
 ---
 
 # Public market data with REST
 
-Use `RestClientV2` for Classic market endpoints and `RestClientV3` for UTA market endpoints. Public reads do not require credentials. Symbols such as `BTCUSDT` do not contain the separator used by some other exchanges.
+Start with `RestClientV3` for UTA market endpoints. Existing Classic integrations can use `RestClientV2` as described below. Public reads do not require credentials. Symbols such as `BTCUSDT` do not contain the separator used by some other exchanges.
 
 <<< @/../examples/market-data.ts
 
@@ -17,9 +17,13 @@ Both clients return the exchange envelope. Read the payload from `response.data`
 
 ## Select the right instrument rules
 
-Classic Spot uses [`getSpotSymbolInfo()`](/api/classes/RestClientV2#getspotsymbolinfo). UTA uses [`getInstruments()`](/api/classes/RestClientV3#getinstruments) with the matching category. Read current price/quantity precision, minimums and instrument status before submitting an order. Futures have different quantity and contract rules from Spot.
+UTA uses [`getInstruments()`](/api/classes/RestClientV3#getinstruments) with the matching category. Classic Spot uses [`getSpotSymbolInfo()`](/api/classes/RestClientV2#getspotsymbolinfo). Read current price/quantity precision, minimums and instrument status before submitting an order. Futures have different quantity and contract rules from Spot.
 
-For UTA prices, use [`getTickers()`](/api/classes/RestClientV3#gettickers); for Classic futures, use the futures methods exposed on `RestClientV2`, with the required product type. Do not assume the same symbol alone identifies the same market.
+For UTA prices, use [`getTickers()`](/api/classes/RestClientV3#gettickers) and read `response.data[0]?.lastPrice`.
+
+## Classic V2 alternatives
+
+Existing Classic Spot integrations can use `getSpotTicker()`, `getSpotSymbolInfo()` and `getSpotOrderBookDepth()` on `RestClientV2`. Classic tickers use `lastPr`, not V3's `lastPrice`. For Classic futures, use the futures methods exposed on `RestClientV2`, with the required product type. Do not assume the same symbol alone identifies the same market.
 
 ## Snapshots and ongoing data
 

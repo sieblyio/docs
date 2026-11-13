@@ -1,23 +1,19 @@
-import { RestClientV2, RestClientV3 } from 'bitget-api';
+import { RestClientV3 } from 'bitget-api';
 
-const classic = new RestClientV2();
-const unified = new RestClientV3();
+const client = new RestClientV3();
 
 async function main() {
-  const symbols = await classic.getSpotSymbolInfo({
-    symbol: 'BTCUSDT',
-  });
-  const book = await classic.getSpotOrderBookDepth({
-    symbol: 'BTCUSDT',
-    limit: '5',
-  });
-  const instruments = await unified.getInstruments({
+  const instruments = await client.getInstruments({
     category: 'SPOT',
     symbol: 'BTCUSDT',
   });
-  console.log('Classic Spot rules:', symbols.data);
-  console.log('Classic order book:', book.data);
+  const book = await client.getOrderBook({
+    category: 'SPOT',
+    symbol: 'BTCUSDT',
+    limit: '5',
+  });
   console.log('UTA instrument rules:', instruments.data);
+  console.log('UTA order book:', book.data);
 }
 
 main().catch((error) => {

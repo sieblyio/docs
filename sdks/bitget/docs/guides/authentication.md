@@ -1,5 +1,5 @@
 ---
-title: "Bitget authentication and Classic or UTA balances"
+title: "Bitget authentication and UTA or Classic balances"
 description: "Configure server-side Bitget credentials and read the account matching your API generation."
 ---
 
@@ -37,10 +37,10 @@ Save as `account-state.ts` beside the helper:
 npm install bitget-api
 npm install --save-dev typescript @types/node
 npx tsc --target ES2022 --module NodeNext --strict --skipLibCheck --outDir dist authenticated-client.ts account-state.ts
-node --env-file=.env dist/account-state.js classic
+node --env-file=.env dist/account-state.js uta
 ```
 
-For a Unified Trading Account, use `uta` instead of `classic`. Run with Node.js 24 from the project directory containing `.env`. Relative `.js` imports refer to the compiled output. This explicit file list does not depend on the [TypeScript starter](/environments/typescript)'s `.mts` include pattern.
+For an existing Classic account, use `classic` instead of `uta`. Run with Node.js 24 from the project directory containing `.env`. Relative `.js` imports refer to the compiled output. This explicit file list does not depend on the [TypeScript starter](/environments/typescript)'s `.mts` include pattern.
 
 For the other private examples, replace `account-state.ts` in the compile command with `private-stream.ts`, `classic-private-stream.ts`, `first-order.ts` or `ws-api.ts`, retaining `authenticated-client.ts`. Compilation itself sends no requests.
 

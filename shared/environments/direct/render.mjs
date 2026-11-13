@@ -56,7 +56,7 @@ export async function screenFile(id, sdk, setup) {
     SYMBOL: exchange.symbol,
     WEBSOCKET: exchange.websocket,
     EVENT: exchange.event,
-    SUBSCRIPTION: exchange.subscription,
+    SUBSCRIPTION: exchange.subscription.replaceAll('\n', '\n' + ' '.repeat(setup === 'vite' ? 6 : 8)),
   };
   if (setup === 'react' || setup === 'expo') {
     values.EFFECT = fill(await readFile(new URL('./effect.tpl', import.meta.url), 'utf8'), {

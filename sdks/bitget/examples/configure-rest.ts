@@ -1,6 +1,6 @@
-import { RestClientV2, WebsocketClientV2 } from 'bitget-api';
+import { RestClientV3, WebsocketClientV3 } from 'bitget-api';
 
-export const client = new RestClientV2(
+export const client = new RestClientV3(
   {
     keepAlive: true,
   },
@@ -8,4 +8,4 @@ export const client = new RestClientV2(
     timeout: 20_000,
   },
 );
-export const ws = new WebsocketClientV2();
+export const ws = new WebsocketClientV3();

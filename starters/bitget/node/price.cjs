@@ -1,11 +1,12 @@
-const { RestClientV2 } = require('bitget-api');
+const { RestClientV3 } = require('bitget-api');
 
 async function main() {
-  const client = new RestClientV2();
-  const response = await client.getSpotTicker({
+  const client = new RestClientV3();
+  const response = await client.getTickers({
+    category: 'SPOT',
     symbol: 'BTCUSDT',
   });
-  const price = response.data[0]?.lastPr;
+  const price = response.data[0]?.lastPrice;
 
   if (!price) {
     throw new Error('No BTCUSDT price was returned.');

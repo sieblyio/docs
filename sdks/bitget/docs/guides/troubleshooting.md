@@ -7,11 +7,11 @@ description: "Diagnose wrong clients, response fields, authentication, WebSocket
 
 ## A client or method from an old example is missing
 
-Use the [client guide](/clients). The documented release exports `RestClientV2`, `RestClientV3`, `WebsocketClientV2`, `WebsocketClientV3` and `WebsocketAPIClient`. Do not assume a legacy V1 class or an unversioned WebSocket client remains available.
+Use the [client guide](/clients). The default guides use `RestClientV3` and `WebsocketClientV3`. The release also exports `WebsocketAPIClient` and Classic `RestClientV2`/`WebsocketClientV2`. Do not assume a legacy V1 class or an unversioned WebSocket client remains available.
 
 ## The ticker is undefined
 
-Classic `getSpotTicker()` returns an envelope. Read `response.data[0]?.lastPr`, not `response[0].last` or another exchange's ticker field. Check that the response contains the requested symbol; `BTCUSDT` has no hyphen.
+UTA `getTickers()` returns an envelope. Read `response.data[0]?.lastPrice`, not `response[0].last` or another exchange's ticker field. Classic V2 `getSpotTicker()` instead uses `response.data[0]?.lastPr`. Check that the response contains the requested symbol; `BTCUSDT` has no hyphen.
 
 ## Private requests fail
 
