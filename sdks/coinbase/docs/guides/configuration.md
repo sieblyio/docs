@@ -36,3 +36,5 @@ For the separate request-response options used by Global derivatives, see its [p
 A `wsUrl` override applies to connections created by that client. Avoid reusing one override across unrelated feeds.
 
 [Proxies](/guides/proxies) · [Production usage](/guides/production)
+
+See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.

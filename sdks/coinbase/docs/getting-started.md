@@ -35,6 +35,12 @@ The price is illustrative. The method returns the product directly, not an Axios
 
 The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file and replace the import with `const { CBAdvancedTradeClient } = require('coinbase-api');`. Keep the async `main()` function. TypeScript uses the same imports with the package's included types.
 
-The other guides use TypeScript. For their small examples, Node.js 24 can run `.ts` files directly. When copying an example that imports `./authenticated-client.js`, compile both TypeScript files with TypeScript first, or change that local import to `./authenticated-client.ts` for Node.js type stripping.
+The other guides show TypeScript examples, but TypeScript is not required to use the SDK. If you choose to run those examples as TypeScript, Node.js 24 can execute their erasable syntax directly without type checking. When copying an example that imports `./authenticated-client.js`, compile both TypeScript files with TypeScript first, or change that local import to `./authenticated-client.ts` for Node.js type stripping.
 
 [Choose a client](/clients) · [Market data](/guides/market-data) · [Troubleshooting](/guides/troubleshooting)
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

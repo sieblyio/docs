@@ -9,6 +9,8 @@ Write a TypeScript script that reads a public @@SYMBOL@@ price with `@@PACKAGE@@
 
 Use Node.js 24 and npm. You can also [view the complete @@SDK@@ TypeScript example on GitHub](@@EXAMPLE_URL@@).
 
+The SDK also works with plain [JavaScript](/environments/node). TypeScript is optional, but we strongly recommend it for SDK integrations: checking the included types catches many invalid method names, parameters and response assumptions at build time. Keep a type check in CI even if your runtime can execute TypeScript directly; execution alone does not check types.
+
 ## Create the project
 
 @@PROJECT_SETUP@@

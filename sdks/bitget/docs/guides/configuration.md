@@ -19,6 +19,8 @@ Bitget uses `demoTrading`, not `testnet`, to select simulated trading.
 
 ## Demo trading
 
+See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.
+
 To opt into simulation, set `demoTrading: true` on **every** REST and WebSocket client and use API credentials created for the demo environment. The SDK supplies the REST demo header and selects demo WebSocket routes. Do not manually add simulation headers or copy production credentials into a demo example.
 
 Live trading is the default. Changing only one client leaves the other clients unchanged. Check Bitget's documentation for demo support on your account and product.
@@ -31,4 +33,4 @@ Node.js `keepAlive` uses an HTTPS agent. Disable it when supplying your own prox
 
 `parseExceptions` controls REST error post-processing. `strictParamValidation` can reject undefined parameters, and `recvWindow` controls the request window. Keep the server clock synchronized and handle rejected requests as described in [Error handling](/guides/errors).
 
-[Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions) · [Bitget demo trading](https://www.bitget.com/api-doc/common/demotrading/restapi)
+[Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions) · [Bitget demo trading](https://www.bitget.com/docs/uta/demo-trading/rest-api)

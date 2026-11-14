@@ -42,6 +42,7 @@ export function coinbaseSidebar(sdk, groups) {
         ]),
       ] },
       { text: 'SDK resources', items: [
+        { text: 'Testing environments', link: '/guides/testing-environments' },
         { text: 'Node.js proxy configuration', link: '/guides/proxies' },
         { text: 'Advanced Trade runtime examples', link: '/compatibility' },
         { text: 'npm package', link: `https://www.npmjs.com/package/${sdk.packageName}` },

@@ -34,3 +34,7 @@ Keep private requests on a server. A successful import does not guarantee a work
 Verify REST and WebSocket routes independently. Check the proxy agent, TLS trust, outbound rules and IP allowlist. Keep SDK `keepAlive` disabled with a custom agent. See [Proxies](/guides/proxies).
 
 <!--@include: @/.vitepress/shared/troubleshooting/reproduction.md-->
+
+## TypeScript checks
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->

@@ -40,3 +40,9 @@ The `.mjs` extension selects ES modules. In a CommonJS `.cjs` file, use `const {
 ## Next steps
 
 [Market data](/guides/market-data) · [WebSocket subscriptions](/guides/websockets) · [Choose a client](/clients) · [Troubleshooting](/guides/troubleshooting)
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

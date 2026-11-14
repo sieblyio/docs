@@ -20,7 +20,7 @@ description: "Diagnose Binance installation, authentication, response and WebSoc
 
 ## Installation and imports
 
-Run `npm ls binance` to check the installed version. The JavaScript Quickstart uses `.mjs`; the TypeScript examples need a compiler or runner. Check exported clients in the [API reference](/reference).
+Run `npm ls binance` to check the installed version. The JavaScript Quickstart uses `.mjs`. The SDK works with both JavaScript and TypeScript. TypeScript is optional and recommended for build-time checks; see the [TypeScript setup](/environments/typescript). Check exported clients in the [API reference](/reference).
 
 <!--@include: @/.vitepress/shared/troubleshooting/reproduction.md-->
 
@@ -30,3 +30,7 @@ Run `npm ls binance` to check the installed version. The JavaScript Quickstart u
 - [Production usage](/guides/production)
 - [Binance SDK issues](https://github.com/sieblyio/binance/issues)
 - [Siebly support](https://siebly.io/support)
+
+## TypeScript checks
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->

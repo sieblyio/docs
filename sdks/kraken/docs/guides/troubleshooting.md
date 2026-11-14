@@ -44,3 +44,7 @@ Check subscription replies and use the correct connection key and symbol format 
 Check matching private execution events before assuming it failed. If the outcome remains unclear, use REST to recover the missing order and execution state before another submission; see [Production usage](/guides/production#resolve-uncertain-order-outcomes).
 
 [Error handling](/guides/errors) · [SDK issues](https://github.com/sieblyio/kraken-api/issues)
+
+## TypeScript checks
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->

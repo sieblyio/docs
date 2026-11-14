@@ -32,3 +32,5 @@ WebSocket options include `pingInterval`, `pongTimeout`, `reconnectTimeout` and 
 The REST `parse_exceptions` flag controls error post-processing; see [Error handling](/guides/errors). Read region, demo trading and proxy settings from a shared server configuration to keep clients consistent.
 
 [Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions)
+
+See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.

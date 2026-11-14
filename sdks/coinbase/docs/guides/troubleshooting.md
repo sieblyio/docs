@@ -30,3 +30,7 @@ Inspect `success` and `error_response`, or preview `errs`. A preview never submi
 REST Axios options do not configure WebSocket transport. Set `wsOptions.agent` as well. Disable SDK `keepAlive` when supplying a custom HTTPS agent. See [Proxies](/guides/proxies).
 
 <!--@include: @/.vitepress/shared/troubleshooting/reproduction.md-->
+
+## TypeScript checks
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->

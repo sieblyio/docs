@@ -36,3 +36,7 @@ Do not immediately resubmit it. Check private events using saved `clientOid`/`or
 Use the matching [runtime recipe](/compatibility) and include its polyfills, aliases and configuration. Keep API secrets on the server. Node.js HTTPS agents cannot be used in browsers. Production access also depends on exchange CORS policy, your network and regional service availability.
 
 When reporting an issue, include the SDK/runtime versions, client and method, sanitized code/message and a minimal reproducible example. Remove credentials, signed headers and private account payloads.
+
+## TypeScript checks
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
