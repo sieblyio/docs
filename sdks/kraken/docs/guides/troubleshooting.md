@@ -21,7 +21,7 @@ To fetch prices on the server, use the [Next.js API route](/environments/next). 
 
 ## Testnet is unavailable
 
-Spot has no public testnet. Kraken retired its Futures demo on 14 July 2026, and `testnet: true` throws in the current SDK. Use public reads or [Spot order validation](/guides/orders) for non-trading development; do not treat a beta API endpoint as simulated trading.
+Spot has no public testnet. Kraken retired its public Futures demo, and `testnet: true` throws in this SDK. Qualified-client testing access is separate; see [Environments](/guides/configuration#environments). Use public reads or [Spot order validation](/guides/orders) for non-trading development; do not treat a beta API endpoint as simulated trading.
 
 ## Invalid symbol or unexpected response key
 

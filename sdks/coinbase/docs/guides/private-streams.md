@@ -17,7 +17,7 @@ The example runs until you stop it. Omitting product IDs requests user updates a
 
 ## Maintain local order state {#apply-account-changes-passively}
 
-The channel sends an initial order snapshot followed by updates. Initial open orders may arrive in batches; do not mark the snapshot complete after the first message. Follow the [user channel schema](https://docs.cdp.coinbase.com/coinbase-app/advanced-trade-apis/websocket/websocket-channels) for batching, order status and sequence fields.
+The channel sends an initial order snapshot followed by updates. Initial open orders may arrive in batches; do not mark the snapshot complete after the first message. Follow the [user channel schema](https://docs.cdp.coinbase.com/api-reference/advanced-trade-api/websocket/user) for batching, order status and sequence fields.
 
 Maintain local order state keyed by order ID and account context. Use status and cumulative filled quantities to update execution state without counting the same fill twice. An order acknowledgement is not a fill, and a subscription reply is not an order acknowledgement.
 
@@ -27,7 +27,7 @@ After initialization, update the covered state from stream events. Do not query 
 
 ## Recover after a gap
 
-On `reconnect`, mark affected state stale. On `reconnected`, confirm subscription recovery and process fresh snapshots; use `getOrders()`, `getFills()` and `getAccounts()` to repair missing state where needed. Follow pagination and account for events arriving during those reads. Resume trading decisions only when the state they depend on is current.
+The SDK restores subscriptions automatically after reconnecting; do not subscribe again. On `reconnect`, mark affected state stale. After the stream resumes, process fresh snapshots; use `getOrders()`, `getFills()` and `getAccounts()` to repair missing state where needed. Follow pagination and account for events arriving during those reads. Resume trading decisions only when the state they depend on is current.
 
 These examples print events for inspection; they do not implement a complete account-state database. Protect private event logs as account data.
 

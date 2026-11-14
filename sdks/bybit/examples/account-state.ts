@@ -13,7 +13,6 @@ async function main() {
   const client = new RestClientV5({
     key,
     secret,
-    testnet: true,
     throwExceptions: true,
   });
   const response = await client.getWalletBalance({ accountType: 'UNIFIED' });

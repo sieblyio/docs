@@ -21,7 +21,7 @@ Follow pagination. An empty first page or a delayed stream message does not prov
 
 `reconnect` signals recovery starting; mark affected state stale. `reconnected` signals a reopened socket and can trigger reconciliation, but does not establish that subscriptions, authentication or account recovery have completed.
 
-The SDK reconnects and resubscribes cached topics. Confirm required subscriptions and snapshots, repair gaps with REST, and account for events received while that repair runs. Resume actions only after the state they depend on is current. Never assume missed updates are replayed in full.
+The SDK reconnects and resubscribes cached topics automatically; no manual resubscription is needed. Process incoming snapshots and updates, repair missing state with REST, and account for events received while that repair runs. Resume actions only after the state they depend on is current. Never assume missed updates are replayed in full.
 
 Use channel-specific sequence and snapshot rules for market data. Heartbeats show activity, not the correctness of a reconstructed book. A quiet order feed may simply mean no orders changed.
 

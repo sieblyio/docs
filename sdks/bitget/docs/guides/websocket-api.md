@@ -34,4 +34,4 @@ A command acknowledgement confirms acceptance. Follow private order and fill eve
 
 The SDK manages the connection and matches responses to requests. Your application must save order IDs, respect rate limits and recover missed account changes. Moving a request from REST to WebSockets does not remove exchange rate limits.
 
-[WebsocketAPIClient reference](/api/classes/WebsocketAPIClient) · [Bitget WebSocket cancellation API](https://www.bitget.com/api-doc/uta/websocket/private/Cancel-Order-Channel)
+[WebsocketAPIClient reference](/api/classes/WebsocketAPIClient) · [Bitget WebSocket cancellation API](https://www.bitget.com/docs/uta/websocket/private/Cancel-Order-Channel)

@@ -21,7 +21,7 @@ Check the API key, secret and key passphrase, minimum permissions, account type,
 
 Observe `authenticated`, subscription `response` and `exception` events. Check API version and topic names. Classic uses `orders`; UTA uses `order` with `instType: 'UTA'` on `WS_KEY_MAP.v3Private`. Check subscription acknowledgements even if the socket opened successfully. A quiet account may produce no updates.
 
-The SDK sends heartbeats automatically; application timers are unnecessary. After reconnection, confirm acknowledgements and [recover missing state](/guides/private-streams#recover-after-a-gap).
+The SDK sends heartbeats automatically; application timers are unnecessary. The SDK restores subscriptions after reconnection; [recover missing state](/guides/private-streams#recover-after-a-gap).
 
 ## A WebSocket command response looks different from REST
 

@@ -51,7 +51,7 @@ Reduce request volume after rate-limit responses and delay retries. Set request 
 
 The SDK reconnects and restores cached subscriptions automatically. `reconnecting` signals that connection recovery is starting; mark the affected account state as stale. `reconnected` means the socket has reopened and the SDK has sent its resubscription requests. It does not wait for subscription acknowledgements or recover missed account state.
 
-Use `reconnected` to trigger REST reconciliation of missed orders, fills, balances and positions. Confirm the required subscriptions, combine their snapshots with REST data, and account for updates received during recovery. Then reconcile open orders with the current position before making follow-up changes; do not blindly recreate orders. Resume dependent actions once their required state is current. See [subscription recovery](/guides/websockets#reconnection) and [WebSocket errors](/guides/errors#websocket-requests-and-subscriptions).
+Use `reconnected` to trigger REST reconciliation of missed orders, fills, balances and positions. The SDK restores subscriptions; do not subscribe again in the reconnect handler. Combine any subscription snapshots with REST data and account for updates received during recovery. Then reconcile open orders with the current position before making follow-up changes; do not blindly recreate orders. Resume dependent actions once their required state is current. See [subscription recovery](/guides/websockets#reconnection) and [WebSocket errors](/guides/errors#websocket-requests-and-subscriptions).
 
 ## Logging and monitoring
 

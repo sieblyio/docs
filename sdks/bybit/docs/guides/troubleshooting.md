@@ -20,7 +20,7 @@ description: "Diagnose Bybit installation, authentication, response and WebSocke
 
 ## Installation and imports
 
-Run `npm ls bybit-api` to check the installed version. The JavaScript Quickstart uses `.mjs`; the TypeScript examples need a compiler or runner. Check exported clients in the [API reference](/reference).
+Run `npm ls bybit-api` to check the installed version. The JavaScript Quickstart uses `.mjs`. The SDK works with both JavaScript and TypeScript. TypeScript is optional and recommended for build-time checks; see the [TypeScript setup](/environments/typescript). Check exported clients in the [API reference](/reference).
 
 <!--@include: @/.vitepress/shared/troubleshooting/reproduction.md-->
 

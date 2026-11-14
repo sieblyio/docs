@@ -29,6 +29,6 @@ Keep heartbeat handling enabled. WebSocket options include `pingInterval`, `pong
 
 Node.js `keepAlive` uses an HTTPS agent. Disable it when supplying your own proxy agent. Browsers and Workers do not use Node.js HTTPS agents; follow the relevant [setup guide](/compatibility).
 
-`parseExceptions` controls REST error post-processing. `strictParamValidation` can reject undefined parameters, and `recvWindow` controls the request window. Keep the server clock synchronized and handle rejected requests as described in [Error handling](/guides/errors).
+`parseExceptions` controls REST error post-processing. The current request builder removes undefined parameters before sending requests; validate required fields in your application. Keep the server clock synchronized and handle rejected requests as described in [Error handling](/guides/errors).
 
-[Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions) · [Bitget demo trading](https://www.bitget.com/api-doc/common/demotrading/restapi)
+[Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions) · [Bitget demo trading](https://www.bitget.com/docs/uta/demo-trading/rest-api)

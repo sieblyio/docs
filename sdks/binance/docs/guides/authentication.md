@@ -9,7 +9,7 @@ Public market data needs no credentials. Account queries and trading require an 
 
 ## Configure credentials
 
-The examples below select Spot Testnet with `testnet: true`. Set the matching credentials through environment variables. Set `testnet: false` (or omit it) and use production credentials to connect to the production Spot APIs.
+The examples use production Spot APIs. Supply credentials through environment variables. To use Spot Testnet instead, set `testnet: true` and use credentials issued for that environment.
 
 <<< @/../examples/authenticated-client.ts
 
@@ -17,17 +17,17 @@ Supply API credentials through protected server-side environment variables or a 
 
 ## Verify account access
 
-To run these examples on Spot Testnet, use credentials created for **Binance Spot Testnet**, with permission to read the account. For local development, create a private `.env` file:
+Use production Spot credentials with permission to read the account. For local development, create a private `.env` file:
 
 ```dotenv
-# Fictitious values; use your own Spot Testnet credentials.
-BINANCE_API_KEY=example_testnet_key # API key
-BINANCE_API_SECRET=example_testnet_secret # API secret
+# Illustrative values; use your own Spot credentials.
+BINANCE_API_KEY=example_key # API key
+BINANCE_API_SECRET=example_secret # API secret
 ```
 
 Add `.env` to `.gitignore`. This server-side request reads account data; it does not place orders.
 
-This example queries a Spot Testnet account. Futures and Portfolio Margin use different clients and account endpoints.
+This example queries a Spot account. Futures and Portfolio Margin use different clients and account endpoints.
 
 After installing the SDK, save this plain JavaScript example as `account.mjs`:
 

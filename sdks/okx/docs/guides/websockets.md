@@ -31,7 +31,7 @@ Subscribe to multiple channels with an array. Use `unsubscribe()` with the same 
 
 ## Connection recovery
 
-Treat data as stale on `reconnect` and unexpected closure. On `reconnected`, wait for restored subscriptions and fresh data. For incremental books, rebuild according to the channel documentation; for accounts, [reconcile missed state](/guides/private-streams#recover-after-a-gap).
+The SDK restores subscriptions automatically; you do not need to subscribe again. Treat data as stale on `reconnect` and unexpected closure. The `reconnected` event signals an open socket, not fresh data. Wait for fresh updates before using cached market data. For incremental books, rebuild according to the channel documentation; for accounts, [reconcile missed state](/guides/private-streams#recover-after-a-gap).
 
 Call `closeAll()` when shutting down to stop connections. This does not cancel orders.
 
