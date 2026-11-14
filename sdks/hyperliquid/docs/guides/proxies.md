@@ -41,7 +41,7 @@ The type assertion lets the SDK use the Node `ws` constructor despite difference
 <!--@include: @/.vitepress/shared/proxies/socks.md-->
 For WebSockets, use that SOCKS agent inside the custom constructor. Do not copy the HTTP-only URL parser from the preceding example.
 
-**Metadata routing:** in SDK 1.0.3, `WebsocketClient` creates an internal REST client for asset metadata. That client uses the default keep-alive agent, so a custom SOCKS `httpsAgent` in `requestOptions` is replaced. A proxied socket does not guarantee that metadata calls use SOCKS. Use an HTTP/HTTPS proxy through `requestOptions.proxy` for that separate route, or avoid metadata-resolution helpers when all traffic must use SOCKS. A direct `RestClient` with `keepAlive: false` supports the SOCKS agent as shown above.
+**Metadata routing:** configure the separate asset-metadata REST route with `requestOptions.proxy` using an HTTP/HTTPS proxy. Verify both metadata and socket traffic in your proxy logs. If your network requires SOCKS for every request, verify metadata routing before using helpers that resolve assets. For a direct `RestClient`, set `keepAlive: false` with the SOCKS agent as shown above.
 
 ## Verify the route
 

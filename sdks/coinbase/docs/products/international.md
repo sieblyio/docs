@@ -43,11 +43,10 @@ The retained account example shows portfolio-scoped reads:
 
 `getOrderDetails()` and `getPortfolioFills()` are legacy order and fill methods. Confirm the supported history routes for your account before relying on them. Keep the INTX portfolio identifier with each historical record and respect endpoint pagination.
 
-## Retired trading and known SDK mismatch {#orders}
+## Retired trading {#orders}
 
 Do not use `submitOrder()`, `updateOpenOrder()` or the cancellation methods as a new INTX trading integration. Coinbase states that old INTX endpoints no longer support trading. Margin loans did not migrate.
 
-There is also a historical route mismatch in this SDK release: `updatePortfolioParameters()` sends `PATCH /api/v1/portfolios`, while the [archived official contract](https://web.archive.org/web/20260412070122/https://docs.cdp.coinbase.com/api-reference/international-exchange-api/rest-api/intx-spec.yaml) requires `/api/v1/portfolios/{portfolio}`. Its request type lacks that identifier. Do not treat this method's presence as evidence that it can update a portfolio.
 
 ## Legacy environments {#environments}
 

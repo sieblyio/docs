@@ -143,3 +143,18 @@ test('resolves literal dotted protocol names and their nested properties', () =>
     undefined,
   );
 });
+
+test('reference descriptions keep SDK defect reports out of user guidance', async () => {
+  const sdkIds = ['binance', 'bitget', 'bybit', 'coinbase', 'hyperliquid', 'kraken', 'okx'];
+  const defectNarrative = /historical route mismatch|known SDK mismatch|do not rely on this method|until the SDK parameter is corrected|transport limitations require SDK fixes|this SDK currently spells|SDK \d+\.\d+\.\d+ incorrectly types/i;
+  for (const id of sdkIds) {
+    const { default: sdk } = await import(`../sdks/${id}/sdk.config.mjs`);
+    for (const [name, description] of Object.entries(sdk.referenceDescriptions ?? {})) {
+      assert.doesNotMatch(JSON.stringify(description), defectNarrative, `${id}: ${name}`);
+    }
+  }
+  const { readFile } = await import('node:fs/promises');
+  const international = await readFile(new URL('../sdks/coinbase/docs/products/international.md', import.meta.url), 'utf8');
+  assert.doesNotMatch(international, defectNarrative);
+  assert.match(international, /## Retired trading \{#orders\}/);
+});

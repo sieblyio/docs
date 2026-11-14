@@ -11,7 +11,7 @@ export default {
   repository: 'https://github.com/sieblyio/okx-api',
   // Clarify upstream comments without changing SDK types or behavior.
   referenceDescriptions: {
-    "WebsocketAPIClient": "Promise-based wrapper for the OKX WebSocket trading API. Use its methods to await trading responses, or call `WebsocketClient.sendWSAPIRequest()` directly. For order placement and cancellation, use `instIdCode`. The [SDK source example](https://github.com/tiagosiebler/okx-api/blob/master/examples/Websocket/WS-API/ws-api-trade-raw.ts) illustrates the call structure but still uses legacy `instId` fields; update those before running its order-placement or cancellation calls.",
+    "WebsocketAPIClient": "Promise-based wrapper for the OKX WebSocket trading API. Use its methods to await trading responses, or call `WebsocketClient.sendWSAPIRequest()` directly. For order placement and cancellation, use `instIdCode`.",
     "ASSET_BILL_TYPE": "Asset-bill type codes used by the SDK funding-account interfaces.",
     "OrderRequest.quickMgnType": "Legacy Quick Margin selector retained in the SDK. OKX announced retirement of Quick Margin mode for May 29, 2024, and marks the response field deprecated. The current place-order request table does not list this parameter.",
     "RestClient.getMaxBuySellAmount.params.outcome": "Market outcome for EVENTS: `yes` or `no`. Optional; defaults to `yes`.",
@@ -43,8 +43,8 @@ export default {
     "neverGuard": "Create an Error for an unexpected value. The `never` parameter helps TypeScript check exhaustive branches. This function returns the Error; it does not throw it.",
     "WsTopicRequest": "A subscription request containing a `topic` name and an optional `payload` with channel-specific parameters.",
     "RestClient.getFills": "Get filled transaction details from the last 3 days.",
-    "RestClient.submitEasyConvert": "Convert small balances to a supported receiving currency, with up to five source currencies per request. In SDK 3.2.9, this method exposes `fromCcys` and sends it unchanged, but OKX requires an array named `fromCcy`. Use `postPrivate('/api/v5/trade/easy-convert', { fromCcy, toCcy })` with the documented fields until the SDK parameter is corrected.",
-    "RestClient.submitOneClickRepay": "Repay cross-margin debt using available funding and trading balances. Isolated debt is not supported. In SDK 3.2.9, this method exposes `debtCcys` and sends it unchanged, but OKX requires an array named `debtCcy`. Use `postPrivate('/api/v5/trade/one-click-repay', { debtCcy, repayCcy })` with the documented fields until the SDK parameter is corrected.",
+    "RestClient.submitEasyConvert": "Convert small balances to a supported receiving currency, with up to five source currencies per request.",
+    "RestClient.submitOneClickRepay": "Repay cross-margin debt using available funding and trading balances. Isolated debt is not supported.",
     "WebsocketClientOptions.useNativeHeartbeats": "Attach listeners for native WebSocket ping/pong events when supported. The SDK still sends text `ping` messages for its heartbeat timer; this option does not switch outgoing heartbeats to native frames.",
     "WS_KEY_MAP.eeaDemoPublic": "OKX EEA demo public WebSocket connection. Some public channels require authentication.",
     "WS_KEY_MAP.eeaLivePublic": "OKX EEA public WebSocket connection. Some public channels require authentication.",

@@ -33,10 +33,6 @@ An API wallet signs for another account. Set `accountAddress` to the managed acc
 
 `vaultAddress` selects a vault or subaccount for supported actions and takes precedence over `accountAddress` for account queries. The signer must be authorized for the requested action. See the [Hyperliquid tutorial](https://siebly.io/sdk/hyperliquid/javascript/tutorial) for the account and API wallet setup workflow.
 
-## Trading side effects
-
-In SDK 1.0.3, the first trading action from a client instance also schedules a `SIEBLY` referral-code request. Orders check Siebly builder-fee approval and include the builder code only after approval is confirmed. With a main-wallet private key, the SDK can attempt builder approval in the background; API wallets cannot grant that approval. Review the [SDK referral and builder-code behavior](https://github.com/sieblyio/hyperliquid-api#referral--builder-codes-4-fee-discount) before configuring a signer for trading.
-
 ## Custom signers
 
 Pass `signer` instead of `privateKey` to supply a [`HyperliquidSigner`](/api/interfaces/HyperliquidSigner). The interface requires `signTypedData()` and supports an `address` or `getAddress()` for address resolution. An ethers Wallet can satisfy this interface.
