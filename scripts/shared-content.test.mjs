@@ -56,3 +56,32 @@ test('Coinbase navigation keeps references scoped and its runtime setups expande
     }
   }
 });
+
+test('every SDK exposes its testing guide and shares testing limits and TypeScript guidance', async () => {
+  const { default: siteConfig } = await import('../shared/config.mjs');
+  const { catalogue } = await import('./context.mjs');
+  const sdks = await catalogue();
+  for (const sdk of sdks) {
+    const config = siteConfig({ sdk, catalogue: sdks, siteUrl: `http://localhost/${sdk.id}/`, originUrl: 'http://localhost/', indexable: false }, '.');
+    const sidebar = config.themeConfig.sidebar;
+    const variants = Array.isArray(sidebar) ? [sidebar] : Object.values(sidebar);
+    for (const groups of variants) {
+      const links = groups.flatMap(group => group.items || []);
+      assert.equal(links.filter(item => item.link === '/guides/testing-environments').length, 1, `${sdk.id}: testing guide must be discoverable once in each sidebar`);
+    }
+    const docs = path.join(root, 'sdks', sdk.id, 'docs');
+    const guide = await readFile(path.join(docs, 'guides/testing-environments.md'), 'utf8');
+    assert.match(guide, /## Available environments/);
+    assert.match(guide, /## Coverage and limitations/);
+    assert.match(guide, /<!--@include: @\/\.vitepress\/shared\/testing\/limits.md-->/);
+    for (const page of ['getting-started.md', 'guides/configuration.md']) {
+      assert.match(await readFile(path.join(docs, page), 'utf8'), /\[Testing environments\]\(\/guides\/testing-environments\)/);
+    }
+    for (const page of ['getting-started.md', 'guides/troubleshooting.md']) {
+      assert.match(await readFile(path.join(docs, page), 'utf8'), /<!--@include: @\/\.vitepress\/shared\/getting-started\/typescript.md-->/);
+    }
+  }
+  const limits = await readFile(path.join(root, 'shared/content/testing/limits.md'), 'utf8');
+  assert.match(limits, /Testnet is not a reliable place to evaluate strategy performance/);
+  assert.match(limits, /Production remains the default/);
+});

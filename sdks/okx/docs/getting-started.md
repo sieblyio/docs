@@ -38,3 +38,9 @@ If your account belongs to a regional OKX service, [select its market](/guides/c
 The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file, replace the import with `const { RestClient } = require('okx-api')`, and keep the async function. TypeScript uses the same import with included types.
 
 [Market data](/guides/market-data) · [Streaming](/guides/websockets) · [Runtime setup](/compatibility) · [API reference](/reference)
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

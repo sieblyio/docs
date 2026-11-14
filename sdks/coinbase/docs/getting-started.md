@@ -38,3 +38,9 @@ The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file and re
 The other guides use TypeScript. For their small examples, Node.js 24 can run `.ts` files directly. When copying an example that imports `./authenticated-client.js`, compile both TypeScript files with TypeScript first, or change that local import to `./authenticated-client.ts` for Node.js type stripping.
 
 [Choose a client](/clients) · [Market data](/guides/market-data) · [Troubleshooting](/guides/troubleshooting)
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

@@ -42,3 +42,9 @@ The `.mjs` extension tells Node.js to use ES modules and `import`. In a CommonJS
 Read [Market data](/guides/market-data), select a [client](/clients), or [subscribe to WebSocket updates](/guides/websockets). If the request fails, start with [Troubleshooting](/guides/troubleshooting).
 
 [getTickers reference](/api/classes/RestClientV5#gettickers)
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

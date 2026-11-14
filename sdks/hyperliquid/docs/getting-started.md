@@ -59,3 +59,9 @@ The `.mjs` extension tells Node.js to use ES modules and `import`. For CommonJS,
 - [Read account state and configure a signer](/guides/authentication).
 - [Configure retries, recovery and shutdown for production](/guides/production).
 - [Follow the full Hyperliquid JavaScript tutorial on Siebly.io](https://siebly.io/sdk/hyperliquid/javascript/tutorial).
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

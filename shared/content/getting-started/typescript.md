@@ -1,0 +1,3 @@
+We strongly recommend **TypeScript** for SDK integrations. The included types help catch invalid method names, parameter shapes and response assumptions at build time, before requests reach the exchange. Follow the [TypeScript setup](/environments/typescript) and run `npx tsc --noEmit` as part of development and CI. Type checking does not replace runtime validation or exchange-side checks.
+
+[Node.js type stripping](https://nodejs.org/api/typescript.html#type-stripping) can run erasable TypeScript syntax directly, but it does **not** check types. Runtimes without compatible TypeScript support need compiled JavaScript or a TypeScript runner. Use the compiler-based setup above for examples with local `.js` imports that refer to TypeScript source files.

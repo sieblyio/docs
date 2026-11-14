@@ -36,3 +36,9 @@ Your price will differ. `getTickers()` returns tickers in `data`. The example re
 The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file and replace the import with `const { RestClientV3 } = require('bitget-api')`, retaining the async function. TypeScript uses the same import with the SDK's included types.
 
 [Market data](/guides/market-data) · [Streaming](/guides/websockets) · [Choose UTA or Classic](/clients) · [Runtime setup](/compatibility)
+
+## TypeScript integrations
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->
+
+For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).

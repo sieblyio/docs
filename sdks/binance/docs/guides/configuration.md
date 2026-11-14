@@ -32,3 +32,5 @@ For REST, `beautifyResponses: true` in the first constructor argument converts k
 Reuse a client for each credential and environment combination. Limit concurrent requests in the application.
 
 [Client reference](/api/classes/MainClient) · [Production usage](/guides/production)
+
+See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.

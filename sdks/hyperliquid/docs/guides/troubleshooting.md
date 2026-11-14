@@ -20,7 +20,7 @@ For `ERR_MODULE_NOT_FOUND` or `Cannot find module`, run `npm ls @siebly/hyperliq
 
 For `Cannot use import statement outside a module`, save the Quickstart example as `prices.mjs`, or configure your project to use ES modules with `"type": "module"` in `package.json`. A `.cjs` file uses CommonJS `require()` instead. See [module formats](/getting-started#module-formats).
 
-Examples with TypeScript annotations need a TypeScript compiler or runner.
+Node.js 24 can run the examples’ erasable TypeScript syntax directly. Older runtimes may need a TypeScript compiler or runner.
 
 ## Missing or unexpected data
 
@@ -75,3 +75,7 @@ After a timeout or disconnect during a signed action, the outcome may be unknown
 Include the SDK version (`npm ls @siebly/hyperliquid-api`), Node version, network, method, minimal example and relevant error fields. For streams, include the channel and connection events around the failure. Remove private keys, signed payloads and other sensitive values before sharing a report.
 
 Check the [SDK issue tracker](https://github.com/sieblyio/hyperliquid-api/issues) for existing reports and fixes.
+
+## TypeScript checks
+
+<!--@include: @/.vitepress/shared/getting-started/typescript.md-->

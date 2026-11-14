@@ -19,7 +19,9 @@ export default function siteConfig(data, docs) {
       ...(sdk.guides || []),
     ] },
     { text: 'Using the SDK', items: [
-      { text: 'Configuration', link: '/guides/configuration' }, { text: 'Proxies', link: '/guides/proxies' },
+      { text: 'Configuration', link: '/guides/configuration' },
+      { text: 'Testing environments', link: '/guides/testing-environments' },
+      { text: 'Proxies', link: '/guides/proxies' },
       { text: 'Error handling', link: '/guides/errors' },
       { text: 'Production usage', link: '/guides/production' }, { text: 'Troubleshooting', link: '/guides/troubleshooting' },
     ] },
