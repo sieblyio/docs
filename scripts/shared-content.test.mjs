@@ -85,3 +85,19 @@ test('every SDK exposes its testing guide and shares testing limits and TypeScri
   assert.match(limits, /Testnet is not a reliable place to evaluate strategy performance/);
   assert.match(limits, /Production remains the default/);
 });
+
+test('TypeScript guidance recommends type checking without requiring TypeScript', async () => {
+  const { catalogue } = await import('./context.mjs');
+  const guidance = await readFile(path.join(root, 'shared/content/getting-started/typescript.md'), 'utf8');
+  assert.match(guidance, /JavaScript and TypeScript/);
+  assert.match(guidance, /TypeScript is optional/);
+  assert.match(guidance, /strongly recommend/);
+  assert.match(guidance, /Some runtimes can execute TypeScript directly/);
+  assert.match(guidance, /does \*\*not\*\* check types/);
+  assert.match(guidance, /Plain JavaScript usage does not need any TypeScript tooling/);
+  for (const sdk of await catalogue()) {
+    const troubleshooting = await readFile(path.join(root, 'sdks', sdk.id, 'docs/guides/troubleshooting.md'), 'utf8');
+    assert.doesNotMatch(troubleshooting, /(?:Examples with TypeScript annotations need|Older runtimes may need) a TypeScript compiler or runner/);
+    assert.doesNotMatch(troubleshooting, /the TypeScript examples need a compiler or runner/);
+  }
+});

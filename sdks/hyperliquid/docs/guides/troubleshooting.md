@@ -20,7 +20,7 @@ For `ERR_MODULE_NOT_FOUND` or `Cannot find module`, run `npm ls @siebly/hyperliq
 
 For `Cannot use import statement outside a module`, save the Quickstart example as `prices.mjs`, or configure your project to use ES modules with `"type": "module"` in `package.json`. A `.cjs` file uses CommonJS `require()` instead. See [module formats](/getting-started#module-formats).
 
-Node.js 24 can run the examples’ erasable TypeScript syntax directly. Older runtimes may need a TypeScript compiler or runner.
+The SDK works with both JavaScript and TypeScript. TypeScript is optional and recommended for build-time checks; see the [TypeScript setup](/environments/typescript).
 
 ## Missing or unexpected data
 
