@@ -33,4 +33,4 @@ The REST `parse_exceptions` flag controls error post-processing; see [Error hand
 
 [Proxies](/guides/proxies) · [RestClientOptions reference](/api/interfaces/RestClientOptions)
 
-See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.
+See [Demo trading](/guides/testing-environments#demo-trading) for setup, credentials and limitations.

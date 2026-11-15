@@ -31,4 +31,4 @@ For [streaming](/guides/websockets#subscribe-to-a-ticker), pass a connection key
 
 [Production usage](/guides/production) · [Error handling](/guides/errors)
 
-See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.
+See [Testing without orders](/guides/testing-environments#test-without-placing-orders) for ways to validate your integration without placing orders.

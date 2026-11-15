@@ -19,7 +19,7 @@ Bitget uses `demoTrading`, not `testnet`, to select simulated trading.
 
 ## Demo trading
 
-See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.
+See [Demo trading](/guides/testing-environments#demo-trading) for setup, credentials and limitations.
 
 To opt into simulation, set `demoTrading: true` on **every** REST and WebSocket client and use API credentials created for the demo environment. The SDK supplies the REST demo header and selects demo WebSocket routes. Do not manually add simulation headers or copy production credentials into a demo example.
 

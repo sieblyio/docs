@@ -1,9 +1,9 @@
 ---
-title: "Binance testing environments"
+title: "Binance Spot Testnet and demo trading"
 description: "Choose supported Binance testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Spot Testnet and demo trading
 
 ## Available environments
 
@@ -12,13 +12,13 @@ description: "Choose supported Binance testing services, configure clients and u
 
 Choose the product and environment together. An option on `MainClient` does not imply support for all of its endpoint families. Production is the default when `testnet` and `demoTrading` are false or omitted.
 
-## Spot Testnet
+## Spot Testnet {#spot-testnet}
 
 Create API credentials at [Spot Testnet](https://testnet.binance.vision/). Set `testnet: true` and `demoTrading: false` on `MainClient` and any Spot WebSocket clients. Supply the Testnet key and secret as `api_key` and `api_secret`.
 
 Spot Testnet supports `/api` endpoints, not `/sapi`. Its data and virtual balances are periodically reset; consult the [Spot Testnet documentation](https://developers.binance.com/en/docs/products/spot/testnet/general-info) before depending on persistent account state.
 
-## Demo trading
+## Demo trading {#demo-trading}
 
 Create API credentials in [Binance Demo Trading](https://developers.binance.com/en/docs/products/spot/demo-mode/general-info). Set `demoTrading: true` and `testnet: false` on every client used for that environment:
 

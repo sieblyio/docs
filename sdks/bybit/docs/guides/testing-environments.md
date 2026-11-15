@@ -1,9 +1,9 @@
 ---
-title: "Bybit testing environments"
+title: "Bybit Testnet and demo trading"
 description: "Choose supported Bybit testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Testnet and demo trading
 
 ## Available environments
 
@@ -12,11 +12,11 @@ description: "Choose supported Bybit testing services, configure clients and und
 
 These are different services. Do not create a demo account on Testnet for the configuration below. Production is the default when both flags are false or omitted.
 
-## Testnet
+## Testnet {#testnet}
 
 Create credentials in [Bybit Testnet API management](https://testnet.bybit.com/app/user/api-management). Set `testnet: true` and `demoTrading: false` on each `RestClientV5`, `WebsocketClient` or supported `WebsocketAPIClient` you use. Pass Testnet credentials through `key` and `secret`.
 
-## Demo trading
+## Demo trading {#demo-trading}
 
 Switch your mainnet account to Demo Trading and create an API key there. Set `demoTrading: true` and `testnet: false` on each REST and subscription client, with that demo key and secret:
 

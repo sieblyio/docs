@@ -1,15 +1,15 @@
 ---
-title: "Kraken testing environments"
+title: "Kraken Testing without orders"
 description: "Choose supported Kraken testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Testing without orders
 
 ## Available environments
 
 Kraken Spot has no public testnet. The [public Futures demo environment has been retired](https://support.kraken.com/articles/360024809011-api-testing-environment-derivatives). In this SDK, `testnet: true` rejects the retired environment rather than selecting a usable test service. Production remains the default.
 
-## Test without placing orders
+## Test without placing orders {#test-without-placing-orders}
 
 Use [public market-data requests](/guides/market-data) and [public streams](/guides/websockets) to check connectivity without account credentials.
 

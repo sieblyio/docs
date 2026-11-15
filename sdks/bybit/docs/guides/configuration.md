@@ -35,4 +35,4 @@ Reuse a client for each credential and environment combination. Limit concurrent
 
 [Client reference](/api/classes/RestClientV5) · [Production usage](/guides/production)
 
-See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.
+See [Testnet](/guides/testing-environments#testnet) and [Demo trading](/guides/testing-environments#demo-trading) for setup, credentials and limitations.

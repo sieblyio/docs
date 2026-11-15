@@ -1,15 +1,15 @@
 ---
-title: "Hyperliquid testing environments"
+title: "Hyperliquid Testnet"
 description: "Choose supported Hyperliquid testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Testnet
 
 ## Available environments
 
 Hyperliquid provides **mainnet** and **Testnet**. This SDK does not expose a separate demo-trading mode. Mainnet is the default.
 
-## Testnet
+## Testnet {#testnet}
 
 Set `testnet: true` on each `RestClient`, `WebsocketClient` and `WebsocketAPIClient` you use:
 

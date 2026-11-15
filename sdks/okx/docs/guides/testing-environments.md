@@ -1,15 +1,15 @@
 ---
-title: "OKX testing environments"
+title: "OKX Demo trading"
 description: "Choose supported OKX testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Demo trading
 
 ## Available environments
 
 OKX supports **production** and **demo trading**. Regional selection and simulation are separate settings: `market` chooses the account's regional service, while `demoTrading` chooses demo routing. Do not use `market: 'demo'`.
 
-## Demo trading
+## Demo trading {#demo-trading}
 
 Create an API key, secret and passphrase from OKX Demo Trading. Set `demoTrading: true` independently on `RestClient`, `WebsocketClient` and `WebsocketAPIClient` as needed. Use the same account region on each client.
 

@@ -1,15 +1,15 @@
 ---
-title: "Bitget testing environments"
+title: "Bitget Demo trading"
 description: "Choose supported Bitget testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Demo trading
 
 ## Available environments
 
 Bitget supports **production** and **demo trading**. The SDK uses `demoTrading`, not a `testnet` flag. Demo configuration is available for both Unified Trading Account (UTA) and Classic clients; endpoint availability still depends on the account and product.
 
-## Demo trading
+## Demo trading {#demo-trading}
 
 Complete Bitget's account requirements, switch to Demo mode and create a demo API key, secret and passphrase. The official setup currently requires KYC. Do not reuse production credentials.
 

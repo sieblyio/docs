@@ -64,18 +64,34 @@ test('every SDK exposes its testing guide and shares testing limits and TypeScri
   for (const sdk of sdks) {
     const config = siteConfig({ sdk, catalogue: sdks, siteUrl: `http://localhost/${sdk.id}/`, originUrl: 'http://localhost/', indexable: false }, '.');
     const sidebar = config.themeConfig.sidebar;
-    const variants = Array.isArray(sidebar) ? [sidebar] : Object.values(sidebar);
-    for (const groups of variants) {
-      const links = groups.flatMap(group => group.items || []);
-      assert.equal(links.filter(item => item.link === '/guides/testing-environments').length, 1, `${sdk.id}: testing guide must be discoverable once in each sidebar`);
+    const expectedModes = {
+      binance: [['Spot Testnet', 'spot-testnet'], ['Demo trading', 'demo-trading']],
+      bybit: [['Testnet', 'testnet'], ['Demo trading', 'demo-trading']],
+      hyperliquid: [['Testnet', 'testnet']],
+      bitget: [['Demo trading', 'demo-trading']],
+      okx: [['Demo trading', 'demo-trading']],
+      coinbase: [['Advanced Trade sandbox', 'advanced-trade-static-sandbox'], ['Exchange sandbox', 'exchange-sandbox']],
+      kraken: [['Testing without orders', 'test-without-placing-orders']],
+    };
+    const expected = expectedModes[sdk.id].map(([text, anchor]) => ({ text, link: `/guides/testing-environments#${anchor}` }));
+    const entries = Array.isArray(sidebar) ? [['/', sidebar]] : Object.entries(sidebar);
+    for (const [route, groups] of entries) {
+      const links = groups.flatMap(group => group.items || []).filter(item => item.link?.startsWith('/guides/testing-environments'));
+      const isExchange = route === '/products/exchange' || route === '/api/classes/CBExchangeClient';
+      const supported = sdk.id === 'coinbase' && route !== '/' ? (isExchange ? [expected[1]] : []) : expected;
+      assert.deepEqual(links, supported, `${sdk.id}${route}: expose only supported modes with clear labels`);
     }
     const docs = path.join(root, 'sdks', sdk.id, 'docs');
     const guide = await readFile(path.join(docs, 'guides/testing-environments.md'), 'utf8');
     assert.match(guide, /## Available environments/);
     assert.match(guide, /## Coverage and limitations/);
     assert.match(guide, /<!--@include: @\/\.vitepress\/shared\/testing\/limits.md-->/);
+    assert.doesNotMatch(guide, /^# Testing environments$/m);
+    for (const [, anchor] of expectedModes[sdk.id]) assert(guide.includes(`{#${anchor}}`), `${sdk.id}: missing stable anchor ${anchor}`);
     for (const page of ['getting-started.md', 'guides/configuration.md']) {
-      assert.match(await readFile(path.join(docs, page), 'utf8'), /\[Testing environments\]\(\/guides\/testing-environments\)/);
+      const content = await readFile(path.join(docs, page), 'utf8');
+      for (const {text, link} of expected) assert(content.includes(`[${text}](${link})`), `${sdk.id}/${page}: missing direct mode entry`);
+      assert(!content.includes('[Testing environments]'), `${sdk.id}/${page}: vague entry label`);
     }
     for (const page of ['getting-started.md', 'guides/troubleshooting.md']) {
       assert.match(await readFile(path.join(docs, page), 'utf8'), /<!--@include: @\/\.vitepress\/shared\/getting-started\/typescript.md-->/);

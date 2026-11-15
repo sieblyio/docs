@@ -47,4 +47,4 @@ Read [Market data](/guides/market-data), select a [client](/clients), or [subscr
 
 <!--@include: @/.vitepress/shared/getting-started/typescript.md-->
 
-For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).
+See [Testnet](/guides/testing-environments#testnet) and [Demo trading](/guides/testing-environments#demo-trading) for setup, credentials and limitations.

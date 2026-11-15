@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { testingNavigation } from './testing-navigation.mjs';
 import { coinbaseSidebar } from './coinbase-sidebar.mjs';
 import { sourceCommentMarkup } from './markdown.mjs';
 import { analyticsAttributes } from './site-services.mjs';
@@ -20,7 +21,7 @@ export default function siteConfig(data, docs) {
     ] },
     { text: 'Using the SDK', items: [
       { text: 'Configuration', link: '/guides/configuration' },
-      { text: 'Testing environments', link: '/guides/testing-environments' },
+      ...testingNavigation[sdkId],
       { text: 'Proxies', link: '/guides/proxies' },
       { text: 'Error handling', link: '/guides/errors' },
       { text: 'Production usage', link: '/guides/production' }, { text: 'Troubleshooting', link: '/guides/troubleshooting' },

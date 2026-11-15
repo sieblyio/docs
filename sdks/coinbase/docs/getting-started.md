@@ -43,4 +43,4 @@ The other guides show TypeScript examples, but TypeScript is not required to use
 
 <!--@include: @/.vitepress/shared/getting-started/typescript.md-->
 
-For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).
+See [Advanced Trade sandbox](/guides/testing-environments#advanced-trade-static-sandbox) and [Exchange sandbox](/guides/testing-environments#exchange-sandbox) for setup, credentials and limitations.

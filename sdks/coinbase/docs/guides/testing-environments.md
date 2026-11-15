@@ -1,21 +1,21 @@
 ---
-title: "Coinbase testing environments"
+title: "Coinbase Sandboxes"
 description: "Choose supported Coinbase testing services, configure clients and understand their limitations."
 ---
 
-# Testing environments
+# Sandboxes
 
 ## Available environments
 
 Coinbase sandbox support is **product-specific**. `useSandbox` is not a universal switch for every Coinbase client. Production is the default.
 
-## Advanced Trade static sandbox
+## Advanced Trade static sandbox {#advanced-trade-static-sandbox}
 
 Set `useSandbox: true` on `CBAdvancedTradeClient` to select the static REST sandbox. It returns predefined mock responses for [the endpoints listed by Coinbase](https://docs.cdp.coinbase.com/coinbase-app/advanced-trade-apis/sandbox). The service does not require authentication, but the SDK's flag changes routing rather than disabling its normal request signing.
 
 Omit credentials when inspecting unauthenticated mock responses. Use this service to inspect supported response shapes. It cannot validate live credentials, account balances, matching or fills. There is **no Advanced Trade WebSocket sandbox**; do not enable `useSandbox` on Advanced Trade streaming clients. Keep public production streams clearly separated from mock REST results.
 
-## Exchange sandbox
+## Exchange sandbox {#exchange-sandbox}
 
 `CBExchangeClient` and Exchange WebSocket feeds support `useSandbox: true`. Create a sandbox account and API credentials specifically for that environment; production login sessions and API keys do not carry over. The REST client uses `apiKey`, `apiSecret` and `apiPassphrase`.
 

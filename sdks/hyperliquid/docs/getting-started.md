@@ -64,4 +64,4 @@ The `.mjs` extension tells Node.js to use ES modules and `import`. For CommonJS,
 
 <!--@include: @/.vitepress/shared/getting-started/typescript.md-->
 
-For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).
+See [Testnet](/guides/testing-environments#testnet) for setup, credentials and limitations.

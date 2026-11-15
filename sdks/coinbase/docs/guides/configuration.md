@@ -37,4 +37,4 @@ A `wsUrl` override applies to connections created by that client. Avoid reusing 
 
 [Proxies](/guides/proxies) · [Production usage](/guides/production)
 
-See [Testing environments](/guides/testing-environments) for supported test services, credentials and limitations.
+See [Advanced Trade sandbox](/guides/testing-environments#advanced-trade-static-sandbox) and [Exchange sandbox](/guides/testing-environments#exchange-sandbox) for setup, credentials and limitations.

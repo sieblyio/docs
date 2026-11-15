@@ -43,4 +43,4 @@ The `.mjs` extension selects ES modules. For CommonJS, save a `.cjs` file, repla
 
 <!--@include: @/.vitepress/shared/getting-started/typescript.md-->
 
-For optional non-production services and their limitations, see [Testing environments](/guides/testing-environments).
+See [Demo trading](/guides/testing-environments#demo-trading) for setup, credentials and limitations.
