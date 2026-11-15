@@ -64,7 +64,7 @@ This subscribes to the authenticated Exchange `user` channel through `exchangeDi
 
 Load initial orders and account state, then update them from user order events. For balance updates, the authenticated `balance` channel takes `payload.account_ids` containing Exchange account IDs. Do not assume the `user` channel itself is a full balance ledger.
 
-Mark state stale on `reconnect`. On `reconnected`, confirm subscription recovery and reconcile missing orders/fills/balances through targeted REST reads, accounting for events received during recovery. Resume trading only when the account state it depends on is current. See [Account State](https://siebly.io/reference/glossary#accountstate).
+The SDK restores subscriptions automatically after reconnecting. Mark state stale on `reconnect`, process incoming order events when the stream resumes, and reconcile missing orders, fills or balances through targeted REST reads. Account for events received during recovery. Resume trading only when the account state it depends on is current. See [Account State](https://siebly.io/reference/glossary#accountstate).
 
 ## Environments and reference {#environments}
 
@@ -72,4 +72,4 @@ Mark state stale on `reconnect`. On `reconnected`, confirm subscription recovery
 
 This SDK's `WebsocketAPIClient` does not provide Exchange order entry. Use REST for order commands and subscriptions for updates.
 
-[Exchange client reference](/api/classes/CBExchangeClient) · [Exchange WebSocket channels](https://docs.cdp.coinbase.com/exchange/docs/websocket-channels) · [Choose another API](/products)
+[Exchange client reference](/api/classes/CBExchangeClient) · [Exchange WebSocket channels](https://docs.cdp.coinbase.com/exchange/websocket-feed/channels) · [Choose another API](/products)

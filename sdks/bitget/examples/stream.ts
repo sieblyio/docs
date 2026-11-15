@@ -14,7 +14,7 @@ ws.on('reconnect', () => {
   console.log('Reconnecting; market data may be stale.');
 });
 ws.on('reconnected', () => {
-  console.log('Connection restored; wait for subscriptions and fresh data.');
+  console.log('Connection restored; the SDK restores subscriptions automatically. Wait for fresh market data.');
 });
 
 ws.subscribe({

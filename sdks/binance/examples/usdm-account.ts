@@ -7,7 +7,7 @@ async function main() {
     throw new Error('Set BINANCE_API_KEY and BINANCE_API_SECRET.');
   }
 
-  const client = new USDMClient({ api_key, api_secret, demoTrading: true });
+  const client = new USDMClient({ api_key, api_secret });
   const account = await client.getAccountInformationV3();
   console.log('Account:', {
     canTrade: account.canTrade,

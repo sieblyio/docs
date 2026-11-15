@@ -46,9 +46,9 @@ The Prime market feed also requires authentication. Use a dedicated `WebsocketCl
 - `product_ids`: the products to subscribe to.
 - `product_type`: optional, when required by the selected product/channel.
 
-The SDK signs the subscription. Follow the [Prime channel schema](https://docs.cdp.coinbase.com/prime/docs/websocket-channels) for the channel name and snapshot/update behavior. Register `update`, `response` and `exception` listeners before subscribing. Keep the default logger, and call `closeAll()` on intentional shutdown.
+The SDK signs the subscription. Follow the [Prime channel schema](https://docs.cdp.coinbase.com/prime/websocket-feed/channels) for the channel name and snapshot/update behavior. Register `update`, `response` and `exception` listeners before subscribing. Keep the default logger, and call `closeAll()` on intentional shutdown.
 
-These market subscriptions do not track all custody, order or portfolio changes. On `reconnect`, mark derived market state stale. On `reconnected`, confirm subscriptions and restore missing snapshots before resuming dependent work.
+These market subscriptions do not track all custody, order or portfolio changes. The SDK restores subscriptions automatically after reconnecting; you do not need to subscribe again. The `reconnected` event means the socket is open, not that fresh data has arrived. Treat derived market state as stale until fresh data arrives, and restore any missing snapshots before applying further updates.
 
 ## Preview and manage orders {#orders}
 

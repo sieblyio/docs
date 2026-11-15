@@ -13,7 +13,7 @@ For HTTP, HTTPS or SOCKS routing in Node.js, see [Use a proxy](/guides/proxies).
 
 The first constructor argument contains SDK settings such as `testnet`, `key`, `secret` and `recv_window`. The second contains Axios request options, including `timeout` in milliseconds.
 
-The example selects Testnet and a ten-second HTTP timeout. `recv_window` controls the signed request acceptance window; it is not the HTTP timeout.
+The example uses Mainnet, the SDK default, and a ten-second HTTP timeout. `recv_window` controls the signed request acceptance window; it is not the HTTP timeout.
 
 ## Select an environment
 
@@ -23,7 +23,7 @@ Choose credentials for the environment you want to use:
 - **Testnet:** set `testnet: true` and use Testnet credentials.
 - **Demo trading:** set `demoTrading: true` with `testnet: false`, and use credentials from your Bybit Demo Trading account. This supports system testing with live market data and simulated orders.
 
-For REST and private WebSocket connections, `demoTrading` takes precedence if both flags are enabled. Demo trading has its own supported endpoints and rate limits; see [Bybit's demo documentation](https://bybit-exchange.github.io/docs/v5/demo).
+For REST and private WebSocket connections, `demoTrading` takes precedence if both flags are enabled. Demo trading supports private WebSocket streams but not WebSocket API trading requests. With `testnet: false`, public streams use Mainnet market data. See [Bybit's demo documentation](https://bybit-exchange.github.io/docs/v5/demo).
 
 ## Rate-limit information
 

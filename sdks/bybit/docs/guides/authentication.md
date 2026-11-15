@@ -9,7 +9,7 @@ Public market data needs no credentials. Account queries and trading require an 
 
 ## Configure credentials
 
-The examples below select Bybit Testnet with `testnet: true`. Set the matching credentials through environment variables. For production (Mainnet), set `testnet: false` (or omit it), leave `demoTrading` disabled and use Mainnet credentials. For system testing with demo trading instead, use `demoTrading: true`, `testnet: false` and credentials from your Bybit Demo Trading account.
+The examples use Mainnet, the SDK default. Set Mainnet credentials through environment variables. To use Testnet or demo trading instead, select that environment explicitly and use matching credentials; see [configuration](/guides/configuration#select-an-environment).
 
 <<< @/../examples/authenticated-client.ts
 
@@ -17,12 +17,12 @@ Keep API credentials in a secure server-side environment, supplied through prote
 
 ## Verify account access
 
-To run these examples on Testnet, use credentials created for Bybit Testnet, with permission to read the account. For local development, create a private `.env` file:
+Use Mainnet credentials with permission to read the account. For local development, create a private `.env` file:
 
 ```dotenv
-# Use your own Bybit Testnet credentials.
-BYBIT_API_KEY=example_testnet_key
-BYBIT_API_SECRET=example_testnet_secret
+# Use your own Bybit Mainnet credentials.
+BYBIT_API_KEY=example_key
+BYBIT_API_SECRET=example_secret
 ```
 
 Exclude `.env` from version control and leave `BYBITTRACE` unset to avoid logging signed requests.

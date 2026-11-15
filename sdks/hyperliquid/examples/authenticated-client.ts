@@ -7,7 +7,6 @@ if (!privateKey || !accountAddress) {
 }
 
 export const client = new RestClient({
-  testnet: true,
   privateKey,
   accountAddress,
 });

@@ -7,7 +7,7 @@ async function main() {
     throw new Error('Set BINANCE_API_KEY and BINANCE_API_SECRET.');
   }
 
-  const client = new MainClient({ api_key, api_secret, testnet: true });
+  const client = new MainClient({ api_key, api_secret });
   const account = await client.getAccountInformation();
 
   console.log('Account access verified.');

@@ -33,7 +33,7 @@ Combine snapshots with buffered updates using order IDs, update times and execut
 
 ## Recover after a gap
 
-On `reconnect`, mark affected state stale and pause decisions that depend on it. On `reconnected`, confirm authentication and subscriptions again, buffer incoming events and reconcile:
+The SDK reconnects, authenticates and restores subscriptions automatically. On `reconnect`, mark affected state stale and pause decisions that depend on it. Use `reconnected` to start recovery, buffer incoming events and reconcile:
 
 1. Refresh balances, positions and all relevant open orders.
 2. Query recent order history and fills covering the outage, with overlap and pagination. An order missing from the open-order list may have filled or been cancelled while disconnected.

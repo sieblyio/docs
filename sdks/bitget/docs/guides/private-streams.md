@@ -29,7 +29,7 @@ Save as `classic-private-stream.ts`, compile it with the same helper and run the
 node --env-file=.env dist/classic-private-stream.js
 ```
 
-`subscribeTopic()` determines the private connection from the topic. For this private topic, `default` selects account updates rather than a particular Spot symbol. Futures and margin use different instrument types and channels.
+`subscribeTopic()` determines the private connection from the topic. For `orders`, `default` subscribes to all Spot symbols; for `account`, it subscribes to all coins. Futures and margin use different instrument types and channels.
 
 ## Follow order updates {#observe-commands-passively}
 
@@ -39,10 +39,10 @@ Keep order state, fills, balances and positions separate. Deduplicate executions
 
 ## Recover after a gap
 
-Mark affected state stale on reconnect or unexpected closure. Confirm renewed authentication and subscriptions, buffer incoming events, then reconcile balances, open orders and executions using the matching REST client. Page through all relevant history, merge buffered events by identifiers and timestamps, and resume trading decisions only when account state is current.
+The SDK reconnects, authenticates and restores subscriptions automatically. Mark affected state stale during a connection gap. Buffer incoming events and reconcile balances, open orders and executions using the matching REST client. Page through all relevant history, merge buffered events by identifiers and timestamps, and resume trading decisions only when account state is current.
 
 For UTA use `getBalances()`, `getUnfilledOrders()`, `getHistoryOrders()` and `getTradeFills()`. `getFills()` is public market trade data and cannot recover your account executions. Classic Spot uses `getSpotAccountAssets()`, `getSpotOpenOrders()`, `getSpotHistoricOrders()` and `getSpotFills()`. Respect each endpoint's history window and pagination.
 
-Check which topics send an initial snapshot and load any missing state through REST. Reconnection does not necessarily replay missed events. Save recovery checkpoints so later history queries cover the gap without reloading all history.
+UTA's `account` topic sends initial data, but `order` and `fill` do not. Load open orders and any required execution history through REST. Reconnection does not necessarily replay missed events. Save recovery checkpoints so later history queries cover the gap without reloading all history.
 
 [UTA order management](/guides/orders) · [Production usage](/guides/production)

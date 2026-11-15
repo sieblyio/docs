@@ -1,24 +1,24 @@
 ---
 title: "Bybit private account streams"
-description: "Subscribe to private account updates with a Testnet order-stream example."
+description: "Subscribe to private account updates with an order-stream example."
 ---
 
 # Subscribe to private account updates
 
 Use `WebsocketClient` to receive private account updates, including orders, executions, positions and wallet changes. It supports Mainnet, Testnet and demo trading with credentials and topics supported by the selected environment.
 
-This example uses Testnet and the `order.linear` topic. It prints order changes for 60 seconds without placing or cancelling orders.
+This example uses Mainnet and the `order.linear` topic. It prints order changes for 60 seconds without placing or cancelling orders.
 
 ## Configure the connection
 
-For production (Mainnet), set `testnet` and `demoTrading` to false or omit both, and use Mainnet credentials. Use `testnet: true` for Testnet, or `demoTrading: true` with `testnet: false` for demo trading when testing your system with simulated orders. Use credentials for that environment; see [configuration](/guides/configuration#select-an-environment) for supported features.
+Mainnet is the default. For Testnet or demo trading, configure the stream and order clients for the same environment and use matching credentials; see [configuration](/guides/configuration#select-an-environment) for the options and supported features.
 
-To run this example on Testnet, use Node.js 24 with the [`bybit-api`](https://www.npmjs.com/package/bybit-api) npm package installed. Create a private `.env` file with Bybit Testnet credentials and permission to read your orders:
+To run this example, use Node.js 24 with the [`bybit-api`](https://www.npmjs.com/package/bybit-api) npm package installed. Create a private `.env` file with Bybit Mainnet credentials and permission to read your orders:
 
 ```dotenv
-# Use your own Bybit Testnet credentials.
-BYBIT_API_KEY=example_testnet_key
-BYBIT_API_SECRET=example_testnet_secret
+# Use your own Bybit Mainnet credentials.
+BYBIT_API_KEY=example_key
+BYBIT_API_SECRET=example_secret
 ```
 
 Keep `.env` server-side and excluded from version control. Leave `BYBITTRACE` unset to avoid logging signed requests. The SDK signs the WebSocket authentication request.
@@ -35,7 +35,7 @@ node --env-file=.env private-stream.ts
 
 ## Observe an order
 
-Wait for `Private stream authenticated.` and `Subscribed to order.linear.` before starting the [Testnet order example](/guides/orders) in another terminal using the same account. Authentication alone does not confirm a subscription.
+Wait for `Private stream authenticated.` and `Subscribed to order.linear.` before starting the [order example](/guides/orders) in another terminal using the same account. Authentication alone does not confirm a subscription.
 
 Each update prints the exchange order ID, symbol, status, cumulative executed quantity and remaining quantity. Match `orderId` to the ID returned by the order example. Stream and subscription errors are logged with their error objects.
 

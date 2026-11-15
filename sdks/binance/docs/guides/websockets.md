@@ -29,7 +29,7 @@ Keep the subscription and cleanup code unchanged. A ticker's `s` and `c` fields 
 
 ## Subscription results and messages
 
-Await the subscription promise and catch failures. Market data arrives on `message`; `response` carries subscription replies.
+Await the subscription promise and catch failures. Its resolution is not proof of server acceptance: the SDK may still be opening the connection or sending cached topics. Market data arrives on `message`; `response` carries subscription replies, and `exception` reports failures.
 
 ## Recover after a disconnect
 

@@ -13,7 +13,7 @@ Set `accountAddress` to query an account without configuring a signer. This exam
 
 <<< @/../examples/account-state.ts
 
-Set `HYPERLIQUID_ACCOUNT_ADDRESS` before running the example. Perpetual positions are in `assetPositions`. For unified accounts or portfolio margin, [`getSpotBalances()`](/api/classes/RestClient#getspotbalances) returns balances across Spot and perps.
+Set `HYPERLIQUID_ACCOUNT_ADDRESS` before running the example. It uses Mainnet by default; add `testnet: true` to the constructor options to query Testnet. Perpetual positions are in `assetPositions`. For unified accounts or portfolio margin, [`getSpotBalances()`](/api/classes/RestClient#getspotbalances) returns balances across Spot and perps.
 
 Account methods resolve addresses in this order: request `user`, `vaultAddress`, `accountAddress`, then the configured signer.
 
@@ -21,7 +21,7 @@ Account methods resolve addresses in this order: request `user`, `vaultAddress`,
 
 ## Configure a private key
 
-Pass `privateKey` and the managed account address to `RestClient`. This example configures Testnet. For production (Mainnet), set `testnet: false` (or omit it), use the Mainnet account address and a signer authorized for that account.
+Pass `privateKey` and the managed account address to `RestClient`. This example uses Mainnet. Use the managed account address and a signer authorized for that account. For Testnet, set `testnet: true` and use the corresponding account and signer.
 
 <<< @/../examples/authenticated-client.ts
 

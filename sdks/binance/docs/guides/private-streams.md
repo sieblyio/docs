@@ -1,19 +1,19 @@
 ---
 title: "Binance private user data streams"
-description: "Receive Spot account and order updates with the WebSocket API, demonstrated on Testnet."
+description: "Receive Spot account and order updates with the WebSocket API."
 ---
 
 # Subscribe to private account updates
 
-Use `WebsocketAPIClient` to receive Spot account and order events through Binance's WebSocket API. It supports Mainnet and Spot Testnet; this walkthrough uses Testnet. Private account events are separate from public market-data subscriptions. Spot's older listen-key workflow is deprecated; use `subscribeUserDataStream()` for new integrations.
+Use `WebsocketAPIClient` to receive Spot account and order events through Binance's WebSocket API. This walkthrough uses production Spot; the client also supports Spot Testnet. Private account events are separate from public market-data subscriptions. Binance removed Spot's older listen-key REST and WebSocket API operations on 20 February 2026 at 07:00 UTC; use `subscribeUserDataStream()` for Spot. See the [Spot API changelog](https://github.com/binance/binance-spot-api-docs/blob/master/CHANGELOG.md#2026-01-21).
 
 Use these events to keep local order and balance state up to date after REST submissions. There is no need to query each order after placing or cancelling it when the required updates have arrived. See [account state](/guides/production#keep-account-state-up-to-date) for startup and recovery.
 
-For production Spot, set `testnet: false` (or omit it) and use production credentials.
+To use Spot Testnet, set `testnet: true` and use Testnet credentials.
 
-## Example: connect to Spot Testnet
+## Connect to the account stream
 
-Use Node.js 24 and install the SDK with `npm install binance`. Set the Spot Testnet credential variables from [order management](/guides/orders#set-up). Keep signing credentials on the server and out of browser bundles.
+Use Node.js 24 and install the SDK with `npm install binance`. Set the Spot credential variables from [order management](/guides/orders#set-up). Keep signing credentials on the server and out of browser bundles.
 
 Save this as `private-stream.ts`:
 
@@ -25,7 +25,7 @@ Run it before placing an order in another terminal:
 node --env-file=.env private-stream.ts
 ```
 
-The SDK maps `WS_KEY_MAP.mainWSAPI` to the Spot Testnet WebSocket API when `testnet: true`. The helper uses `userDataStream.subscribe` on an authenticated Ed25519 session, or a signed `userDataStream.subscribe.signature` request for HMAC/RSA credentials. This example accepts an HMAC API secret through the environment; see [authentication](/guides/authentication) for credential handling.
+`WS_KEY_MAP.mainWSAPI` selects the production Spot WebSocket API by default; the SDK maps it to Spot Testnet when `testnet: true`. The helper uses `userDataStream.subscribe` on an authenticated Ed25519 session, or a signed `userDataStream.subscribe.signature` request for HMAC/RSA credentials. This example accepts an HMAC API secret through the environment; see [authentication](/guides/authentication) for credential handling.
 
 Listeners are registered before subscribing so early messages are not missed. Once subscribed, the script waits for account activity. A quiet account may produce no events during the 60-second window.
 

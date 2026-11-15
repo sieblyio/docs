@@ -18,6 +18,8 @@ REST clients return promises. `WebsocketClient` delivers subscriptions through e
 
 Start with `SpotClient` for Spot endpoints or `DerivativesClient` for Futures. These APIs use different credentials, symbols and response formats.
 
+Unified public WebSocket support is [in development](/guides/websockets#unified-public-streams-in-development). The current SDK uses `WebsocketClient` for Futures subscriptions and `WebsocketAPIClient` for Spot order entry. Kraken’s existing Futures feed remains available until [1 March 2027](https://docs.kraken.com/exchange/changelog).
+
 ## REST requests
 
 <<< @/../examples/first-call.ts

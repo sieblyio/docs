@@ -14,9 +14,9 @@ Use the client, keys and account identifiers for your product. A Coinbase login 
 | Advanced Trade | [Quickstart](/getting-started), [clients](/clients), [reference](/reference). |
 | Global derivatives | [Global guide](/products/global): derivatives JSON-RPC and a dedicated WebSocket API. |
 | Exchange | [Exchange guide](/products/exchange): Exchange REST and market feeds. |
-| International Exchange | [INTX guide](/products/international): international derivatives instruments and portfolios. |
+| International Exchange (legacy) | [Migration and historical records](/products/international). Institutional trading moved to Deribit. |
 | Prime | [Prime guide](/products/prime): institutional trading, portfolios and custody. |
 | Coinbase App | [App guide](/products/app): wallet accounts and transactions. |
-| Commerce | [Commerce guide](/products/commerce): charges and checkouts. |
+| Commerce (legacy) | [Migration and retained methods](/products/commerce). Use Coinbase Business for new payment integrations. |
 
 Each product guide covers authentication, environments and links to its API reference.

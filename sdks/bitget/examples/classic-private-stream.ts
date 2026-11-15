@@ -18,7 +18,7 @@ ws.on('reconnect', () => {
   console.log('Reconnecting; Classic account state may be stale.');
 });
 ws.on('reconnected', () => {
-  console.log('Connection restored. Confirm subscriptions and recover missed account updates through REST.');
+  console.log('Connection restored; the SDK restores subscriptions automatically. Recover missed account updates through REST.');
 });
 
 Promise.all([

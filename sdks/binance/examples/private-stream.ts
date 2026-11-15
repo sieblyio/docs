@@ -1,15 +1,14 @@
 import { WebsocketAPIClient, WS_KEY_MAP } from 'binance';
 
 async function main() {
-  const api_key = process.env.BINANCE_TESTNET_API_KEY;
-  const api_secret = process.env.BINANCE_TESTNET_API_SECRET;
+  const api_key = process.env.BINANCE_API_KEY;
+  const api_secret = process.env.BINANCE_API_SECRET;
   if (!api_key || !api_secret) {
-    throw new Error('Set Spot Testnet credentials.');
+    throw new Error('Set Spot credentials.');
   }
   const api = new WebsocketAPIClient({
     api_key,
     api_secret,
-    testnet: true,
     beautify: false,
   });
   const ws = api.getWSClient();
@@ -77,7 +76,7 @@ async function main() {
       await api.disconnectAll();
     } else {
       console.log(
-        'Spot Testnet user data subscribed. Waiting for account events.',
+        'Spot user data subscribed. Waiting for account events.',
       );
     }
   } catch (error) {

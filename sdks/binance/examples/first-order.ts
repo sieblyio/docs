@@ -27,9 +27,8 @@ async function main() {
 
   const client = new MainClient(
     {
-      api_key: requiredEnvVar('BINANCE_TESTNET_API_KEY'),
-      api_secret: requiredEnvVar('BINANCE_TESTNET_API_SECRET'),
-      testnet: true,
+      api_key: requiredEnvVar('BINANCE_API_KEY'),
+      api_secret: requiredEnvVar('BINANCE_API_SECRET'),
     },
     { timeout: 10_000 },
   );

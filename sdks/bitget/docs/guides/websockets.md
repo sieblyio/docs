@@ -33,7 +33,7 @@ Existing Classic integrations can use `WebsocketClientV2.subscribeTopic('SPOT', 
 
 ## Recovery and shutdown
 
-Treat data as stale during `reconnect` or unexpected closure. On `reconnected`, confirm subscriptions and wait for fresh data. For incremental order books, follow the channel's recovery procedure before applying further deltas.
+The SDK restores subscriptions automatically after reconnecting; you do not need to subscribe again. The `reconnected` event means the socket is open, not that fresh data has arrived. Treat cached data as stale until fresh updates arrive. For incremental order books, follow the channel's recovery procedure before applying further deltas.
 
 Call `closeAll()` when shutting down. Browser/mobile views should unsubscribe or close their owned connections when removed; do not reconnect on every render. Closing a socket does not cancel orders.
 

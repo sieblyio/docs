@@ -21,7 +21,7 @@ async function printOrderStatus(client: RestClientV5, orderId: string) {
   );
   if (!order) {
     throw new Error(
-      'Order not found. Check Testnet order history before placing another order.',
+      'Order not found. Check order history before placing another order.',
     );
   }
   console.log({
@@ -45,7 +45,6 @@ async function main() {
     {
       key: requiredEnvVar('BYBIT_API_KEY'),
       secret: requiredEnvVar('BYBIT_API_SECRET'),
-      testnet: true,
       throwExceptions: true,
     },
     { timeout: 10_000 },

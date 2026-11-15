@@ -7,7 +7,7 @@ async function main() {
       'Set HYPERLIQUID_ACCOUNT_ADDRESS to the managed account address.',
     );
   }
-  const ws = new WebsocketClient({ testnet: true });
+  const ws = new WebsocketClient({});
 
   let stopped = false;
   const timer = setTimeout(stop, 60_000);

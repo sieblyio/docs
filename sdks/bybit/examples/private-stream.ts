@@ -10,7 +10,10 @@ function main() {
     throw new Error('Set BYBIT_API_KEY and BYBIT_API_SECRET.');
   }
 
-  const ws = new WebsocketClient({ key, secret, testnet: true });
+  const ws = new WebsocketClient({
+    key,
+    secret,
+  });
   let stopped = false;
 
   function stop() {
@@ -31,7 +34,9 @@ function main() {
   process.once('SIGTERM', stop);
 
   // Install listeners before initiating the subscription.
-  ws.on('authenticated', () => console.log('Private stream authenticated.'));
+  ws.on('authenticated', () => {
+    console.log('Private stream authenticated.');
+  });
   ws.on('response', (message) => {
     if (stopped) {
       return;
@@ -61,7 +66,9 @@ function main() {
     }
   });
   // The SDK reconnects, authenticates and restores subscriptions automatically.
-  ws.on('exception', (error) => console.error('Private stream error:', error));
+  ws.on('exception', (error) => {
+    console.error('Private stream error:', error);
+  });
   ws.on('reconnect', (event) => {
     console.log('Reconnecting:', event);
   });
@@ -70,7 +77,9 @@ function main() {
     // If missed events leave state unresolved, use a targeted REST recovery query.
     // Do not query after each order event or submission.
   });
-  ws.on('close', (event) => console.log('Connection closed:', event));
+  ws.on('close', (event) => {
+    console.log('Connection closed:', event);
+  });
 
   try {
     // The response event above confirms subscription, not this promise alone.

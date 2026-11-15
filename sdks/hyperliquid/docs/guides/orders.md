@@ -9,15 +9,15 @@ Place a BTC perpetual limit order with `RestClient` and cancel any remaining qua
 
 The example uses separate commands to place, cancel and check an order. In a persistent application, keep the account stream connected and track orders and fills locally. Use REST reads for startup, recovery and unresolved requests rather than after every order.
 
-This walkthrough uses Hyperliquid Testnet and test funds to avoid accidental live trades. The same methods work on Mainnet, Hyperliquid's production markets. Remove `testnet` or set it to `false`, and use the Mainnet account address with an authorized signer to execute against live markets.
+This walkthrough uses Mainnet. The `place` command submits a real order. To use Testnet instead, set `testnet: true` on the REST and WebSocket clients and use the corresponding account and signer.
 
 A post-only order is rejected if it would immediately take liquidity. Once resting, it can fill before cancellation. Cancelling an order does not reverse fills or close an existing position.
 
-Before placing orders, use the [account read example](/guides/authentication) to check balances and confirm the account address.
+Before placing orders, use the [account read example](/guides/authentication) to inspect positions. Keep account reads, order requests and subscriptions on the same network.
 
 ## Set up
 
-To run this example on Testnet, use Node.js 24, a funded Hyperliquid Testnet account and an API wallet authorized for that account. See [API wallets and account addresses](/guides/authentication#api-wallets-and-vaults).
+Use Node.js 24, a funded Hyperliquid account and an API wallet authorized for that account. See [API wallets and account addresses](/guides/authentication#api-wallets-and-vaults).
 
 Install the [`@siebly/hyperliquid-api`](https://www.npmjs.com/package/@siebly/hyperliquid-api) npm package:
 
@@ -36,7 +36,7 @@ HYPERLIQUID_LIMIT_PRICE=60000 # USD; adjust for the current market
 
 The address and key above are illustrative. Use the authorized API wallet's key and the account it manages. Signing runs locally in Node.js.
 
-Set a size in BTC and a buy price below the current Testnet BTC best bid. The example passes both values as decimal strings; the exchange applies its current [tick and lot size rules](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/tick-and-lot-size).
+Set a size in BTC and a buy price below the current BTC best bid. The example passes both values as decimal strings; the exchange applies its current [tick and lot size rules](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/tick-and-lot-size).
 
 ## Save the example
 
@@ -46,7 +46,7 @@ Save the following as `orders.mts`. Node.js 24 runs this TypeScript file directl
 
 ## Place the order
 
-Start the [account order stream](/guides/private-streams) in another terminal for the same Testnet account. Wait for the server subscription acknowledgements for `orderUpdates` and `userFills`. Keep it running while you try the commands; the demonstration stops after 60 seconds.
+Start the [account order stream](/guides/private-streams) in another terminal for the same account. Wait for the server subscription acknowledgements for `orderUpdates` and `userFills`. Keep it running while you try the commands; the demonstration stops after 60 seconds.
 
 ```sh
 node --env-file=.env orders.mts place

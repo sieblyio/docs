@@ -1,7 +1,7 @@
 import { RestClient } from '@siebly/hyperliquid-api';
 
 const client = new RestClient(
-  { testnet: true },
+  {},
   { timeout: 20_000 },
 );
 

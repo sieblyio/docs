@@ -1,6 +1,6 @@
 ---
 title: "Binance order management"
-description: "Place and cancel a Spot Testnet order through REST, and follow its lifecycle through private WebSocket events."
+description: "Place and cancel a Spot order through REST, and follow its lifecycle through private WebSocket events."
 ---
 
 # Order management {#place-your-first-spot-testnet-order}
@@ -11,7 +11,7 @@ The order script makes one REST request per command. In a persistent application
 
 `LIMIT_MAKER` is post-only: Binance rejects it if it would immediately match as a taker. An accepted resting order can still fill, including before you cancel it.
 
-This walkthrough uses Spot Testnet and virtual funds to avoid accidental live trades. The same Spot methods work on Mainnet, Binance's production markets. Remove `testnet` or set it to `false`, and use production credentials to execute against live markets.
+This walkthrough uses production Spot markets. The `place` command submits a real order. To use Spot Testnet instead, set `testnet: true` on both clients and use Testnet credentials.
 
 Before placing orders, use the [authenticated account read](/guides/authentication) to check balances and account access.
 
@@ -23,20 +23,20 @@ Use Node.js 24 and install the [`binance`](https://www.npmjs.com/package/binance
 npm install binance
 ```
 
-To run this example on Spot Testnet, create credentials at [Binance Spot Testnet](https://testnet.binance.vision/). Enable the permissions needed to read account state and trade. Use Testnet credentials with this server-side example and keep your system clock synchronized.
+Use production Spot API credentials with account-read and trading permissions. Keep credentials server-side and keep your system clock synchronized.
 
 Create a local `.env` file, exclude it from version control, and fill in your values:
 
 ```dotenv
-# Illustrative values; use your own Spot Testnet credentials.
-BINANCE_TESTNET_API_KEY=example_testnet_key
-BINANCE_TESTNET_API_SECRET=example_testnet_secret
+# Illustrative values; use your own Spot credentials.
+BINANCE_API_KEY=example_key
+BINANCE_API_SECRET=example_secret
 BINANCE_SYMBOL=BTCUSDT # Spot market
 BINANCE_PRICE=60000 # Example USDT limit price; choose for the current market
 BINANCE_QUANTITY=0.001 # BTC
 ```
 
-Choose a buy price below the current best ask and a quantity that fits your Testnet balance. Check the symbol's price increment, quantity increment and minimum order value using [exchange information](https://developers.binance.com/docs/binance-spot-api-docs/rest-api/general-endpoints#exchange-information). Binance validates these rules at submission.
+Choose a buy price below the current best ask and a quantity that fits your Spot balance. Check the symbol's price increment, quantity increment and minimum order value using [exchange information](https://developers.binance.com/docs/binance-spot-api-docs/rest-api/general-endpoints#exchange-information). Binance validates these rules at submission.
 
 A custom client order ID is optional and is not needed for this example. Status and cancellation use the exchange order ID returned after placement.
 
@@ -50,7 +50,7 @@ The example uses numeric price and quantity fields for a post-only buy order. It
 
 ## Place and observe the order {#place-query-and-cancel}
 
-Start the [private user data stream](/guides/private-streams) in another terminal with the same Testnet account. Wait for `Spot Testnet user data subscribed.` before continuing. The demonstration stops after 60 seconds; keep it running while you try the commands.
+Start the [private user data stream](/guides/private-streams) in another terminal with the same Spot account. Wait for `Spot user data subscribed.` before continuing. The demonstration stops after 60 seconds; keep it running while you try the commands.
 
 Place the order:
 
@@ -64,7 +64,7 @@ The script prints the exchange order ID. Save it in `.env` for status and cancel
 BINANCE_ORDER_ID=123456789 # Use the returned orderId
 ```
 
-Use the same Testnet account and symbol throughout.
+Use the same Spot account and symbol throughout.
 
 Submission acknowledgement means Binance accepted the request, not that the order filled. A resting order normally reports `NEW`; an order that has traded may report `PARTIALLY_FILLED` or `FILLED`.
 
@@ -92,6 +92,6 @@ node --env-file=.env first-order.ts status
 
 This is a diagnostic read, not a step to repeat after every order. If neither the response nor the stream provides an ID, inspect open orders, order history and trade history for the same account and symbol before submitting again. An unavailable or not-found response does not establish whether the order was accepted. Save the confirmed order ID for subsequent status and cancellation commands.
 
-A connection failure or process exit does not cancel an open order. Keep the saved identifiers for subsequent `status` and `cancel` commands. Testnet resets can remove account and order history; see [Spot Testnet information](https://developers.binance.com/docs/binance-spot-api-docs/testnet).
+A connection failure or process exit does not cancel an open order. Keep the saved identifiers for subsequent `status` and `cancel` commands. When using Spot Testnet, resets can remove account and order history; see [Spot Testnet information](https://developers.binance.com/docs/binance-spot-api-docs/testnet).
 
 [Private order updates](/guides/private-streams) · [Order recovery](/guides/production#resolve-uncertain-order-outcomes) · [Trading endpoints](https://developers.binance.com/docs/binance-spot-api-docs/rest-api/trading-endpoints) · [Symbol filters](https://developers.binance.com/docs/binance-spot-api-docs/filters)

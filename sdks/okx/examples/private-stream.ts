@@ -18,7 +18,7 @@ ws.on('reconnect', () => {
   console.log('Reconnecting; account state may be stale. Pause trading decisions until recovery completes.');
 });
 ws.on('reconnected', () => {
-  console.log('Connection restored. Confirm subscriptions and recover missed account updates through REST.');
+  console.log('Connection restored; the SDK restores subscriptions automatically. Recover missed account updates through REST.');
 });
 
 Promise.all(ws.subscribe([

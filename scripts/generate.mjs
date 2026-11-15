@@ -6,6 +6,7 @@ import { compilerConfig } from './compiler.mjs';
 import { generateCompatibility } from '../compatibility/report.mjs';
 import { copySharedContent, validateIncludes } from './shared-content.mjs';
 import { generateEnvironments } from './environments.mjs';
+import { findDocumentedReflection } from './reference-overrides.mjs';
 const ctx = await context(process.env.SDK_ID);
 const { sdk, sdkRoot, projectRoot } = ctx;
 await rm(projectRoot, { recursive: true, force: true });
@@ -80,8 +81,8 @@ if (!project || app.logger.hasErrors()) throw new Error('TypeDoc conversion fail
 // Enrich the documentation model, never the SDK or generated Markdown.
 for (const [name, description] of Object.entries(sdk.referenceDescriptions || {})) {
   const parts = name.split('.');
-  const reflection = project.getChildByName(parts);
-  const method = !reflection && project.getChildByName(parts.slice(0, -1));
+  const reflection = findDocumentedReflection(project, parts);
+  const method = !reflection && findDocumentedReflection(project, parts.slice(0, -1));
   const targets = reflection
     ? (reflection.signatures?.length ? reflection.signatures : [reflection])
     : (method?.signatures || []).flatMap(signature =>
@@ -92,10 +93,11 @@ for (const [name, description] of Object.entries(sdk.referenceDescriptions || {}
     target.comment = (target.comment || reflection?.comment)?.clone() || new Comment();
     const summary = typeof description === 'string' ? description : description.summary;
     if (summary !== undefined) target.comment.summary = [{ kind: 'text', text: summary }];
-    if (typeof description === 'object' && description.deprecated !== undefined) {
-      const tag = target.comment.blockTags.find(tag => tag.tag === '@deprecated');
-      if (!tag) throw new Error(`Missing deprecation tag for documented export: ${name}`);
-      tag.content = [{ kind: 'text', text: description.deprecated }];
+    for (const field of ['deprecated', 'returns']) {
+      if (typeof description !== 'object' || description[field] === undefined) continue;
+      const tag = target.comment.blockTags.find(tag => tag.tag === `@${field}`);
+      if (!tag) throw new Error(`Missing @${field} tag for documented export: ${name}`);
+      tag.content = [{ kind: 'text', text: description[field] }];
     }
   }
 }
