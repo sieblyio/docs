@@ -100,6 +100,9 @@ export default function siteConfig(data, docs) {
       if (page.relativePath.startsWith('environments/')) {
         page.frontmatter.prev = { text: 'Quickstart', link: '/getting-started' };
         page.frontmatter.next = { text: 'Public market data (REST)', link: '/guides/market-data' };
+      } else if (page.relativePath === 'guides/testing-environments.md') {
+        page.frontmatter.prev = { text: 'Configuration', link: '/guides/configuration' };
+        page.frontmatter.next = { text: 'Production usage', link: '/guides/production' };
       } else if (page.relativePath === 'compatibility.md') {
         page.frontmatter.prev = false;
         page.frontmatter.next = false;

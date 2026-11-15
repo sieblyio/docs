@@ -64,6 +64,10 @@ test('every SDK exposes its testing guide and shares testing limits and TypeScri
   for (const sdk of sdks) {
     const config = siteConfig({ sdk, catalogue: sdks, siteUrl: `http://localhost/${sdk.id}/`, originUrl: 'http://localhost/', indexable: false }, '.');
     const sidebar = config.themeConfig.sidebar;
+    const testingPage = { relativePath: 'guides/testing-environments.md', frontmatter: {} };
+    config.transformPageData(testingPage);
+    assert.deepEqual(testingPage.frontmatter.prev, { text: 'Configuration', link: '/guides/configuration' });
+    assert.deepEqual(testingPage.frontmatter.next, { text: 'Production usage', link: '/guides/production' });
     const expectedModes = {
       binance: [['Spot Testnet', 'spot-testnet'], ['Demo trading', 'demo-trading']],
       bybit: [['Testnet', 'testnet'], ['Demo trading', 'demo-trading']],
