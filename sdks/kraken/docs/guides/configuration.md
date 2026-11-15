@@ -17,7 +17,7 @@ Reuse a client for each account and product rather than creating one for every r
 
 ## Environments
 
-The clients use Kraken's live APIs by default. Spot has no public testnet. Kraken retired the public Futures demo environment; in this SDK, `testnet: true` throws instead of selecting a test environment. Kraken offers a separate testing environment to qualified clients through its API team; this SDK does not configure that access.
+The clients use Kraken's live APIs by default. Spot has no public testnet. Kraken retired the public Futures demo environment; in this SDK, `testnet: true` throws instead of selecting a test environment.
 
 Use public market-data reads or [Spot order validation](/guides/orders) when developing without placing an order. Validation is not simulated trading and does not test fills or a complete order lifecycle.
 

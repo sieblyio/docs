@@ -7,9 +7,7 @@ description: "Choose supported Kraken testing services, configure clients and un
 
 ## Available environments
 
-Kraken Spot has no public testnet. The public Futures demo environment has been retired. In this SDK, `testnet: true` rejects the retired environment rather than selecting a usable test service. Production remains the default.
-
-Kraken offers a separate testing environment to qualified clients through its API team. This SDK's `testnet` option does not configure that access. Consult [Kraken's current testing-environment notice](https://support.kraken.com/articles/360024809011-api-testing-environment-derivatives) rather than following older public-demo signup instructions.
+Kraken Spot has no public testnet. The [public Futures demo environment has been retired](https://support.kraken.com/articles/360024809011-api-testing-environment-derivatives). In this SDK, `testnet: true` rejects the retired environment rather than selecting a usable test service. Production remains the default.
 
 ## Test without placing orders
 
