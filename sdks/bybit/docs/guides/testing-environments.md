@@ -3,7 +3,7 @@ title: "Bybit Testnet and demo trading"
 description: "Choose supported Bybit testing services, configure clients and understand their limitations."
 ---
 
-# Testnet and demo trading
+# Testnet and demo trading {#testing-environments}
 
 ## Available environments
 

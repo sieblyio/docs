@@ -3,7 +3,7 @@ title: "Hyperliquid Testnet"
 description: "Choose supported Hyperliquid testing services, configure clients and understand their limitations."
 ---
 
-# Testnet
+# Testnet {#testing-environments}
 
 ## Available environments
 

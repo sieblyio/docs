@@ -3,7 +3,7 @@ title: "Coinbase Sandboxes"
 description: "Choose supported Coinbase testing services, configure clients and understand their limitations."
 ---
 
-# Sandboxes
+# Sandboxes {#testing-environments}
 
 ## Available environments
 

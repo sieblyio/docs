@@ -87,6 +87,9 @@ test('every SDK exposes its testing guide and shares testing limits and TypeScri
     assert.match(guide, /## Coverage and limitations/);
     assert.match(guide, /<!--@include: @\/\.vitepress\/shared\/testing\/limits.md-->/);
     assert.doesNotMatch(guide, /^# Testing environments$/m);
+    const { createMarkdownRenderer } = await import('vitepress');
+    const renderer = await createMarkdownRenderer(root);
+    assert.doesNotThrow(() => renderer.render(guide.split('\n').filter(line => /^#{1,6} /.test(line)).join('\n')), `${sdk.id}: headings must render without duplicate anchors`);
     for (const [, anchor] of expectedModes[sdk.id]) assert(guide.includes(`{#${anchor}}`), `${sdk.id}: missing stable anchor ${anchor}`);
     for (const page of ['getting-started.md', 'guides/configuration.md']) {
       const content = await readFile(path.join(docs, page), 'utf8');

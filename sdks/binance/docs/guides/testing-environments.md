@@ -3,7 +3,7 @@ title: "Binance Spot Testnet and demo trading"
 description: "Choose supported Binance testing services, configure clients and understand their limitations."
 ---
 
-# Spot Testnet and demo trading
+# Spot Testnet and demo trading {#testing-environments}
 
 ## Available environments
 

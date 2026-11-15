@@ -3,7 +3,7 @@ title: "OKX Demo trading"
 description: "Choose supported OKX testing services, configure clients and understand their limitations."
 ---
 
-# Demo trading
+# Demo trading {#testing-environments}
 
 ## Available environments
 
