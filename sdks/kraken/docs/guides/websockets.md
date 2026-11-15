@@ -19,6 +19,14 @@ Register listeners before calling `subscribe()`. It requests the subscription bu
 
 The example logs every message rather than dropping unrecognised events. In an application, route messages by channel and retain a catch-all branch for diagnostics.
 
+## Unified public streams (in development)
+
+[PR #62](https://github.com/sieblyio/kraken-api/pull/62) adds Unified public streams to `WebsocketClient`. This is work in progress, not part of the published SDK; the API may change before release.
+
+The draft uses `client.subscribe(request, WS_KEY_MAP.unifiedPublicV2)` to connect to `wss://uws.kraken.com/v2/public`. Each request has a `topic` and a `payload` containing `asset_class`. For a Futures ticker, the [draft example](https://github.com/sieblyio/kraken-api/blob/unifiedws/examples/Unified/WebSockets/publicWs.ts) uses `topic: 'ticker'` with `asset_class: 'derivatives'` and `symbol: ['PF_XBTUSD']`. The `instrument` channel lists symbols for the selected asset class.
+
+The draft covers public `ticker`, `book`, `ohlc`, `trade` and `instrument` subscriptions and reuses automatic reconnection and resubscription. It does not include Unified private account streams or order entry.
+
 ## Reconnects and shutdown
 
 The SDK reconnects and restores subscriptions automatically. `reconnecting` is a status event, not a reason to terminate the process. `reconnected` indicates the connection has recovered; reconcile any application state that may have missed updates.

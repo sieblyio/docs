@@ -5,7 +5,7 @@ description: "Observe Kraken Spot order and trade updates using authenticated We
 
 # Private account updates
 
-Use `WebsocketClient` to observe account changes. The Spot v2 `executions` channel delivers order status and execution updates. Other private channels cover account balances. For Futures, read the [legacy-feed deprecation notice](/clients) before choosing a transport.
+Use `WebsocketClient` to observe account changes. The Spot v2 `executions` channel delivers order status and execution updates. Other private channels cover account balances. Futures account updates use the SDK’s Derivatives WebSocket connection.
 
 ## Observe Spot executions
 

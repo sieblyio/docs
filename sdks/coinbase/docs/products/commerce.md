@@ -11,7 +11,7 @@ Coinbase's [transition notice](https://help.coinbase.com/en/transitioning-from-c
 
 ## SDK scope {#setup}
 
-The methods below remain exported by `coinbase-api`. Their presence does not establish that a legacy endpoint is still available to your account. This page describes the SDK interface for maintaining or identifying old integrations, not a new Commerce setup.
+The methods below describe the legacy Commerce interface for existing integrations. New payment integrations use the Coinbase Business APIs.
 
 ## Legacy authentication {#authentication}
 
@@ -19,17 +19,17 @@ Commerce used an API key in `X-CC-Api-Key`, without an API secret or passphrase.
 
 ## Charge methods {#charges}
 
-`getAllCharges()` requests one page from `/charges`, despite its name. The historical API requires cursor pagination to retrieve all charges, but this wrapper does not accept a cursor or fetch further pages automatically. The retained example reads `COINBASE_COMMERCE_API_KEY` from the environment:
+`getAllCharges()` requests one page from `/charges`. The historical API requires cursor pagination to retrieve all charges, but this wrapper does not accept a cursor or fetch further pages automatically. The example reads `COINBASE_COMMERCE_API_KEY` from the environment:
 
 <<< @/../examples/commerce-read.ts
 
 ## Individual charge {#payment-state}
 
-`getCharge()` takes `charge_code_or_charge_id`. The retained example also reads `COINBASE_COMMERCE_CHARGE_ID`:
+`getCharge()` takes `charge_code_or_charge_id`. The example also reads `COINBASE_COMMERCE_CHARGE_ID`:
 
 <<< @/../examples/commerce-charge.ts
 
-The SDK types these responses as `any`. It does not validate payment state or establish that an invoice was paid. Preserve charge identifiers when migrating historical records; a checkout ID or on-chain transaction hash is not a substitute for a Commerce charge ID.
+Preserve charge identifiers when migrating historical records; a checkout ID or on-chain transaction hash is not a substitute for a Commerce charge ID.
 
 ## Checkout and event methods {#events}
 
@@ -41,7 +41,7 @@ These are not the Business checkout or webhook APIs. Follow the replacement API'
 
 ## Legacy creation methods {#payments}
 
-`createCharge()` and `createCheckout()` remain in the SDK, but do not use them to build a new payment integration. Follow Coinbase's transition guidance rather than assuming an exported method means the service still accepts new resources.
+`createCharge()` and `createCheckout()` are legacy Commerce methods. Coinbase has ended Commerce charge creation; use the Coinbase Business APIs for new payments.
 
 ## Transport and environments {#environments}
 

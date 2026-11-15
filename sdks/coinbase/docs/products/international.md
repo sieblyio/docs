@@ -7,19 +7,19 @@ description: "Understand retained INTX methods, historical records and the insti
 
 `CBInternationalClient` retains the old `api.international.coinbase.com` routes. Coinbase's [institutional migration FAQ](https://help.coinbase.com/en/international-exchange/deribit/institutional-faqs) says accounts, positions and balances migrated to Deribit on **1 October 2026**. The migrated INTX accounts are view-only and the old API endpoints no longer support trading.
 
-For institutional trading, follow the FAQ and the [Deribit API documentation](https://docs.deribit.com/). New Deribit API keys are required. The retail [Advanced Trade Global client](/products/global) uses a different Coinbase gateway; do not assume it replaces an institutional INTX integration.
+Institutional trading now uses the [Deribit API](https://docs.deribit.com/) and new Deribit API keys. The [Advanced Trade Global client](/products/global) connects to Coinbase’s retail gateway, not the institutional Deribit API.
 
 ## SDK scope {#setup}
 
-These methods and examples remain available to identify or maintain legacy integrations. Their exported signatures do not establish current service availability. The SDK still uses INTX-specific instruments, portfolio IDs and credentials; changing a base URL is not a migration.
+The examples below document legacy INTX integrations, which use INTX instruments, portfolio IDs and credentials. A Deribit integration requires its own API keys and request formats.
 
 ## Legacy market data {#market-data}
 
-The retained public REST example shows how the SDK constructs requests:
+The public REST example shows how the SDK constructs requests:
 
 <<< @/../examples/international-market-data.ts
 
-`getInstruments()`, `getInstrumentDetails()` and `getQuotePerInstrument()` describe historical INTX market-data operations. Their former availability is not a promise that these endpoints still return market data after migration. Use the replacement venue's current instrument and market-data contracts.
+The legacy market-data methods are `getInstruments()`, `getInstrumentDetails()` and `getQuotePerInstrument()`. For current market data, use the Deribit API.
 
 ## Legacy authentication {#authentication}
 
@@ -27,29 +27,28 @@ The SDK's INTX authentication uses an API key, secret and passphrase. Historical
 
 ## Legacy market subscriptions {#public-streams}
 
-The retained example subscribes to `LEVEL1` on the SDK's `internationalMarketData` connection:
+The example subscribes to `LEVEL1` on the SDK's `internationalMarketData` connection:
 
 <<< @/../examples/international-stream.ts
 
-The SDK signs subscription requests and maps the feed to `wss://ws-md.international.coinbase.com`. This is historical market-data integration code, not confirmation that the feed remains operational. It is not a portfolio/order stream, and the SDK does not map a separate INTX private-account feed or INTX WebSocket order API.
+The SDK signs subscription requests for the legacy market-data URL `wss://ws-md.international.coinbase.com`. This subscription is for market data, not portfolio or order updates.
 
 ## Historical records {#account-state}
 
-Coinbase says historical INTX trade and order data will remain accessible for **approximately 12 months after migration**. INTX history does not appear in Deribit. Keep a copy of required records and consult Coinbase's current retention guidance; this statement does not guarantee that every legacy account endpoint remains available.
+Coinbase says historical INTX trade and order data will remain accessible for **approximately 12 months after migration**. INTX history does not appear in Deribit. Export the records you need within that retention period.
 
-The retained account example shows portfolio-scoped reads:
+The account example shows portfolio-scoped reads:
 
 <<< @/../examples/international-account.ts
 
-`getOrderDetails()` and `getPortfolioFills()` are legacy order and fill methods. Confirm the supported history routes for your account before relying on them. Keep the INTX portfolio identifier with each historical record and respect endpoint pagination.
+`getOrderDetails()` and `getPortfolioFills()` are the SDK’s legacy order and fill queries. Keep the INTX portfolio identifier with each historical record and paginate the results.
 
 ## Retired trading {#orders}
 
 Do not use `submitOrder()`, `updateOpenOrder()` or the cancellation methods as a new INTX trading integration. Coinbase states that old INTX endpoints no longer support trading. Margin loans did not migrate.
 
-
 ## Legacy environments {#environments}
 
-`useSandbox: true` still selects the SDK's INTX sandbox REST and WebSocket host mappings. Those mappings do not establish current sandbox availability. Follow the replacement API's test environment, credentials and recovery guidance.
+`useSandbox: true` selects the legacy INTX sandbox hosts. For Deribit development, use Deribit’s test environment and API keys.
 
 [Legacy INTX client reference](/api/classes/CBInternationalClient) · [Institutional migration FAQ](https://help.coinbase.com/en/international-exchange/deribit/institutional-faqs) · [Choose another API](/products)

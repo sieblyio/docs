@@ -15,13 +15,13 @@ In `@siebly/kraken-api@1.1.10`, a default `SpotClient` adds `UserAgent` and `loc
 
 The [Vite](/environments/vite) and [React](/environments/react) public-price examples use the SDK's second constructor argument, `AxiosRequestConfig`, with `transformRequest` to remove just those headers before the public GET. Passing `headers` alone does not work in this version because the SDK overwrites that option. The transform is deliberately limited to GET requests and replaces Axios's usual request-body transform. Do not reuse it for POST requests or authenticated calls.
 
-This setup was checked with the published 1.1.10 package in Chrome using a public Spot ticker and WebSocket subscription. It does not establish support for every REST endpoint, browser or region. Kraken must still allow the browser's origin; never disable browser security or use `no-cors`, which prevents reading the response.
+Browser REST requests require Kraken to allow your application's origin. Never disable browser security or use `no-cors`, which prevents reading the response.
 
 To fetch prices on the server, use the [Next.js API route](/environments/next). It creates a `SpotClient` on the Node.js server and exposes the public price at `/api/price`. A browser application can request that same-origin route instead of calling Kraken REST directly. In production, expose only the operations your app needs, with suitable validation, rate limits and authentication. Keep API credentials on the server. Do not create an unrestricted forwarding proxy.
 
 ## Testnet is unavailable
 
-Spot has no public testnet. Kraken retired its public Futures demo, and `testnet: true` throws in this SDK. Qualified-client testing access is separate; see [Environments](/guides/configuration#environments). Use public reads or [Spot order validation](/guides/orders) for non-trading development; do not treat a beta API endpoint as simulated trading.
+Spot has no public testnet. Kraken retired its public Futures demo, and `testnet: true` throws in this SDK. Use public reads or [Spot order validation](/guides/orders) for non-trading development; do not treat a beta API endpoint as simulated trading.
 
 ## Invalid symbol or unexpected response key
 
