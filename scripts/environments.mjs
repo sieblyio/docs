@@ -267,10 +267,10 @@ export async function generateEnvironments(ctx) {
     if (['okx', 'bitget', 'gateio'].includes(ctx.id) && environment !== 'cloudflare-workers') {
       const note = browser
         ? 'Keep the supplied Vite configuration: it resolves EventEmitter and rejects Node-only HTTPS agents. Browsers manage connections, so omit `keepAlive`. REST access depends on EXCHANGE CORS policy; use a server route if blocked. Keep credentials on your server.'.replace('EXCHANGE', ctx.sdk.name)
-        : 'These examples use public market data. Keep authenticated account and trading calls on your server. See [Runtime setup](/compatibility) for the scope of each recipe; a successful build does not verify live exchange access.';
+        : 'These examples use public market data. Keep authenticated account and trading calls on your server. See [Runtime setup](/compatibility) for project recipes and required configuration.';
       rendered = rendered
         .replace('## Create the project', note + '\n\n## Create the project')
-        .replace('See Runtime compatibility for recorded verification of this configuration.', 'See Runtime setup for the scope and limits of this recipe.')
+        .replace('See Runtime compatibility for recorded verification of this configuration.', 'See Runtime setup for project recipes and required configuration.')
         .replaceAll('[Runtime compatibility](/compatibility) for tested versions', '[Runtime setup](/compatibility) for setup details');
     }
     if (ctx.id === 'kraken' && environment !== 'cloudflare-workers') {
