@@ -1,0 +1,8 @@
+{
+  "name": "kucoin-deno-quickstart",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "kucoin-api": "latest"
+  }
+}

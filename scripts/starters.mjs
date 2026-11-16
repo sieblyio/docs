@@ -25,7 +25,7 @@ function readme(sdk, environment) {
         : streaming ? '\nThe script prints a public REST price and exits.\n' : '';
   const native = environment === 'expo' ? '\nUse an Expo Go version that supports the Expo SDK in `package.json`. Press **i** for an iOS simulator or **a** for an Android emulator. iOS simulators require macOS and Xcode. Keep Expo Go in the foreground.\n' : '';
   const controls = ['react', 'vite', 'expo'].includes(environment) ? '\nUse **Stop stream** to close the price subscription.\n' : '';
-  const optionalStream = streaming ? `\n${['coinbase', 'okx', 'bitget', 'gateio'].includes(sdk.id) ? 'To stream WebSocket prices until Ctrl+C:' : 'To receive one WebSocket price and close the connection:'}\n\n\`\`\`sh\n${stream}\n\`\`\`\n` : '';
+  const optionalStream = streaming ? `\n${['coinbase', 'okx', 'bitget', 'gateio', 'kucoin'].includes(sdk.id) ? 'To stream WebSocket prices until Ctrl+C:' : 'To receive one WebSocket price and close the connection:'}\n\n\`\`\`sh\n${stream}\n\`\`\`\n` : '';
   const commonjs = environment === 'node' ? '\nFor CommonJS instead, run `node price.cjs` or `node stream.cjs`.\n' : '';
   const browserNote = sdk.id === 'kraken' && ['react', 'vite'].includes(environment)
     ? '\nThe public GET client removes the SDK’s `UserAgent` and `locale` headers because they trigger a CORS preflight that Kraken rejects. Keep this configuration for these public reads only. Run authenticated REST calls on your server, never in a browser bundle. See the guide for the server-side alternative.\n' : '';
@@ -34,7 +34,7 @@ function readme(sdk, environment) {
       + (['react', 'vite'].includes(environment) ? '\nKeep `sdk.vite.config.js`: it excludes Node-only JWT signing from this public-data application. Browser REST access depends on Coinbase CORS policy.\n' : '')
       + (environment === 'expo' ? '\nKeep `coinbase-public-auth.cjs` and both Metro configuration files. They configure the app for public market data and disable Node-only JWT signing.\n' : '')
     : '';
-  const transportNote = ['okx', 'bitget', 'gateio'].includes(sdk.id) && environment !== 'cloudflare-workers'
+  const transportNote = ['okx', 'bitget', 'gateio', 'kucoin'].includes(sdk.id) && environment !== 'cloudflare-workers'
     ? (['react', 'vite'].includes(environment)
       ? '\nKeep authenticated calls on your server. Keep the supplied Vite configuration and omit Node-only `keepAlive`. Browser REST access depends on EXCHANGE CORS policy; use a server route if requests are blocked.\n'.replace('EXCHANGE', sdk.name)
       : '\nThis example uses public market data. Keep authenticated account and trading calls on your server. See the guide for this runtime’s requirements and limitations.\n') : '';

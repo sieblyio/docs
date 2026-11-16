@@ -98,6 +98,18 @@ Each folder is a complete project. Open its README for prerequisites and run com
 - [Deno](./gateio/deno/)
 - [Cloudflare Workers](./gateio/cloudflare-workers/)
 
+## KuCoin
+
+- [Node.js / JavaScript](./kucoin/node/)
+- [Node.js / TypeScript](./kucoin/typescript/)
+- [React](./kucoin/react/)
+- [Vite (plain JavaScript)](./kucoin/vite/)
+- [Next.js](./kucoin/next/)
+- [React Native / Expo](./kucoin/expo/)
+- [Bun](./kucoin/bun/)
+- [Deno](./kucoin/deno/)
+- [Cloudflare Workers](./kucoin/cloudflare-workers/)
+
 ## Maintaining these examples
 
 Edit the maintained sources in `shared/environments/`, then run `npm run starters:generate` from the repository root. Run `npm run check:starters` to check without writing files. Regeneration updates known generated files and never deletes extra files or local build output. The check reports unexpected source files and stale folders for review.

@@ -1,4 +1,22 @@
 export const exchanges = {
+  kucoin: {
+    restClient: 'SpotClient',
+    symbol: 'BTC-USDT',
+    continuous: true,
+    cliSubscription: "ws.subscribe('/market/ticker:BTC-USDT', 'spotPublicV1')",
+    request: `const client = new SpotClient();
+const response = await client.getTicker({ symbol: 'BTC-USDT' });
+const price = response.data.price;`,
+    event: 'update',
+    update: `if (message.topic !== '/market/ticker:BTC-USDT') {
+  console.log('WebSocket update:', message);
+  return;
+}
+
+const price = message.data?.price;`,
+    websocket: 'new WebsocketClient()',
+    subscription: "Promise.resolve(ws.subscribe('/market/ticker:BTC-USDT', 'spotPublicV1'))",
+  },
   gateio: {
     restClient: 'RestClient',
     symbol: 'BTC_USDT',

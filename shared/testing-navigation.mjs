@@ -24,6 +24,10 @@ export const testingNavigation = {
     { text: 'Advanced Trade sandbox', link: '/guides/testing-environments#advanced-trade-static-sandbox' },
     { text: 'Exchange sandbox', link: '/guides/testing-environments#exchange-sandbox' },
   ],
+  kucoin: [
+    { text: 'Test order validation', link: '/guides/testing-environments#test-order' },
+    { text: 'Testing without orders', link: '/guides/testing-environments#test-without-placing-orders' },
+  ],
   kraken: [
     { text: 'Testing without orders', link: '/guides/testing-environments#test-without-placing-orders' },
   ],

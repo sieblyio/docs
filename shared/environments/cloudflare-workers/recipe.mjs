@@ -3,6 +3,12 @@ import { exchanges } from '../direct/exchanges.mjs';
 import { codeBlock } from '../../../scripts/environment-guides.mjs';
 
 const orders = {
+  kucoin: {
+    credentials: ['KUCOIN_API_KEY', 'KUCOIN_API_SECRET', 'KUCOIN_API_PASSPHRASE'],
+    options: 'apiKey: env.KUCOIN_API_KEY, apiSecret: env.KUCOIN_API_SECRET, apiPassphrase: env.KUCOIN_API_PASSPHRASE',
+    environment: 'KuCoin Spot production',
+    request: "await client.submitHFOrder({ clientOid: clientOrderId, symbol: 'BTC-USDT', side: 'buy', type: 'limit', price, size: quantity, postOnly: true })",
+  },
   gateio: {
     credentials: ['GATEIO_API_KEY', 'GATEIO_API_SECRET'],
     options: 'apiKey: env.GATEIO_API_KEY, apiSecret: env.GATEIO_API_SECRET',
@@ -60,7 +66,7 @@ export async function workerFiles(id, sdk) {
   const { restClient, request } = exchanges[id];
   const publicRequest = request.replace(`new ${restClient}()`, `new ${restClient}({}${transport(id)})`);
   const publicCode = `import { ${restClient} } from '${sdk.packageName}';\n\nexport default {\n  async fetch() {\n${indent(publicRequest)}\n    return Response.json({ symbol: '${exchanges[id].symbol}', price });\n  },\n};\n`;
-  const orderCode = `import { ${restClient} } from '${sdk.packageName}';\n\nexport default {\n  async fetch(request, env) {\n    if (new URL(request.url).pathname !== '/order') {\n      return new Response('Not found', { status: 404 });\n    }\n    if (request.method !== 'POST') {\n      return new Response('Use POST', { status: 405 });\n    }\n    if (!env.ORDER_TOKEN || request.headers.get('Authorization') !== 'Bearer ' + env.ORDER_TOKEN) {\n      return new Response('Unauthorized', { status: 401 });\n    }\n\n    const { price, quantity${id === 'coinbase' ? ', clientOrderId' : ''} } = await request.json();\n\n    const positiveDecimal = value => typeof value === 'string' && /^\\d+(\\.\\d+)?$/.test(value) && Number(value) > 0 && Number.isFinite(Number(value));\n    if (!positiveDecimal(price) || !positiveDecimal(quantity)) {\n      return new Response('Use positive decimal strings for price and quantity', { status: 400 });\n    }\n${id === 'coinbase' ? "    if (typeof clientOrderId !== 'string' || !clientOrderId.trim()) {\n      return new Response('Provide your persisted clientOrderId', { status: 400 });\n    }\n" : ''}    if (${recipe.credentials.map(key => `!env.${key}`).join(' || ')}) {\n      return new Response('Missing exchange credentials', { status: 503 });\n    }\n\n    const client = new ${restClient}({\n${recipe.options.split(', ').join(',\n')},\n}${transport(id)});\n\n    const result = ${recipe.request};\n\n    return Response.json(result);\n  },\n};\n`;
+  const orderCode = `import { ${restClient} } from '${sdk.packageName}';\n\nexport default {\n  async fetch(request, env) {\n    if (new URL(request.url).pathname !== '/order') {\n      return new Response('Not found', { status: 404 });\n    }\n    if (request.method !== 'POST') {\n      return new Response('Use POST', { status: 405 });\n    }\n    if (!env.ORDER_TOKEN || request.headers.get('Authorization') !== 'Bearer ' + env.ORDER_TOKEN) {\n      return new Response('Unauthorized', { status: 401 });\n    }\n\n    const { price, quantity${['coinbase', 'kucoin'].includes(id) ? ', clientOrderId' : ''} } = await request.json();\n\n    const positiveDecimal = value => typeof value === 'string' && /^\\d+(\\.\\d+)?$/.test(value) && Number(value) > 0 && Number.isFinite(Number(value));\n    if (!positiveDecimal(price) || !positiveDecimal(quantity)) {\n      return new Response('Use positive decimal strings for price and quantity', { status: 400 });\n    }\n${['coinbase', 'kucoin'].includes(id) ? "    if (typeof clientOrderId !== 'string' || !clientOrderId.trim()) {\n      return new Response('Provide your persisted clientOrderId', { status: 400 });\n    }\n" : ''}    if (${recipe.credentials.map(key => `!env.${key}`).join(' || ')}) {\n      return new Response('Missing exchange credentials', { status: 503 });\n    }\n\n    const client = new ${restClient}({\n${recipe.options.split(', ').join(',\n')},\n}${transport(id)});\n\n    const result = ${recipe.request};\n\n    return Response.json(result);\n  },\n};\n`;
   return new Map([
     ['src/index.js', await format(publicCode, { parser: 'babel', tabWidth: 2, singleQuote: true, trailingComma: 'all' })],
     ['src/order.js', await format(orderCode, { parser: 'babel', tabWidth: 2, singleQuote: true, trailingComma: 'all' })],
@@ -78,7 +84,7 @@ export function workerGuideFields(id, files) {
     WORKER_SECRETS: ['ORDER_TOKEN', ...recipe.credentials].map(name => `npx wrangler secret put ${name}`).join('\n'),
     WORKER_ORDER_ENVIRONMENT: recipe.environment,
     WORKER_LIVE_NOTE: 'The example uses production credentials and submits a live order.',
-    WORKER_ORDER_ID_NOTE: id === 'coinbase' ? 'Also supply `clientOrderId`: generate a unique ID in your calling application and persist it before sending. Use that same ID to resolve an uncertain order outcome before submitting another order.' : '',
+    WORKER_ORDER_ID_NOTE: ['coinbase', 'kucoin'].includes(id) ? 'Also supply `clientOrderId`: generate a unique ID in your calling application and persist it before sending. Use that same ID to resolve an uncertain order outcome before submitting another order.' : '',
     WORKER_CACHE: id === 'kraken'
       ? 'This Kraken recipe uses the SDK’s native request configuration without an Axios cache override.'
       : "The second constructor argument sets `fetchOptions.cache` to `no-store`, a [cache mode Workers supports](https://developers.cloudflare.com/workers/runtime-apis/request/). Axios 1.20.0 otherwise requests `default`, which Workers rejects. Keep this option while using that affected version. [Axios 1.21.0](https://github.com/axios/axios/releases/tag/v1.21.0) fixes this default cache behavior. SDK dependency upgrades follow [Siebly’s security policy](https://siebly.io/security), which generally includes at least 30 days of review. You do not need to override the SDK dependency.",

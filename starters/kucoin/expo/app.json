@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "KuCoin price screen",
+    "slug": "kucoin-price-screen",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+---
+title: "KuCoin SDK runtime setup and compatibility"
+description: "Set up kucoin-api for Node.js, browsers, frameworks, Expo and Cloudflare Workers."
+---
+
+# Runtime setup
+
+Each setup guide starts from an empty directory and includes installation commands, configuration and a public price example.
+
+## Server-side JavaScript and TypeScript
+
+- [Node.js / JavaScript](/environments/node): ES modules and CommonJS.
+- [Node.js / TypeScript](/environments/typescript): typed imports with build/run commands.
+- [Next.js](/environments/next): a server route that keeps SDK requests off the browser.
+- [Bun](/environments/bun): npm dependencies and Bun scripts.
+- [Deno](/environments/deno): npm dependencies and explicit permissions.
+- [Cloudflare Workers](/environments/cloudflare-workers): public REST reads and an optional authenticated order route with deployment guidance.
+
+Keep credentials and authenticated operations server-side. Use the same account and region settings for REST and WebSockets. In Workers, create connections within the request as shown in the guide; the command-line streaming example is intended for a long-running Node.js process.
+
+## Browser applications
+
+The [React](/environments/react) and [Vite](/environments/vite) recipes include their required browser configuration. Keep those files together rather than copying only the component. Public browser examples contain no credentials.
+
+REST access still depends on the exchange's CORS policy, network and regional availability. When direct browser access is unavailable, use a server route with appropriate access controls. A development proxy is not a production backend. Never add API secrets to a frontend bundle to work around an authentication failure.
+
+## React Native and Expo
+
+The [Expo guide](/environments/expo) includes native setup and polyfills. Use the complete configuration and test it on your target device. Keep credentials and private account operations on a server.
+
+## Check your setup
+
+Run a public REST request and a market-data subscription in your target runtime and network. For authenticated applications, also check permissions and account recovery before enabling trading.
+
+## Streaming lifecycle
+
+Command-line streams run until Ctrl+C. Browser/mobile views must stop connections when removed or when Stop is selected. The SDK reconnects and restores subscriptions automatically. Wait for fresh market data and reconcile missed account changes before using cached state.
+
+[WebSocket subscriptions](/guides/websockets) · [Production usage](/guides/production) · [Troubleshooting](/guides/troubleshooting)

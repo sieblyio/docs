@@ -76,6 +76,7 @@ test('every SDK exposes its testing guide and shares testing limits and TypeScri
       gateio: [['TestNet', 'testnet']],
       okx: [['Demo trading', 'demo-trading']],
       coinbase: [['Advanced Trade sandbox', 'advanced-trade-static-sandbox'], ['Exchange sandbox', 'exchange-sandbox']],
+      kucoin: [['Test order validation', 'test-order'], ['Testing without orders', 'test-without-placing-orders']],
       kraken: [['Testing without orders', 'test-without-placing-orders']],
     };
     const expected = expectedModes[sdk.id].map(([text, anchor]) => ({ text, link: `/guides/testing-environments#${anchor}` }));
