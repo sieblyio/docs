@@ -14,7 +14,7 @@ Each setup guide starts from an empty directory and includes installation comman
 - [Next.js](/environments/next): a server route that keeps SDK requests off the browser.
 - [Bun](/environments/bun): npm dependencies and Bun scripts.
 - [Deno](/environments/deno): npm dependencies and explicit permissions.
-- [Cloudflare Workers](/environments/cloudflare-workers): public REST reads and an optional authenticated order route with deployment guidance.
+- [Cloudflare Workers](/environments/cloudflare-workers): public REST reads and an authenticated order handler.
 
 Keep credentials and authenticated operations server-side. Use the same account and live/TestNet settings for REST and WebSockets. In Workers, create connections within the request as shown in the guide; the command-line streaming example is intended for a long-running Node.js process.
 

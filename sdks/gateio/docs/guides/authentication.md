@@ -38,13 +38,13 @@ In your project directory, install the SDK and compiler dependencies, then compi
 ```sh
 npm install gateio-api
 npm install --save-dev typescript @types/node
-npx tsc --target ES2022 --module NodeNext --strict --skipLibCheck --outDir dist authenticated-client.ts account-state.ts
+npx tsc --ignoreConfig --target ES2022 --module NodeNext --strict --skipLibCheck --outDir dist authenticated-client.ts account-state.ts
 node --env-file=.env dist/account-state.js
 ```
 
-Run with Node.js 24 from the project directory containing `.env`. Relative `.js` imports refer to compiled files. If you use the [TypeScript starter](/environments/typescript), add these `.ts` files to its `include` list, which uses `.mts` files by default.
+Run with Node.js 24 from the project directory containing `.env`. Relative `.js` imports refer to compiled files. The command compiles the listed files independently of any existing `tsconfig.json`. To use your project configuration instead, add these `.ts` files to its `include` list and run `npx tsc` without file arguments. The [TypeScript starter](/environments/typescript) includes only `.mts` files by default.
 
-For other private examples, replace `account-state.ts` in the compile command with `private-stream.ts`, `first-order.ts` or `ws-api.ts`, retaining `authenticated-client.ts`. Run the emitted `.js` file as shown in its guide. Compilation alone does not send requests.
+For other private examples, replace `account-state.ts` in the compile command with `private-stream.ts`, `first-order.ts` or `ws-api.ts`, retaining `authenticated-client.ts`. Run the emitted `.js` file as shown in its guide.
 
 `getSpotAccounts()` returns currency balances with `available` and `locked` amounts. The example reads one page of open BTC_USDT Spot orders; paginate to load all relevant orders. An empty result can be valid when the account has no balances or open orders.
 

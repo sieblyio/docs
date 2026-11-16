@@ -1,9 +1,9 @@
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { RestClient, WebsocketClient } from 'gateio-api';
 
-const proxyUrl = process.env.HTTPS_PROXY;
+const proxyUrl = process.env.PROXY_URL;
 if (!proxyUrl) {
-  throw new Error('Set HTTPS_PROXY in your server environment.');
+  throw new Error('Set PROXY_URL in your server environment.');
 }
 const agent = new HttpsProxyAgent(proxyUrl);
 

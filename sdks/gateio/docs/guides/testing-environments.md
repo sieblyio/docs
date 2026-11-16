@@ -21,7 +21,7 @@ For this documentation's private examples, set `GATEIO_USE_TESTNET=true` in `.en
 
 ## Coverage and limitations
 
-Setting the flag changes routing, not account permissions or product availability. The SDK includes TestNet URLs for several derivatives connections, but a configured URL alone does not guarantee that every product or operation is available. Announcements WebSockets do not have a TestNet endpoint.
+Check Gate’s current TestNet documentation for the products and operations available to your account. Announcements WebSockets are production-only.
 
 Avoid overriding `baseUrl` or `baseUrlKey` when using automatic REST TestNet routing: those overrides take precedence over `useTestnet`. Keep the environment consistent for placement, status queries and private subscriptions.
 

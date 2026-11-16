@@ -27,7 +27,7 @@ Treat the result as unknown. Check private events, then query with saved order i
 
 ## Browser or mobile request fails
 
-Keep private operations on a server. Check CORS, network access and the full configuration in the [runtime guide](/compatibility). A successful import or bundle does not prove live connectivity. Do not expose API secrets or disable transport security to work around a connection failure.
+Keep private operations on a server. Check CORS, network access and the full configuration in the [runtime guide](/compatibility). Do not expose API secrets or disable transport security to work around a connection failure.
 
 ## Proxy or connection problem
 
