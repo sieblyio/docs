@@ -69,6 +69,7 @@ test('every SDK exposes its testing guide and shares testing limits and TypeScri
     assert.deepEqual(testingPage.frontmatter.prev, { text: 'Configuration', link: '/guides/configuration' });
     assert.deepEqual(testingPage.frontmatter.next, { text: 'Production usage', link: '/guides/production' });
     const expectedModes = {
+      htx: [['Testing without orders', 'test-without-placing-orders']],
       binance: [['Spot Testnet', 'spot-testnet'], ['Demo trading', 'demo-trading']],
       bybit: [['Testnet', 'testnet'], ['Demo trading', 'demo-trading']],
       hyperliquid: [['Testnet', 'testnet']],
@@ -125,4 +126,30 @@ test('TypeScript guidance recommends type checking without requiring TypeScript'
     assert.doesNotMatch(troubleshooting, /(?:Examples with TypeScript annotations need|Older runtimes may need) a TypeScript compiler or runner/);
     assert.doesNotMatch(troubleshooting, /the TypeScript examples need a compiler or runner/);
   }
+});
+
+test('HTX recipes preserve released package identity and transport requirements', async () => {
+  const { default: sdk } = await import('../sdks/htx/sdk.config.mjs');
+  const { environmentFiles, environments } = await import('./environments.mjs');
+  assert.equal(sdk.packageName, '@siebly/htx-api');
+  for (const environment of environments) {
+    const files = await environmentFiles('htx', sdk, environment);
+    assert.equal(JSON.parse(files.get('package.json')).dependencies['@siebly/htx-api'], 'latest');
+    for (const [filename, content] of files) {
+      assert.doesNotMatch(content, /from ['"]htx-api['"]|require\(['"]htx-api['"]\)/, filename);
+    }
+  }
+  const node = await environmentFiles('htx', sdk, 'node');
+  assert.match(node.get('stream.mjs'), /ws\.on\('message'/);
+  assert.match(node.get('stream.mjs'), /market\.btcusdt\.detail.*spotPublic/);
+  assert.match(node.get('stream.mjs'), /ws\.closeAll\(\)/);
+  const browser = await environmentFiles('htx', sdk, 'vite');
+  assert.match(browser.get('vite.config.js'), /find: \/\^events\$\//);
+  const worker = await environmentFiles('htx', sdk, 'cloudflare-workers');
+  assert.match(worker.get('src/order.js'), /'client-order-id': clientOrderId/);
+  assert.match(worker.get('src/order.js'), /'account-id': env\.HTX_SPOT_ACCOUNT_ID/);
+  assert.match(worker.get('src/order.js'), /Provide your persisted clientOrderId/);
+  const docs = path.join(root, 'sdks/htx/docs');
+  assert.match(await readFile(path.join(docs, 'compatibility.md'), 'utf8'), /does \*\*not\*\* polyfill `DecompressionStream`/);
+  assert.match(await readFile(path.join(docs, 'guides/configuration.md'), 'utf8'), /`SpotClient` defaults to `spotAWS`; `FuturesClient` defaults to `futuresAWS`/);
 });

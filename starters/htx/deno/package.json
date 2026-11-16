@@ -1,0 +1,8 @@
+{
+  "name": "htx-deno-quickstart",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@siebly/htx-api": "latest"
+  }
+}

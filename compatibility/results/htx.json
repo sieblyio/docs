@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "suiteVersion": "2-live",
+  "sdk": "htx",
+  "packageName": "@siebly/htx-api",
+  "packageVersion": "1.0.8",
+  "source": "npm",
+  "traffic": "live-mainnet",
+  "packageAvailable": true,
+  "platform": "darwin/arm64",
+  "runId": "compat-DUJMEQ",
+  "checkedAt": "2026-11-16T13:48:36.978Z",
+  "selection": {
+    "kind": "explicit",
+    "requestedVersion": "1.0.8",
+    "documentationVersion": "1.0.8"
+  },
+  "targets": {
+    "node": {
+      "target": "node",
+      "status": "passed",
+      "runtimeVersion": "v24.19.0",
+      "checks": [
+        {
+          "id": "import",
+          "status": "passed",
+          "elapsedMs": 179
+        },
+        {
+          "id": "rest",
+          "status": "passed",
+          "price": "64428.01",
+          "operation": "SpotClient.getTicker()",
+          "observedAt": "2026-11-16T13:48:41.982Z",
+          "elapsedMs": 488
+        },
+        {
+          "id": "websocket",
+          "status": "passed",
+          "price": "64428.01",
+          "operation": "WebsocketClient.subscribe()",
+          "observedAt": "2026-11-16T13:48:42.966Z",
+          "elapsedMs": 982
+        },
+        {
+          "id": "cleanup",
+          "status": "passed",
+          "elapsedMs": 0
+        },
+        {
+          "id": "commonjs",
+          "status": "passed"
+        },
+        {
+          "id": "types",
+          "status": "passed"
+        }
+      ],
+      "reason": "The package checks listed below passed against the live exchange APIs.",
+      "checkedAt": "2026-11-16T13:48:36.978Z",
+      "platform": "darwin/arm64",
+      "detail": "[ 'Websocket connected', { category: 'htx-ws', wsKey: 'spotPublic' } ]\n[ 'Closing all ws connections: spotPublic' ]\n[ 'Closing connection', { category: 'htx-ws', wsKey: 'spotPublic' } ]\n[\n  'Websocket connection closed',\n  { category: 'htx-ws', wsKey: 'spotPublic' }\n]\n"
+    },
+    "bun": {
+      "target": "bun",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "deno": {
+      "target": "deno",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "vite": {
+      "target": "vite",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "browser": {
+      "target": "browser",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "browser-configured": {
+      "target": "browser-configured",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "browser-bundle": {
+      "target": "browser-bundle",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "next": {
+      "target": "next",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "react-native": {
+      "target": "react-native",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "react-native-ios": {
+      "target": "react-native-ios",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "react-native-configured": {
+      "target": "react-native-configured",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    },
+    "react-native-ios-configured": {
+      "target": "react-native-ios-configured",
+      "status": "not-run",
+      "runtimeVersion": null,
+      "checks": [],
+      "reason": "Not checked in this run."
+    }
+  },
+  "artifact": {
+    "tarball": "https://registry.npmjs.org/@siebly/htx-api/-/htx-api-1.0.8.tgz",
+    "integrity": "sha512-3kQ0bVV6Sb3HMP1do9IRYMyd+Xy7A8YNwSs9s5KZaOnsv+17zFYQU6rhwFB6OqMdLy8PLnIqGOQr1OGFln3upA=="
+  }
+}

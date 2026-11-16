@@ -1,5 +1,8 @@
 // Only expose supported modes; the canonical guide retains its stable URL.
 export const testingNavigation = {
+  htx: [
+    { text: 'Testing without orders', link: '/guides/testing-environments#test-without-placing-orders' },
+  ],
   binance: [
     { text: 'Spot Testnet', link: '/guides/testing-environments#spot-testnet' },
     { text: 'Demo trading', link: '/guides/testing-environments#demo-trading' },

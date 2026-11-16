@@ -38,7 +38,14 @@ function readme(sdk, environment) {
     ? (['react', 'vite'].includes(environment)
       ? '\nKeep authenticated calls on your server. Keep the supplied Vite configuration and omit Node-only `keepAlive`. Browser REST access depends on EXCHANGE CORS policy; use a server route if requests are blocked.\n'.replace('EXCHANGE', sdk.name)
       : '\nThis example uses public market data. Keep authenticated account and trading calls on your server. See the guide for this runtime’s requirements and limitations.\n') : '';
-  return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
+  const htxNote = sdk.id !== 'htx' ? '' : environment === 'expo'
+    ? '\nPublic WebSocket streams require `DecompressionStream`. This recipe does not polyfill it; use a runtime that provides it or relay market data through a backend. Keep credentials on your server.\n'
+    : ['react', 'vite'].includes(environment)
+      ? '\nPublic WebSocket streams require `DecompressionStream`. Browser REST access depends on HTX CORS policy. Keep credentials and trading operations on your server.\n'
+      : ['node', 'typescript', 'bun', 'deno'].includes(environment)
+        ? '\nThe WebSocket example requires `DecompressionStream` support in your runtime.\n'
+        : '';
+  return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}${htxNote}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
 
 export async function starterFiles(id, sdk, environment) {

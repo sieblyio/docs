@@ -10,6 +10,7 @@
     "okx-api": "3.2.9",
     "bitget-api": "3.2.8",
     "gateio-api": "1.6.8",
-    "kucoin-api": "2.6.9"
+    "kucoin-api": "2.6.9",
+    "@siebly/htx-api": "1.0.8"
   }
 }

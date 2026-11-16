@@ -1,4 +1,22 @@
 export const exchanges = {
+  htx: {
+    restClient: 'SpotClient',
+    symbol: 'btcusdt',
+    request: `const client = new SpotClient();
+const response = await client.getTicker({ symbol: 'btcusdt' });
+const price = response.tick.close;`,
+    event: 'message',
+    update: `if (Array.isArray(message) || message.ch !== 'market.btcusdt.detail') {
+  return;
+}
+const tick = message.tick;
+if (!tick || typeof tick !== 'object' || !('close' in tick)) {
+  return;
+}
+const price = tick.close;`,
+    websocket: 'new WebsocketClient()',
+    subscription: "Promise.resolve(ws.subscribe('market.btcusdt.detail', 'spotPublic'))",
+  },
   kucoin: {
     restClient: 'SpotClient',
     symbol: 'BTC-USDT',

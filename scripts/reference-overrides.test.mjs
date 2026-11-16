@@ -145,7 +145,7 @@ test('resolves literal dotted protocol names and their nested properties', () =>
 });
 
 test('reference descriptions keep SDK defect reports out of user guidance', async () => {
-  const sdkIds = ['binance', 'bitget', 'bybit', 'coinbase', 'gateio', 'hyperliquid', 'kraken', 'kucoin', 'okx'];
+  const sdkIds = ['binance', 'bitget', 'bybit', 'coinbase', 'gateio', 'hyperliquid', 'kraken', 'kucoin', 'htx', 'okx'];
   const defectNarrative = /historical route mismatch|known SDK mismatch|do not rely on this method|until the SDK parameter is corrected|transport limitations require SDK fixes|this SDK currently spells|SDK \d+\.\d+\.\d+ incorrectly types/i;
   for (const id of sdkIds) {
     const { default: sdk } = await import(`../sdks/${id}/sdk.config.mjs`);
