@@ -13,9 +13,7 @@ description: "Configure REST timeouts, WebSocket connections and TestNet routing
 
 Clients use live services by default. Set `useTestnet: true` separately on each REST and WebSocket client for [TestNet](/guides/testing-environments#testnet). Use keys created for that environment. The option is `useTestnet`, not `testnet` or `demoTrading`.
 
-REST options also include `baseUrlKey` and `baseUrl`. A custom `baseUrl` takes precedence over `baseUrlKey`, which takes precedence over `useTestnet`. Avoid combining overrides unless you intend to replace automatic routing. A custom REST URL must include the API prefix, such as `/api/v4`.
-
-Use the built-in environment option for normal TestNet access rather than hardcoding endpoint URLs. Product availability can differ between live and testing services.
+Product availability can differ between live and TestNet services.
 
 ## Timeouts and connections
 

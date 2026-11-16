@@ -2,7 +2,9 @@ import { RestClient } from 'gateio-api';
 
 export function requiredEnv(name: string): string {
   const value = process.env[name];
-  if (!value) throw new Error(`Set ${name} in your server environment.`);
+  if (!value) {
+    throw new Error(`Set ${name} in your server environment.`);
+  }
   return value;
 }
 

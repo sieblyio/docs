@@ -31,6 +31,6 @@ Unlike REST methods, WebSocket API methods return an envelope. The operation's r
 
 The wrapper opens and authenticates connections as needed. To establish the Spot connection ahead of time, await `getWSClient().connectWSAPI('spotV4')`. For lower-level requests, use `sendWSAPIRequest('spotV4', operation, params)` on a `WebsocketClient`.
 
-A long-running service should retain its client rather than reconnecting for each request. Set `useTestnet: true` on the wrapper for [TestNet](/guides/testing-environments); do not invent a testnet connection key.
+A long-running service should retain its client rather than reconnecting for each request. Set `useTestnet: true` on the wrapper for [TestNet](/guides/testing-environments).
 
 In-flight requests can reject when a connection closes, even if the exchange processed them. [Resolve uncertain order outcomes](/guides/orders#recover-an-uncertain-outcome) before retrying a trading command.

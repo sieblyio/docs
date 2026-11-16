@@ -28,12 +28,6 @@ REST access still depends on the exchange's CORS policy, network and regional av
 
 The [Expo guide](/environments/expo) includes native setup and polyfills. Use the complete configuration and test it on your target device. Keep credentials and private account operations on a server.
 
-## Verification limits
-
-The setup guides use Spot public market data. The examples are type-checked, and browser and Worker builds check bundling. Live REST and WebSocket connections, native devices, Worker deployment and private trading have not been tested here. These checks also do not cover account permissions or recovery.
-
-Test the examples with the SDK version, runtime, network and region you will deploy. Check a public REST request, a market-data subscription and connection shutdown, then test private account operations separately. Bun, Deno, Next.js and mobile projects also need testing in their intended environments. A timeout alone cannot tell you whether the cause is the SDK, the network or the exchange; an access rejection may reflect account or regional restrictions.
-
 ## Streaming lifecycle
 
 Command-line streams run until Ctrl+C. Browser/mobile views must stop connections when removed or when Stop is selected. The SDK reconnects and restores subscriptions automatically. Wait for fresh market data and reconcile missed account changes before using cached state.

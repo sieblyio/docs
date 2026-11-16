@@ -10,16 +10,18 @@ ws.on('response', (message) => {
     errorCode: message.error?.code,
   });
 });
-ws.on('update', (message) =>
-  console.log('Private update:', message.channel, message.result),
-);
-ws.on('exception', () =>
-  console.error('Private WebSocket request or connection failed.'),
-);
-ws.on('reconnect', () => console.log('Reconnecting; account state is stale.'));
-ws.on('reconnected', () =>
-  console.log('Reconnected; reconcile missed orders and fills through REST.'),
-);
+ws.on('update', (message) => {
+  console.log('Private update:', message.channel, message.result);
+});
+ws.on('exception', () => {
+  console.error('Private WebSocket request or connection failed.');
+});
+ws.on('reconnect', () => {
+  console.log('Reconnecting; account state is stale.');
+});
+ws.on('reconnected', () => {
+  console.log('Reconnected; reconcile missed orders and fills through REST.');
+});
 
 ws.subscribe(
   [
@@ -30,4 +32,6 @@ ws.subscribe(
   'spotV4',
 );
 
-process.once('SIGINT', () => ws.closeAll());
+process.once('SIGINT', () => {
+  ws.closeAll();
+});

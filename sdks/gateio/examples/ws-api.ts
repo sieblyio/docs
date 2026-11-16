@@ -6,11 +6,9 @@ async function main() {
     ...clientOptions,
     attachEventListeners: false,
   });
-  api
-    .getWSClient()
-    .on('exception', () =>
-      console.error('WebSocket API request or connection failed.'),
-    );
+  api.getWSClient().on('exception', () => {
+    console.error('WebSocket API request or connection failed.');
+  });
   try {
     const response = await api.getSpotOrderStatus({
       currency_pair: 'BTC_USDT',
