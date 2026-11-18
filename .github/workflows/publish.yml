@@ -79,17 +79,13 @@ jobs:
       # No repository checkout or build code runs with deployment permissions.
       - name: Reject an obsolete main revision
         id: current
+        timeout-minutes: 1
         env:
           EXPECTED_SHA: ${{ github.sha }}
           GIT_TERMINAL_PROMPT: '0'
+        shell: bash
         run: |
-          remote_ref="$(timeout 30s git -c credential.helper= -c http.extraHeader= \
-            ls-remote --exit-code https://github.com/sieblyio/docs.git refs/heads/main)"
-          if [[ ! "$remote_ref" =~ ^([0-9a-f]{40})$'\t'refs/heads/main$ ]]; then
-            echo 'Invalid main revision response.' >&2
-            exit 1
-          fi
-          current_sha="${BASH_REMATCH[1]}"
+          current_sha="$(git ls-remote --exit-code https://github.com/sieblyio/docs.git refs/heads/main | cut -f1)"
           if [ "$current_sha" = "$EXPECTED_SHA" ]; then
             echo 'deploy=true' >> "$GITHUB_OUTPUT"
           else
