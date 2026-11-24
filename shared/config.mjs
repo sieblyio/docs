@@ -3,6 +3,7 @@ import { testingNavigation } from './testing-navigation.mjs';
 import { coinbaseSidebar } from './coinbase-sidebar.mjs';
 import { sourceCommentMarkup } from './markdown.mjs';
 import { analyticsAttributes } from './site-services.mjs';
+import { docsStartupHtml, relativePageImports } from './page-modules.mjs';
 
 export default function siteConfig(data, docs) {
   const { sdk, siteUrl, originUrl, indexable, catalogue } = data;
@@ -58,6 +59,8 @@ export default function siteConfig(data, docs) {
     // GitHub Pages serves actual .html files. Do not rely on a fallback rewrite.
     cleanUrls: false, lastUpdated: false, srcExclude: ['**/typedoc-sidebar.json'],
     markdown: { config: sourceCommentMarkup },
+    vite: { plugins: [relativePageImports] },
+    transformHtml: docsStartupHtml,
     sitemap: indexable ? { hostname: site.origin, transformItems: (items) => items
       .filter((item) => !item.url.endsWith('404.html'))
       .map((item) => ({ ...item, url: new URL(item.url.replace(/^\//, ''), site).href })) } : undefined,

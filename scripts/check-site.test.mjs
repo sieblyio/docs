@@ -1,10 +1,43 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { copyFile, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import path from 'node:path';
 import { root } from './context.mjs';
 import { checkSite } from './check-site.mjs';
 import { searchConsoleFile } from '../shared/site-services.mjs';
+import { docsStartupHtml } from '../shared/page-modules.mjs';
+
+test('SDK startup leaves the article alone if its page module cannot run', async (t) => {
+  const base = '/docs/gateio/';
+  const entry = `<script type="module" src="${base}assets/app.js"></script>`;
+  const context = {
+    page: 'guides/example.md', siteData: { base },
+    head: [['link', { rel: 'modulepreload', href: base + 'assets/example.lean.js' }]],
+  };
+  const html = docsStartupHtml(entry, '', context);
+  const [, page, app] = html.match(/data-page="([^"]+)" data-app="([^"]+)"/);
+  assert.ok(html.includes(`src="${base}start-docs.js"`));
+  assert.equal(docsStartupHtml(entry, '', { ...context, page: '404.md' }), entry);
+
+  const scratch = path.join(root, 'tmp');
+  await mkdir(scratch, { recursive: true });
+  const dir = await mkdtemp(path.join(scratch, 'docs-start-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  await mkdir(path.join(dir, 'assets'));
+  await writeFile(path.join(dir, 'package.json'), '{"type":"module"}');
+  await copyFile(new URL('../shared/start-docs.js', import.meta.url), path.join(dir, 'start-docs.js'));
+  await writeFile(path.join(dir, app), 'console.log("router started")');
+  const runner = `globalThis.document = { getElementById: () => ({ dataset: ${JSON.stringify({ page, app })} }) };
+    await import('./start-docs.js');`;
+  const run = () => promisify(execFile)(process.execPath, ['--input-type=module', '-e', runner], { cwd: dir });
+  assert.equal((await run()).stdout, '');
+  await writeFile(path.join(dir, page), '{ import {} from "./other.js"; }');
+  assert.equal((await run()).stdout, '');
+  await writeFile(path.join(dir, page), 'export default {}');
+  assert.equal((await run()).stdout.trim(), 'router started');
+});
 
 test('asset checks handle multiple rel tokens and either HTML quote style', async () => {
   const scratch = path.join(root, 'tmp');
