@@ -26,6 +26,8 @@
   "devDependencies": {
     "@types/ws": "8.18.1",
     "https-proxy-agent": "7.0.6",
+    "node-html-markdown": "2.0.0",
+    "node-html-parser": "6.1.13",
     "prettier": "3.3.2",
     "tar": "7.5.22",
     "typedoc": "0.28.20",

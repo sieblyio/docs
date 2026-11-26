@@ -49,10 +49,22 @@ jobs:
           npm run check:site-tests
           npm run check:release-update
           npm run check:release-refresh
+          node --test scripts/search-pages.test.mjs
       - name: Build all SDK sites from the resolved release records
         env:
           DOCS_RELEASE_RECORD: .work/available-releases.json
         run: npm run build:release
+      - name: Prepare searchable documentation from the validated site
+        run: node scripts/search-pages.mjs dist .work/search-pages.json
+      - name: Save search pages for the production sync
+        if: steps.plan.outputs.deploy == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: search-pages
+          path: .work/search-pages.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
       - name: Upload validated Pages output
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
@@ -62,6 +74,8 @@ jobs:
 
   deploy:
     needs: build
+    outputs:
+      published: ${{ steps.deployment.outcome == 'success' }}
     if: >-
       needs.build.outputs.deploy == 'true' &&
       github.repository == 'sieblyio/docs' &&
@@ -96,3 +110,34 @@ jobs:
         if: steps.current.outputs.deploy == 'true'
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  search:
+    needs: deploy
+    if: needs.deploy.outputs.published == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    environment:
+      name: github-pages
+      deployment: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts/publish-search.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: search-pages
+          path: .work/
+      - name: Sync published guides to Cloudflare AI Search
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_AI_SEARCH_INSTANCE: ${{ vars.CLOUDFLARE_AI_SEARCH_INSTANCE }}
+          CLOUDFLARE_AI_SEARCH_TOKEN: ${{ secrets.CLOUDFLARE_AI_SEARCH_TOKEN }}
+        run: node scripts/publish-search.mjs .work/search-pages.json

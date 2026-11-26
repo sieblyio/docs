@@ -101,6 +101,10 @@ npm run check:public
 
 ## Publishing
 
+After a successful GitHub Pages deployment, the `search` job indexes the pages in the deployed sitemap that fall outside `/api/`. It converts the rendered article to Markdown so included examples match the page. Search results carry the GitHub Pages URL in `item.metadata.source_url`. The job skips unchanged documents and removes retired guides that it previously uploaded.
+
+The main-only `github-pages` environment supplies the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_AI_SEARCH_INSTANCE` variables and the `CLOUDFLARE_AI_SEARCH_TOKEN` secret with AI Search Edit permission. If an indexing step fails, rerun the failed job while its revision is still deployed.
+
 Set **Settings > Pages > Source** to **GitHub Actions** and allow deployments from `main` in the `github-pages` environment.
 
 Dependabot checks npm daily at 00:19 UTC, including weekends, and opens a grouped PR when SDK versions change. GitHub requires at least 24 hours between Dependabot checks. The versions in `releases/package.json` are build inputs; user installation examples still use the latest SDK without pins.
