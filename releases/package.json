@@ -2,7 +2,7 @@
   "name": "siebly-sdk-release-inputs",
   "private": true,
   "dependencies": {
-    "@siebly/hyperliquid-api": "1.0.4",
+    "@siebly/hyperliquid-api": "1.0.5",
     "bybit-api": "4.8.6",
     "binance": "3.6.13",
     "@siebly/kraken-api": "1.1.11",
