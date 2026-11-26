@@ -81,7 +81,7 @@ async function main() {
     async list() {
       const all = [];
       for (let page = 1; ; page++) {
-        const body = await request('?source=builtin&per_page=100&page=' + page);
+        const body = await request('?source=builtin&per_page=50&page=' + page);
         all.push(...body.result);
         if (!body.result.length || all.length >= body.result_info?.total_count) return all;
       }
