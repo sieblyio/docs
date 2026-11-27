@@ -1,6 +1,6 @@
 ---
 title: "Binance SDK production usage"
-description: "Handle Binance retries, uncertain order outcomes, stream recovery and shutdown."
+description: "Handle Binance rate limits, retries, uncertain order outcomes, stream recovery and shutdown."
 ---
 
 # Production usage
@@ -8,6 +8,21 @@ description: "Handle Binance retries, uncertain order outcomes, stream recovery 
 <!--@include: @/.vitepress/shared/production/account-state.md-->
 
 <!--@include: @/.vitepress/shared/production/request-policy.md-->
+
+## Stay within rate limits {#rate-limits}
+
+Binance limits REST traffic by request weight per IP address and order placement per account. Read the current limits from `getExchangeInfo()` rather than hard-coding them. On 27 November 2026 the values were:
+
+| Market | Request weight | Orders |
+| --- | --- | --- |
+| Spot (`MainClient`) | 6000 per minute | 100 per 10 seconds, 200000 per day |
+| USDⓈ-M futures (`USDMClient`) | 2400 per minute | 300 per 10 seconds, 1200 per minute |
+
+Each REST client records Binance's usage headers after every response. Call `getRateLimitStates()` to read the latest values, such as `x-mbx-used-weight-1m` and `x-mbx-order-count-10s`, and slow down before the limit instead of waiting for an HTTP 429.
+
+<<< @/../examples/rate-limits.ts
+
+All processes on one IP address share the weight budget, so the value can be higher than your own client's requests. An HTTP 429 means a limit was hit. Repeatedly ignoring 429 responses leads to HTTP 418 and an automatic IP ban. Back off for the `Retry-After` period, and use WebSocket streams for data that changes continuously.
 
 ## Resolve uncertain order outcomes
 
