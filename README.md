@@ -12,7 +12,7 @@ The following SDKs have public documentation pages to guide builders such as you
 - [Bitget](https://sieblyio.github.io/docs/bitget/)
 - [Bybit](https://sieblyio.github.io/docs/bybit/)
 - [Coinbase](https://sieblyio.github.io/docs/coinbase/)
-- [Gate.io](https://sieblyio.github.io/docs/gateio/)
+- [Gate.com](https://sieblyio.github.io/docs/gateio/)
 - [HTX](https://sieblyio.github.io/docs/htx/)
 - [Hyperliquid](https://sieblyio.github.io/docs/hyperliquid/)
 - [Kraken](https://sieblyio.github.io/docs/kraken/)
