@@ -37,6 +37,15 @@ test('generated guides match the starter programs and publish valid archives', a
         const guide = await readFile(path.join(docs, 'environments', `${environment}.md`), 'utf8');
         assert(!/@@[A-Z_]+@@/.test(guide));
         assert(guide.includes(`https://github.com/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}`));
+        const stackblitzEnabled = sdk.id === 'hyperliquid' && ['node', 'typescript', 'vite', 'react'].includes(environment);
+        if (stackblitzEnabled) {
+          assert.match(guide, /## Try it in the browser/);
+          assert.match(guide, new RegExp(`stackblitz\\.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/${environment}\\?title=`));
+          assert(guide.includes('https://developer.stackblitz.com/img/open_in_stackblitz.svg'));
+          assert(guide.includes('No account is needed. Keep API keys out of public sandboxes.'));
+        } else {
+          assert(!guide.toLowerCase().includes('stackblitz'), `Unexpected StackBlitz link: ${sdk.id}/${environment}`);
+        }
         const automaticPackage = ['node', 'typescript', 'bun'].includes(environment);
         for (const [name, content] of files) {
           if (!(name === 'package.json' && automaticPackage)) {

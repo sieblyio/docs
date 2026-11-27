@@ -252,6 +252,11 @@ export async function generateEnvironments(ctx) {
       rendered = rendered
         .replace('If a request fails or no update arrives within 30 seconds,', 'If a request fails or no stream updates arrive,');
     }
+    if (ctx.id === 'hyperliquid' && ['node', 'typescript', 'vite', 'react'].includes(environment)) {
+      const title = encodeURIComponent(`${ctx.sdk.name} ${environmentTitles[environment]} starter`);
+      const stackblitz = `## Try it in the browser\n\n[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}?title=${title})\n\nNo account is needed. Keep API keys out of public sandboxes.\n\n`;
+      rendered = rendered.replace('## Create the project', stackblitz + '## Create the project');
+    }
     if (ctx.id === 'coinbase' && environment !== 'cloudflare-workers') {
       const note = browser || environment === 'expo'
         ? 'This example reads public market data only. The supplied configuration disables the SDK’s Node-only JWT signing helper. '
