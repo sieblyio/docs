@@ -64,6 +64,7 @@ export default {
     { client: 'WebsocketClient', method: 'subscribe', guide: '/guides/private-streams', title: 'Receive account order updates' },
     { client: 'RestClient', method: 'getAllMids', example: 'first-call.ts', guide: '/getting-started', title: 'Quickstart' },
     { client: 'RestClient', method: 'getOrderBook', example: 'order-book.ts', guide: '/guides/market-data#l2-order-book', title: 'Read an order book' },
+    { client: 'RestClient', method: 'getRecentTrades', example: 'recent-trades.ts', guide: '/guides/market-data#recent-trades', title: 'Read recent trades' },
     { client: 'RestClient', method: 'getCandles', example: 'candles.ts', guide: '/guides/market-data#candle-history', title: 'Read candle history' },
     { client: 'RestClient', method: 'getFundingHistory', example: 'funding-rates.ts', guide: '/guides/market-data#funding-rates', title: 'Read funding rates' },
     { client: 'RestClient', method: 'getPerpAccountSummary', example: 'account-state.ts', guide: '/guides/authentication#read-account-state', title: 'Read account state' },
