@@ -1,6 +1,6 @@
 ---
 title: Hyperliquid market data in JavaScript
-description: Read Hyperliquid mid prices, L2 order books, candle history and hourly funding rates, and resolve Spot and perpetual asset names.
+description: Read Hyperliquid mid prices, L2 order books, recent trades, candle history and hourly funding rates, and resolve Spot and perpetual asset names.
 ---
 
 # Public market data (REST) {#market-data}
@@ -34,6 +34,14 @@ The example prints the best bid and ask, or `null` for an empty side. A level co
 
 [getOrderBook reference](/api/classes/RestClient#getorderbook) · [Request parameters](/api/interfaces/GetOrderBookRequest) · [Response fields](/api/interfaces/OrderBookResponse)
 
+## Recent trades {#recent-trades}
+
+<<< @/../examples/recent-trades.ts
+
+`getRecentTrades()` returns the latest public trades for one coin, newest first. In a check on 27 November 2026 it returned the last 10 BTC trades. Each trade has `px` and `sz` as decimal strings, `time` in milliseconds, `side` (`B` for bid, `A` for ask), a trade id `tid`, the transaction `hash` and the two counterparty addresses in `users`. The request has weight 20, plus extra weight per 20 trades returned, so subscribe to `trades` on [WebSocket](/guides/websockets) instead of polling it.
+
+[getRecentTrades reference](/api/classes/RestClient#getrecenttrades) · [Response fields](/api/interfaces/Trade)
+
 ## Candle history
 
 <<< @/../examples/candles.ts
@@ -55,5 +63,17 @@ Hyperliquid settles perpetual funding every hour, so the `funding` field from `g
 ## Asset names
 
 Use `BTC` for a native perpetual, `@107` for a native Spot identifier, or a `dex:COIN` name for a HIP-3 market. `getOrderBook`, `getCandles` and `getFundingHistory` can resolve readable Spot aliases through metadata. Other Info methods and stream subscriptions pass `coin` through unchanged.
+
+## Asset IDs {#asset-ids}
+
+Orders, cancels and leverage updates identify a market by a numeric asset ID. Order methods in the SDK accept a readable name and resolve it for you. Call `resolveAsset` when you need the ID itself, for example to match `asset` fields in raw actions or logs.
+
+<<< @/../examples/asset-ids.ts
+
+A native perpetual uses its index in `meta.universe`, so `BTC` is `0`. A Spot pair is `10000` plus its spot index, so `HYPE/USDC` (`@107`) is `10107`. A HIP-3 market is `100000 + dexIndex * 10000 + index`, where `dexIndex` is the DEX's position in `perpDexs`. `xyz` is currently `110000` and `flx` is `120000`, so hard-coding one DEX's offset sends orders for other DEXs to the wrong market.
+
+The resolver caches metadata. Call `refreshAssetMetadata` after a new listing or a new HIP-3 DEX.
+
+[resolveAsset reference](/api/classes/RestClient#resolveasset) · [getPerpDexs reference](/api/classes/RestClient#getperpdexs)
 
 [Hyperliquid tutorial](https://siebly.io/sdk/hyperliquid/javascript/tutorial)
