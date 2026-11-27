@@ -73,3 +73,15 @@ test('drift checks reject changed, missing and unexpected files and stale direct
     await assert.rejects(checkStarters(directory), /Unexpected example path: old-sdk/);
   });
 });
+
+test('StackBlitz links appear only on the enabled Hyperliquid starters', async () => {
+  await fixture(async directory => {
+    for (const environment of ['node', 'typescript', 'vite', 'react']) {
+      const readme = await readFile(path.join(directory, `hyperliquid/${environment}/README.md`), 'utf8');
+      assert.match(readme, new RegExp(`stackblitz\\.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/${environment}\\?title=`));
+    }
+    for (const relative of ['hyperliquid/next/README.md', 'hyperliquid/expo/README.md', 'binance/node/README.md']) {
+      assert(!(await readFile(path.join(directory, relative), 'utf8')).includes('stackblitz'));
+    }
+  });
+});
