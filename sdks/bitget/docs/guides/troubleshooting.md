@@ -9,6 +9,16 @@ description: "Diagnose wrong clients, response fields, authentication, WebSocket
 
 Use the [client guide](/clients). The default guides use `RestClientV3` and `WebsocketClientV3`. The release also exports `WebsocketAPIClient` and Classic `RestClientV2`/`WebsocketClientV2`. Legacy V1 clients and the unversioned WebSocket client are no longer exported.
 
+## Requests fail with code 30032
+
+Bitget has switched off the V1 REST API. Any request to an `/api/spot/v1/...` or `/api/mix/v1/...` path returns HTTP 400 before the API key is checked:
+
+```json
+{ "code": "30032", "msg": "The V1 API has been decommissioned. Please migrate to a newer version.", "data": null }
+```
+
+The SDK no longer calls V1, so this usually comes from older code that builds Bitget URLs by hand. Move those calls to a current client: `RestClientV3` for UTA accounts, or Classic `RestClientV2` for accounts not yet upgraded. Classic V2 drops the `_SPBL` and `_UMCBL` symbol suffixes (use `BTCUSDT`) and uses `USDT-FUTURES`, `USDC-FUTURES` or `COIN-FUTURES` where V1 used `umcbl`, `cmcbl` or `dmcbl`. For example, V1 `/api/spot/v1/market/ticker?symbol=BTCUSDT_SPBL` becomes `getSpotTicker({ symbol: 'BTCUSDT' })`, and V1 `/api/mix/v1/position/allPosition-v2?productType=umcbl` becomes `getFuturesPositions({ productType: 'USDT-FUTURES' })`, where the entry price is `openPriceAvg`.
+
 ## The ticker is undefined
 
 UTA `getTickers()` returns an envelope. Read the price from `response.data[0]?.lastPrice`. Classic V2 `getSpotTicker()` instead uses `response.data[0]?.lastPr`. Check that the response contains the requested symbol; `BTCUSDT` has no hyphen.
