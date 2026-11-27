@@ -1,6 +1,6 @@
 ---
 title: Hyperliquid market data in JavaScript
-description: Read Hyperliquid mid prices, L2 order books and candle history, and resolve Spot and perpetual asset names.
+description: Read Hyperliquid mid prices, L2 order books, candle history and hourly funding rates, and resolve Spot and perpetual asset names.
 ---
 
 # Public market data (REST) {#market-data}
@@ -41,6 +41,16 @@ The example prints the best bid and ask, or `null` for an empty side. A level co
 This example requests hourly BTC candles starting 24 hours ago. Times are Unix milliseconds. Only the most recent 5,000 candles are available.
 
 [getCandles reference](/api/classes/RestClient#getcandles) · [Request parameters](/api/interfaces/GetCandlesRequest) · [Candle response](/api/interfaces/Candle)
+
+## Funding rates
+
+<<< @/../examples/funding-rates.ts
+
+Hyperliquid settles perpetual funding every hour, so the `funding` field from `getPerpAssetContexts` and each `fundingRate` from `getFundingHistory` are hourly rates. Multiply by 8 for an 8-hour equivalent and by `24 * 365` to annualise. Treating the hourly value as an 8-hour rate understates it by a factor of 8.
+
+`getPredictedFundingRates` returns a rate per venue with `fundingIntervalHours`. Divide by that interval before you compare venues that settle on different schedules. A venue entry can be `null`.
+
+[getFundingHistory reference](/api/classes/RestClient#getfundinghistory) · [getPredictedFundingRates reference](/api/classes/RestClient#getpredictedfundingrates)
 
 ## Asset names
 
