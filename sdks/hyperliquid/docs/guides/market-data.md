@@ -56,4 +56,16 @@ Hyperliquid settles perpetual funding every hour, so the `funding` field from `g
 
 Use `BTC` for a native perpetual, `@107` for a native Spot identifier, or a `dex:COIN` name for a HIP-3 market. `getOrderBook`, `getCandles` and `getFundingHistory` can resolve readable Spot aliases through metadata. Other Info methods and stream subscriptions pass `coin` through unchanged.
 
+## Asset IDs {#asset-ids}
+
+Orders, cancels and leverage updates identify a market by a numeric asset ID. Order methods in the SDK accept a readable name and resolve it for you. Call `resolveAsset` when you need the ID itself, for example to match `asset` fields in raw actions or logs.
+
+<<< @/../examples/asset-ids.ts
+
+A native perpetual uses its index in `meta.universe`, so `BTC` is `0`. A Spot pair is `10000` plus its spot index, so `HYPE/USDC` (`@107`) is `10107`. A HIP-3 market is `100000 + dexIndex * 10000 + index`, where `dexIndex` is the DEX's position in `perpDexs`. `xyz` is currently `110000` and `flx` is `120000`, so hard-coding one DEX's offset sends orders for other DEXs to the wrong market.
+
+The resolver caches metadata. Call `refreshAssetMetadata` after a new listing or a new HIP-3 DEX.
+
+[resolveAsset reference](/api/classes/RestClient#resolveasset) · [getPerpDexs reference](/api/classes/RestClient#getperpdexs)
+
 [Hyperliquid tutorial](https://siebly.io/sdk/hyperliquid/javascript/tutorial)
