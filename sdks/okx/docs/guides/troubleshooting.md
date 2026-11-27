@@ -29,6 +29,12 @@ Treat the outcome as unknown. Look for matching private events, then query by th
 
 Keep private requests on a server. A successful import does not guarantee a working connection. Check browser CORS, mobile network restrictions and the framework configuration in the [runtime guide](/compatibility). Do not expose secrets or disable transport security to make a client-side request work.
 
+## WebSocket connection fails on port 8443 {#port-8443}
+
+OKX stopped accepting WebSocket connections on port 8443 on 31 October 2026 (Colo on 16 November 2026). Code or config that still uses a URL such as `wss://ws.okx.com:8443/ws/v5/public` now fails to connect, while REST keeps working. Remove `:8443` and keep the host and path: `wss://ws.okx.com/ws/v5/public`. This applies to every OKX WebSocket domain, including demo trading and the EEA and US domains. See the [OKX announcement](https://www.okx.com/en-us/help/okx-websocket-port-8443-discontinuation-announcement).
+
+`WebsocketClient` already connects on port 443 by default. If you set `wsUrl` yourself, check that it has no `:8443`.
+
 ## Proxy or connection problem
 
 Verify REST and WebSocket routes independently. Check the proxy agent, TLS trust, outbound rules and IP allowlist. Keep SDK `keepAlive` disabled with a custom agent. See [Proxies](/guides/proxies).
