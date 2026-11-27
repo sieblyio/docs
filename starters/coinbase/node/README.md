@@ -25,4 +25,10 @@ For CommonJS instead, run `node price.cjs` or `node stream.cjs`.
 
 These examples use Advanced Trade public market data. Keep authenticated calls on your Node.js server.
 
+## Try it in the browser
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/coinbase/node?title=Coinbase%20Node.js%20%2F%20JavaScript%20starter)
+
+Opens a copy of this folder in StackBlitz, installs dependencies and runs the start script. No account is needed. Keep API keys out of public sandboxes.
+
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/coinbase/environments/node.html).
