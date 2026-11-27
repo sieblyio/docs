@@ -50,8 +50,22 @@ Call [`unsubscribe()`](/api/classes/WebsocketClient#unsubscribe) with the origin
 
 Call `closeAll()` to close connections and cancel queued reconnects. Clear timers and process listeners as shown in the example.
 
+## Limits and heartbeats {#limits}
+
+Hyperliquid allows 10 open WebSocket connections, 30 new connections per minute and 1000 subscriptions per IP address. `WebsocketClient` keeps public topics on one shared connection and opens an extra connection per account only for `orderUpdates`, `userEvents` and `notification`. See [WebSocket limits](/guides/rate-limits#websocket-limits) for the full table.
+
+The server closes a connection that receives nothing for 60 seconds. The client sends a ping every 10 seconds by default, so quiet streams stay open. See [Heartbeats](/guides/rate-limits#heartbeats) before changing `pingInterval` or `pongTimeout`.
+
 ## Asset names
 
 Stream subscriptions use native coin names. Resolve a readable alias with `nameToCoin()` before subscribing when needed.
 
 See [Use a proxy](/guides/proxies) for Node.js proxy configuration, and the [Siebly Hyperliquid tutorial](https://siebly.io/sdk/hyperliquid/javascript/tutorial) for more account-stream and recovery examples.
+
+## More WebSocket examples {#more-examples}
+
+Runnable Node.js examples on Siebly.io:
+
+- [Public streams](https://siebly.io/examples/Hyperliquid/Websocket/ws-public)
+- [Account streams](https://siebly.io/examples/Hyperliquid/Websocket/ws-private)
+- [WebSocket API client](https://siebly.io/examples/Hyperliquid/Websocket/WS-API/ws-api-client)
