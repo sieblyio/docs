@@ -1,6 +1,6 @@
 ---
 title: Hyperliquid SDK authentication and account addresses
-description: Query Hyperliquid accounts by address and configure private keys, API wallets, vaults or custom signers for signed actions.
+description: Query Hyperliquid accounts by address, find the Hyperliquid equivalent of an API key, and configure private keys, API wallets, vaults or custom signers for signed actions.
 ---
 
 # Account access and balances {#authentication}
@@ -26,6 +26,19 @@ Pass `privateKey` and the managed account address to `RestClient`. This example 
 <<< @/../examples/authenticated-client.ts
 
 Keep the private key in a secure server-side environment, supplied through a protected environment variable or a secret manager, outside source files and browser bundles.
+
+## Hyperliquid API keys {#api-keys}
+
+Hyperliquid does not issue an API key and secret pair. The equivalent is an API wallet, also called an agent wallet: a separate private key that your main account approves to sign on its behalf. Create one on the [API page of the Hyperliquid app](https://app.hyperliquid.xyz/API) on the network you trade on, because Mainnet and Testnet approvals are separate.
+
+| Exchange-style setting | Hyperliquid equivalent | SDK option |
+| --- | --- | --- |
+| API secret | API wallet private key | `privateKey` |
+| API key or account ID | Main account or subaccount address | `accountAddress` |
+
+The API wallet only signs. Account data belongs to the main account, so always set `accountAddress`. Without it, account methods throw `The signer is not a Hyperliquid account on this network. Set accountAddress when using an API wallet.` A key that is not approved for the account is rejected with `User or API Wallet 0x... does not exist.` (see [common rejection messages](/guides/errors)).
+
+Use a separate API wallet for each trading process, because Hyperliquid tracks nonces per signer. After an API wallet is replaced or expires, generate a new one instead of reusing the old address.
 
 ## API wallets and vaults
 
