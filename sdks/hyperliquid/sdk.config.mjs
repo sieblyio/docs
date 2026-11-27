@@ -65,6 +65,7 @@ export default {
     { client: 'RestClient', method: 'getAllMids', example: 'first-call.ts', guide: '/getting-started', title: 'Quickstart' },
     { client: 'RestClient', method: 'getOrderBook', example: 'order-book.ts', guide: '/guides/market-data#l2-order-book', title: 'Read an order book' },
     { client: 'RestClient', method: 'getCandles', example: 'candles.ts', guide: '/guides/market-data#candle-history', title: 'Read candle history' },
+    { client: 'RestClient', method: 'getFundingHistory', example: 'funding-rates.ts', guide: '/guides/market-data#funding-rates', title: 'Read funding rates' },
     { client: 'RestClient', method: 'getPerpAccountSummary', example: 'account-state.ts', guide: '/guides/authentication#read-account-state', title: 'Read account state' },
     { client: 'RestClient', method: 'getUserRateLimit', example: 'rate-limit.ts', guide: '/guides/rate-limits#address-limits', title: 'Check address action limits' },
     { client: 'RestClient', method: 'getOrderStatus', example: 'order-status.ts', guide: '/guides/production#check-an-order-after-a-timeout', title: 'Check an order after a timeout' },
