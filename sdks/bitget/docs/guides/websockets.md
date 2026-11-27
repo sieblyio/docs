@@ -31,6 +31,14 @@ The example logs subscription responses and incoming market updates. Leave it ru
 
 Existing Classic integrations can use `WebsocketClientV2.subscribeTopic('SPOT', 'ticker', 'BTCUSDT')`, with `unsubscribeTopic()` for cleanup. Classic topics use `instId` and uppercase `SPOT`, unlike V3's `symbol` and lowercase `spot`. Classic ticker prices use `lastPr`, not V3's `lastPrice`. Check the topic and response fields when switching between API versions.
 
+## Order book and candle channel changes {#channel-changes}
+
+From 1 December 2026, Bitget changes the V3 `books50` channel from a full snapshot on every push to incremental pushes: one `snapshot` after you subscribe, then `update` messages with only the changed levels (size `0` removes a level). `pseq` is also set on `books50` from then on, so you can detect a missed message. Demo trading already behaves this way. Code that replaces the whole book on every message will break, so branch on the event's `action`: reset the book on `snapshot` and merge levels on `update`. On a gap in `pseq`, resubscribe to get a fresh snapshot. `books1` and `books5` stay full snapshots.
+
+The `kline` and `publicTrade` channels no longer send an initial snapshot after subscribing, only `update` messages. Load history through REST first.
+
+See Bitget's [update preview](https://www.bitget.com/docs/uta/update-preview) for the exact dates.
+
 ## Recovery and shutdown
 
 The SDK restores subscriptions automatically after reconnecting; you do not need to subscribe again. The `reconnected` event means the socket is open, not that fresh data has arrived. Treat cached data as stale until fresh updates arrive. For incremental order books, follow the channel's recovery procedure before applying further deltas.
