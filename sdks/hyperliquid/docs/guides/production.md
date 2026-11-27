@@ -45,7 +45,7 @@ Set `HYPERLIQUID_ACCOUNT_ADDRESS` and `HYPERLIQUID_ORDER_ID` to the account and 
 
 Hyperliquid applies IP-based and address-based limits, with different weights for different operations. Limit concurrent requests across workers that share an IP or account. Use WebSocket subscriptions for ongoing market and account updates. Reserve REST reads for initial data, explicit lookups and recovery.
 
-Reduce request volume after rate-limit responses and delay retries. Set request budgets using [Hyperliquid's limits](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/rate-limits-and-user-limits).
+Reduce request volume after rate-limit responses and delay retries. Set request budgets using [Hyperliquid's limits](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/rate-limits-and-user-limits). See [Rate limits and heartbeats](/guides/rate-limits) for request weights, WebSocket connection limits and address-based action limits.
 
 ## Recover after a disconnect
 
