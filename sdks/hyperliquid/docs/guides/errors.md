@@ -47,3 +47,108 @@ Reconnection restores subscriptions without replaying requests. After a timeout 
 A successful request can contain rejected individual orders. Inspect each entry in `response.data.statuses` returned by `submitOrder()`: an entry can be `resting`, `filled` or `error`.
 
 [`submitOrder()`](/api/classes/RestClient#submitorder) · [`OrderResponseData`](/api/interfaces/OrderResponseData)
+
+## Common rejection messages
+
+Hyperliquid reports most rejections as text. Match on the stable words, because several messages include an address or a value.
+
+### Whole request rejected
+
+These arrive as a top-level `status: 'err'`, so `submitOrder()` and the other Exchange methods reject with `HyperliquidApiError`. The HTTP status is still `200`.
+
+| Message starts with | Usual cause | What to check |
+| --- | --- | --- |
+| `User or API Wallet 0x... does not exist.` | The signature recovered to an address Hyperliquid does not know. | The private key belongs to the main wallet or an approved API wallet on the same network (mainnet and testnet approvals are separate), the API wallet has not expired, and `accountAddress` is the main account. A wallet that has never deposited on that network also gives this error. |
+| `Must deposit before performing actions.` | The account exists but has never deposited. | Deposit on the network you are calling. |
+
+Some payload problems are caught before matching and reject the whole batch with one message, for example an order priced too far from the reference price. With a batch, treat that single error as applying to every order in it.
+
+### Individual orders rejected
+
+These arrive in a successful response: the matching entry in `response.data.statuses` has an `error` string instead of `resting` or `filled`.
+
+| Message | What to check |
+| --- | --- |
+| `Price must be divisible by tick size.` | At most 5 significant figures and at most `6 - szDecimals` decimals for perps (`8 - szDecimals` for spot). Whole-number prices are always valid. |
+| `Order must have minimum value of $10.` | Price multiplied by size is below the minimum. Spot orders use the quote token instead of `$`. |
+| `Insufficient margin to place order.` | Available margin on the account or sub-account that places the order. |
+| `Reduce only order would increase position.` | The side and size of a `reduceOnly` order against the current position. |
+| `Post only order would have immediately matched, bbo was ...` | A `postOnly` price that crosses the book. |
+| `Order could not immediately match against any resting orders.` | An IOC order with no liquidity at its price. |
+| `Invalid TP/SL price.` | The trigger price relative to the order side. |
+| `Order price too far from oracle` | Prices far from the oracle price. |
+
+```ts
+const result = await client.submitOrder(/* ... */);
+if (result.status === 'ok') {
+  result.response.data.statuses.forEach((status, index) => {
+    if ('error' in status) {
+      console.error(`Order ${index} rejected:`, status.error);
+    }
+  });
+}
+```
+
+Hyperliquid's [error responses](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/error-responses) page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
