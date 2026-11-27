@@ -74,13 +74,18 @@ test('drift checks reject changed, missing and unexpected files and stale direct
   });
 });
 
-test('StackBlitz links appear only on the enabled Hyperliquid starters', async () => {
+test('StackBlitz links appear on the enabled public-price starters', async () => {
   await fixture(async directory => {
-    for (const environment of ['node', 'typescript', 'vite', 'react']) {
-      const readme = await readFile(path.join(directory, `hyperliquid/${environment}/README.md`), 'utf8');
-      assert.match(readme, new RegExp(`stackblitz\\.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/${environment}\\?title=`));
+    const enabled = ['hyperliquid', 'binance', 'bitget', 'okx', 'kraken', 'kucoin', 'gateio', 'coinbase'];
+    for (const id of enabled) {
+      for (const environment of ['node', 'typescript', 'vite', 'react']) {
+        const readme = await readFile(path.join(directory, `${id}/${environment}/README.md`), 'utf8');
+        assert.match(readme, new RegExp(`stackblitz\\.com/fork/github/sieblyio/docs/tree/main/starters/${id}/${environment}\\?title=`));
+        assert(readme.includes('https://developer.stackblitz.com/img/open_in_stackblitz.svg'));
+        assert(readme.includes('No account is needed. Keep API keys out of public sandboxes.'));
+      }
     }
-    for (const relative of ['hyperliquid/next/README.md', 'hyperliquid/expo/README.md', 'binance/node/README.md']) {
+    for (const relative of ['hyperliquid/next/README.md', 'hyperliquid/expo/README.md', 'binance/next/README.md', 'binance/bun/README.md']) {
       assert(!(await readFile(path.join(directory, relative), 'utf8')).includes('stackblitz'));
     }
   });
