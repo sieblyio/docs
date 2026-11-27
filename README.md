@@ -2,6 +2,25 @@
 
 The shared TypeDoc and VitePress builder, guides, examples and compatibility harness for the SDK documentation published to GitHub Pages, available at [sieblyio.github.io/docs](https://sieblyio.github.io/docs/).
 
+## Siebly JavaScript, Node.js & TypeScript SDKs
+
+This builder drives the detailed documentation pages for our SDKs. While many guides are handwritten (and thoroughly tested), much of this is made so much easier thanks to our rich types with each and every REST API & WebSocket interface, in each SDK, and the wonders of both TypeDoc and VitePress.
+
+The following SDKs have public documentation pages to guide builders such as yourself:
+
+- [Binance](https://sieblyio.github.io/docs/binance/)
+- [Bitget](https://sieblyio.github.io/docs/bitget/)
+- [Bybit](https://sieblyio.github.io/docs/bybit/)
+- [Coinbase](https://sieblyio.github.io/docs/coinbase/)
+- [Gate.io](https://sieblyio.github.io/docs/gateio/)
+- [HTX](https://sieblyio.github.io/docs/htx/)
+- [Hyperliquid](https://sieblyio.github.io/docs/hyperliquid/)
+- [Kraken](https://sieblyio.github.io/docs/kraken/)
+- [KuCoin](https://sieblyio.github.io/docs/kucoin/)
+- [OKX](https://sieblyio.github.io/docs/okx/)
+
+Each SDK has quickstarts for Node.js (JavaScript and TypeScript), Bun, Deno, and Cloudflare Workers. The guides also cover browser apps built with Vite using plain JavaScript or React, Next.js server routes, and React Native apps built with Expo for iOS and Android mobile development.
+
 ## Documentation Updates
 
 A huge portion of the docs is codegen directly from the rich types included with each of our SDKs. Most of the remaining custom content is Markdown in `sdks/<sdk>/docs/`.
@@ -123,7 +142,6 @@ To check npm immediately, use **Actions > Refresh SDK releases > Run workflow** 
 
 The action locates the exact token-created `pull_request` run for the bot PR and validates its author, repository, base, head, manifest-only diff and increasing SDK versions before approving it. It waits up to 15 minutes for that real PR build, then calls the shared guarded merger directly from trusted `main` code. This avoids both redundant branch builds and reliance on a suppressed follow-up event. A dispatched branch build does not satisfy GitHub's native required-check gate. The PR build remains read-only, and merging still requires the protected **build** check and current main ancestry. The merger then dispatches publication on `main`. No new secrets or protection changes are required. An approval permission failure reports the exact run URL and stops without a fallback.
 
-
 To rebuild and publish the versions already recorded in `releases/package.json`, use **Actions > Build and deploy SDK documentation > Run workflow** on `main`. This does not check npm for newer versions. Each deployment's SDK versions and source identifiers are listed in [build-manifest.json](https://sieblyio.github.io/docs/build-manifest.json).
 
 If refresh orchestration stops before merging, rerun **Refresh SDK releases**; it reuses the PR and its real validation run. If refresh merges successfully but publication dispatch fails, use **Build and deploy SDK documentation > Run workflow** on `main` to publish the recorded versions. For Dependabot, rerunning a failed release-update job can retry publication without merging again. The release-update manual mode accepts a completed PR run ID for read-only inspection.
@@ -145,13 +163,13 @@ Docs events also carry the built-in **Content group** value `Documentation`. No 
 
 `shared/public/analytics.js` owns event names, parameter allowlisting, context and the GA transport. `shared/site-services.mjs` supplies its build settings from the existing SDK catalogue. The shared theme connects the supported VitePress router hooks to that controller. Portal pages load the same controller. New pages and SDKs inherit this integration without page-specific tracking.
 
-| Event | Meaning |
-| --- | --- |
-| `content_copy` | A code or install-command copy operation finished. `copy_result` is `success` or `failure`; count only successes for adoption intent. |
-| `content_select` | An SDK, code tab or search result was selected. `selection_type` is `exchange`, `code_tab` or `search_result`. |
+| Event              | Meaning                                                                                                                                                                                                        |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `content_copy`     | A code or install-command copy operation finished. `copy_result` is `success` or `failure`; count only successes for adoption intent.                                                                          |
+| `content_select`   | An SDK, code tab or search result was selected. `selection_type` is `exchange`, `code_tab` or `search_result`.                                                                                                 |
 | `navigation_click` | A link was activated, including middle clicks and keyboard activation. Destinations distinguish guides, references, tutorials, sections, packages, repositories and support. This records intent, not arrival. |
-| `docs_search` | A local-search query settled for 600 ms, or its result was selected earlier. `search_result` is `results` or `no_results`. |
-| `page_not_found` | A missing page was shown, once per missing-page arrival. |
+| `docs_search`      | A local-search query settled for 600 ms, or its result was selected earlier. `search_result` is `results` or `no_results`.                                                                                     |
+| `page_not_found`   | A missing page was shown, once per missing-page arrival.                                                                                                                                                       |
 
 The names and meanings of copy, selection and navigation events match the main website's interaction contract. Successful copying uses the actual clipboard operation outcome, including the browser fallback's boolean result. Analytics errors do not change the copy result. Ordinary text selection and system clipboard shortcuts are outside the copy-button measurement.
 
