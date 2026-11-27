@@ -1,6 +1,6 @@
 ---
 title: Hyperliquid market data in JavaScript
-description: Read Hyperliquid mid prices, L2 order books, candle history and hourly funding rates, and resolve Spot and perpetual asset names.
+description: Read Hyperliquid mid prices, L2 order books, recent trades, candle history and hourly funding rates, and resolve Spot and perpetual asset names.
 ---
 
 # Public market data (REST) {#market-data}
@@ -33,6 +33,14 @@ The example prints the best bid and ask, or `null` for an empty side. A level co
 ```
 
 [getOrderBook reference](/api/classes/RestClient#getorderbook) · [Request parameters](/api/interfaces/GetOrderBookRequest) · [Response fields](/api/interfaces/OrderBookResponse)
+
+## Recent trades {#recent-trades}
+
+<<< @/../examples/recent-trades.ts
+
+`getRecentTrades()` returns the latest public trades for one coin, newest first. In a check on 27 November 2026 it returned the last 10 BTC trades. Each trade has `px` and `sz` as decimal strings, `time` in milliseconds, `side` (`B` for bid, `A` for ask), a trade id `tid`, the transaction `hash` and the two counterparty addresses in `users`. The request has weight 20, plus extra weight per 20 trades returned, so subscribe to `trades` on [WebSocket](/guides/websockets) instead of polling it.
+
+[getRecentTrades reference](/api/classes/RestClient#getrecenttrades) · [Response fields](/api/interfaces/Trade)
 
 ## Candle history
 
