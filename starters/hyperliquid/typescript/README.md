@@ -25,6 +25,6 @@ npm run stream
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/typescript?title=Hyperliquid%20Node.js%20%2F%20TypeScript%20starter) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/hyperliquid/typescript)
 
-Opens a copy of this folder in StackBlitz or CodeSandbox. StackBlitz installs dependencies and runs the start script, and does not need an account. In CodeSandbox, run the Start task from the Devtools panel to see the output in its terminal. Keep API keys out of public sandboxes.
+Quickest way to run it: Open in StackBlitz, no account needed, and the output appears in its terminal. CodeSandbox opens a read-only copy until you sign in (free) and fork it, because it only runs code in your own copy. After forking, run the Start task from the Devtools panel to see the output.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/hyperliquid/environments/typescript.html).
