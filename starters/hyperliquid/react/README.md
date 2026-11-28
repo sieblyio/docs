@@ -21,6 +21,6 @@ Use **Stop stream** to close the price subscription.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/react?title=Hyperliquid%20React%20starter) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/hyperliquid/react)
 
-Opens a copy of this folder in StackBlitz or CodeSandbox, installs dependencies and runs the start script. StackBlitz does not need an account. Keep API keys out of public sandboxes.
+Opens a copy of this folder in StackBlitz or CodeSandbox, installs dependencies and runs the start script. StackBlitz does not need an account. In CodeSandbox, the running page appears in the preview pane on port 5173. Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/hyperliquid/environments/react.html).

@@ -47,7 +47,7 @@ function readme(sdk, environment) {
         : '';
   // Browser sandboxes: enabled per SDK once each starter has been run there.
   const stackblitz = ['hyperliquid', 'binance', 'bitget', 'okx', 'kraken', 'kucoin', 'gateio', 'coinbase'].includes(sdk.id) && ['node', 'typescript', 'vite', 'react'].includes(environment)
-    ? `\n## Try it in the browser\n\n[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)}) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment})\n\nOpens a copy of this folder in StackBlitz or CodeSandbox, installs dependencies and runs the start script. StackBlitz does not need an account. Keep API keys out of public sandboxes.\n`
+    ? `\n## Try it in the browser\n\n[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)}) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment})\n\nOpens a copy of this folder in StackBlitz or CodeSandbox, installs dependencies and runs the start script. StackBlitz does not need an account. ${['vite', 'react'].includes(environment) ? 'In CodeSandbox, the running page appears in the preview pane on port 5173. ' : 'In CodeSandbox, the script output appears in the terminal tab. '}Keep API keys out of public sandboxes.\n`
     : '';
   return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}${htxNote}${stackblitz}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
@@ -65,7 +65,7 @@ function codesandboxTasks(environment) {
       ? {
         dev: {
           name: 'Dev Server',
-          command: 'npm run dev -- --host 0.0.0.0',
+          command: '__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.csb.app npm run dev -- --host 0.0.0.0 --port 5173 --strictPort',
           runAtStart: true,
           preview: { port: 5173 },
         },
@@ -81,6 +81,13 @@ function codesandboxTasks(environment) {
   return `${JSON.stringify(config, null, 2)}\n`;
 }
 
+function codesandboxDevcontainer() {
+  return `${JSON.stringify({
+    name: 'Node.js',
+    image: 'mcr.microsoft.com/devcontainers/javascript-node:24',
+  }, null, 2)}\n`;
+}
+
 export async function starterFiles(id, sdk, environment) {
   const files = [
     ...await environmentFiles(id, sdk, environment),
@@ -89,6 +96,7 @@ export async function starterFiles(id, sdk, environment) {
   ];
   if (codesandboxEnabled({ id, ...sdk }, environment)) {
     files.push(['.codesandbox/tasks.json', codesandboxTasks(environment)]);
+    files.push(['.devcontainer/devcontainer.json', codesandboxDevcontainer()]);
   }
   return new Map(files);
 }
