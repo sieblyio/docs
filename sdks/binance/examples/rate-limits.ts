@@ -7,7 +7,7 @@ async function main() {
     (limit) => limit.rateLimitType === 'REQUEST_WEIGHT',
   );
 
-  await client.getOrderBook({ symbol: 'BTCUSDT', limit: 5 });
+  await client.getServerTime();
   const states = client.getRateLimitStates();
   console.log('Weight limit per minute:', weightLimit?.limit);
   console.log('Weight used this minute:', states['x-mbx-used-weight-1m']);
