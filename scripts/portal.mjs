@@ -28,5 +28,35 @@ export async function assemblePortal(out, manifest) {
     }
     await writeFile(path.join(out, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${locations.map((url) => `<url><loc>${url}</loc></url>`).join('')}</urlset>`);
   }
+  if (manifest.indexable) await writeFile(path.join(out, 'llms.txt'), await llmsIndex(out, manifest, site));
   await writeFile(path.join(out, 'robots.txt'), manifest.indexable ? `User-agent: *\nAllow: /\nSitemap: ${site.href}sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
+}
+
+// llms.txt (https://llmstxt.org): one plain-text map of every SDK and its guide pages for AI assistants.
+// API reference pages are left out; each SDK links to its reference index instead.
+async function llmsIndex(out, manifest, site) {
+  const pageTitle = async (url) => {
+    const relative = decodeURI(new URL(url).pathname.slice(site.pathname.length)).replace(/\/$/, '/index').replace(/\.html$/, '');
+    try {
+      const html = await readFile(path.join(out, `${relative}.html`), 'utf8');
+      const title = html.match(/<title>([^<]*)<\/title>/)?.[1].split(' | ')[0].trim();
+      if (title) return title.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'");
+    } catch (error) { if (error.code !== 'ENOENT') throw error; }
+    return relative.split('/').pop().replaceAll('-', ' ');
+  };
+  const lines = ['# Siebly SDK documentation', '', '> Guides and API reference for Siebly\'s open source JavaScript and TypeScript SDKs for crypto exchange REST APIs and WebSockets.', ''];
+  const sdks = ids.filter((id) => manifest.sdks[id]);
+  lines.push('## SDKs', '');
+  for (const id of sdks) {
+    const sdk = manifest.sdks[id];
+    lines.push(`- [${sdk.name}](${new URL(`${id}/`, site).href}): \`npm install ${sdk.packageName}\` (v${sdk.version}). API reference: ${new URL(`${id}/api/`, site).href}`);
+  }
+  for (const id of sdks) {
+    const sitemap = await readFile(path.join(out, id, 'sitemap.xml'), 'utf8');
+    const guides = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).filter((url) => !new URL(url).pathname.includes(`/${id}/api/`));
+    if (!guides.length) continue;
+    lines.push('', `## ${manifest.sdks[id].name}`, '');
+    for (const url of guides) lines.push(`- [${await pageTitle(url)}](${url})`);
+  }
+  return lines.join('\n') + '\n';
 }
