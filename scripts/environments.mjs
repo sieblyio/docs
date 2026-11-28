@@ -9,6 +9,19 @@ import { programFiles, screenFile } from '../shared/environments/direct/render.m
 import { exchanges } from '../shared/environments/direct/exchanges.mjs';
 import { guideFields } from './environment-guides.mjs';
 
+// CodeSandbox browser copies that run without an account (static template, created from these starters).
+export const codesandboxIds = {
+  'binance/vite': 'nlz23w',
+  'binance/react': 'nkntr8',
+  'hyperliquid/vite': 'w2x69d',
+  'hyperliquid/react': 'jkzr6t',
+  'kraken/vite': '8k5lmp',
+  'kraken/react': '583j3r',
+  'okx/vite': '6l8kf5',
+  'okx/react': 'zy3ypn',
+};
+
+
 export const environments = ['node', 'typescript', 'react', 'vite', 'next', 'expo', 'bun', 'deno', 'cloudflare-workers'];
 export const environmentTitles = { node: 'Node.js / JavaScript', typescript: 'Node.js / TypeScript', react: 'React', vite: 'Vite (plain JavaScript)', next: 'Next.js', expo: 'React Native / Expo', bun: 'Bun', deno: 'Deno', 'cloudflare-workers': 'Cloudflare Workers' };
 const reactPluginVersion = '4.7.0';
@@ -254,7 +267,7 @@ export async function generateEnvironments(ctx) {
     }
     if (ctx.id === 'hyperliquid' && ['node', 'typescript', 'vite', 'react'].includes(environment)) {
       const title = encodeURIComponent(`${ctx.sdk.name} ${environmentTitles[environment]} starter`);
-      const stackblitz = `## Try it in the browser\n\n[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}?title=${title}) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment})\n\nStackBlitz does not need an account. Keep API keys out of public sandboxes.\n\n`;
+      const stackblitz = `## Try it in the browser\n\n${codesandboxIds[`${ctx.id}/${environment}`] ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${codesandboxIds[`${ctx.id}/${environment}`]}) ` : ''}[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}?title=${title})\n\n${codesandboxIds[`${ctx.id}/${environment}`] ? 'Run in CodeSandbox runs straight away in your browser, no account needed, and StackBlitz needs no account either.' : 'StackBlitz does not need an account.'} Keep API keys out of public sandboxes.\n\n`;
       rendered = rendered.replace('## Create the project', stackblitz + '## Create the project');
     }
     if (ctx.id === 'coinbase' && environment !== 'cloudflare-workers') {

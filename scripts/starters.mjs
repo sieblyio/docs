@@ -2,7 +2,7 @@ import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { catalogue, root } from './context.mjs';
-import { environments, environmentFiles, environmentTitles } from './environments.mjs';
+import { codesandboxIds, environments, environmentFiles, environmentTitles } from './environments.mjs';
 
 const localDirectories = new Set(['node_modules', 'dist', '.next', '.expo', '.vite', '.turbo', '.metro-cache', '.metro-file-map', 'native-dist-ios', 'native-dist-android', '.git']);
 const localFiles = new Set(['package-lock.json', 'npm-shrinkwrap.json', 'bun.lock', 'bun.lockb', 'deno.lock', 'yarn.lock', 'pnpm-lock.yaml', '.npmrc', 'next-env.d.ts']);
@@ -46,8 +46,16 @@ function readme(sdk, environment) {
         ? '\nThe WebSocket example requires `DecompressionStream` support in your runtime.\n'
         : '';
   // Browser sandboxes: enabled per SDK once each starter has been run there.
+  const sandbox = codesandboxIds[`${sdk.id}/${environment}`];
+  const stackblitzButton = `[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)})`;
+  const browserApp = ['vite', 'react'].includes(environment);
+  const browserText = sandbox
+    ? 'Run in CodeSandbox opens a live copy that runs straight away in your browser, no account needed. Open in StackBlitz runs the full Vite project, also without an account.'
+    : browserApp
+      ? 'Open in StackBlitz runs the full Vite project with no account, and the output appears on the page.'
+      : 'Open in StackBlitz runs it with no account, and the output appears in its terminal.';
   const stackblitz = ['hyperliquid', 'binance', 'bitget', 'okx', 'kraken', 'kucoin', 'gateio', 'coinbase'].includes(sdk.id) && ['node', 'typescript', 'vite', 'react'].includes(environment)
-    ? `\n## Try it in the browser\n\n[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)}) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment})\n\nOpens a copy of this folder in StackBlitz or CodeSandbox. StackBlitz installs dependencies and runs the start script, and does not need an account. ${['vite', 'react'].includes(environment) ? 'In CodeSandbox, run the Dev Server task and open the preview on port 5173. ' : 'In CodeSandbox, run the Start task from the Devtools panel to see the output in its terminal. '}Keep API keys out of public sandboxes.\n`
+    ? `\n## Try it in the browser\n\n${sandbox ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${sandbox}) ` : ''}${stackblitzButton}\n\n${browserText} Keep API keys out of public sandboxes.\n`
     : '';
   return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}${htxNote}${stackblitz}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
