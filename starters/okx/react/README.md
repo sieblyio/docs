@@ -23,6 +23,6 @@ Keep authenticated calls on your server. Keep the supplied Vite configuration an
 
 [![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/zy3ypn) [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/okx/react?title=OKX%20React%20starter)
 
-Run in CodeSandbox opens a live copy that runs straight away in your browser, no account needed. Open in StackBlitz runs the full Vite project, also without an account. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/okx/environments/react.html).

@@ -27,6 +27,6 @@ For CommonJS instead, run `node price.cjs` or `node stream.cjs`.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/binance/node?title=Binance%20Node.js%20%2F%20JavaScript%20starter)
 
-Open in StackBlitz runs it with no account, and the output appears in its terminal. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/binance/environments/node.html).

@@ -25,6 +25,6 @@ npm run stream
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/typescript?title=Hyperliquid%20Node.js%20%2F%20TypeScript%20starter)
 
-Open in StackBlitz runs it with no account, and the output appears in its terminal. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/hyperliquid/environments/typescript.html).

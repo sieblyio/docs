@@ -267,7 +267,7 @@ export async function generateEnvironments(ctx) {
     }
     if (ctx.id === 'hyperliquid' && ['node', 'typescript', 'vite', 'react'].includes(environment)) {
       const title = encodeURIComponent(`${ctx.sdk.name} ${environmentTitles[environment]} starter`);
-      const stackblitz = `## Try it in the browser\n\n${codesandboxIds[`${ctx.id}/${environment}`] ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${codesandboxIds[`${ctx.id}/${environment}`]}) ` : ''}[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}?title=${title})\n\n${codesandboxIds[`${ctx.id}/${environment}`] ? 'Run in CodeSandbox runs straight away in your browser, no account needed, and StackBlitz needs no account either.' : 'StackBlitz does not need an account.'} Keep API keys out of public sandboxes.\n\n`;
+      const stackblitz = `## Try it in the browser\n\n${codesandboxIds[`${ctx.id}/${environment}`] ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${codesandboxIds[`${ctx.id}/${environment}`]}) ` : ''}[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}?title=${title})\n\nKeep API keys out of public sandboxes.\n\n`;
       rendered = rendered.replace('## Create the project', stackblitz + '## Create the project');
     }
     if (ctx.id === 'coinbase' && environment !== 'cloudflare-workers') {

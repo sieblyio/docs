@@ -25,6 +25,6 @@ Keep `sdk.vite.config.js`: it excludes Node-only JWT signing from this public-da
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/coinbase/vite?title=Coinbase%20Vite%20(plain%20JavaScript)%20starter)
 
-Open in StackBlitz runs the full Vite project with no account, and the output appears on the page. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/coinbase/environments/vite.html).

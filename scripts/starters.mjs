@@ -48,14 +48,8 @@ function readme(sdk, environment) {
   // Browser sandboxes: enabled per SDK once each starter has been run there.
   const sandbox = codesandboxIds[`${sdk.id}/${environment}`];
   const stackblitzButton = `[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)})`;
-  const browserApp = ['vite', 'react'].includes(environment);
-  const browserText = sandbox
-    ? 'Run in CodeSandbox opens a live copy that runs straight away in your browser, no account needed. Open in StackBlitz runs the full Vite project, also without an account.'
-    : browserApp
-      ? 'Open in StackBlitz runs the full Vite project with no account, and the output appears on the page.'
-      : 'Open in StackBlitz runs it with no account, and the output appears in its terminal.';
   const stackblitz = ['hyperliquid', 'binance', 'bitget', 'okx', 'kraken', 'kucoin', 'gateio', 'coinbase'].includes(sdk.id) && ['node', 'typescript', 'vite', 'react'].includes(environment)
-    ? `\n## Try it in the browser\n\n${sandbox ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${sandbox}) ` : ''}${stackblitzButton}\n\n${browserText} Keep API keys out of public sandboxes.\n`
+    ? `\n## Try it in the browser\n\n${sandbox ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${sandbox}) ` : ''}${stackblitzButton}\n\nKeep API keys out of public sandboxes.\n`
     : '';
   return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}${htxNote}${stackblitz}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }

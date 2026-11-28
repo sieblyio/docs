@@ -23,6 +23,6 @@ Keep authenticated calls on your server. Keep the supplied Vite configuration an
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/gateio/vite?title=Gate.io%20Vite%20(plain%20JavaScript)%20starter)
 
-Open in StackBlitz runs the full Vite project with no account, and the output appears on the page. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/gateio/environments/vite.html).

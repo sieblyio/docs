@@ -23,6 +23,6 @@ The public GET client removes the SDK’s `UserAgent` and `locale` headers becau
 
 [![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/583j3r) [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/kraken/react?title=Kraken%20React%20starter)
 
-Run in CodeSandbox opens a live copy that runs straight away in your browser, no account needed. Open in StackBlitz runs the full Vite project, also without an account. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/kraken/environments/react.html).
