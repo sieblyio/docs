@@ -2,7 +2,6 @@ import { MainClient } from 'binance';
 
 const PAGE_SIZE = 1000;
 const SAFETY_FRACTION = 0.8;
-const STALE_AFTER_MS = 5000;
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -21,17 +20,16 @@ async function main() {
     throw new Error('REQUEST_WEIGHT limit missing from exchange info.');
   }
 
+  await client.getServerTime();
+
   const candles: Awaited<ReturnType<MainClient['getKlines']>> = [];
   let startTime = Date.now() - 3 * 24 * 60 * 60 * 1000;
 
   while (candles.length < 3000) {
-    let states = client.getRateLimitStates();
-    if (!states.lastUpdated || Date.now() - states.lastUpdated > STALE_AFTER_MS) {
-      await client.getServerTime();
-      states = client.getRateLimitStates();
-    }
-    if (states['x-mbx-used-weight-1m'] >= weightLimit * SAFETY_FRACTION) {
+    const used = client.getRateLimitStates()['x-mbx-used-weight-1m'];
+    if (used >= weightLimit * SAFETY_FRACTION) {
       await sleep(2000);
+      await client.getServerTime();
       continue;
     }
 

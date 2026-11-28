@@ -28,7 +28,7 @@ Aim to stay comfortably below the limit, for example around 80% of the request-w
 
 <<< @/../examples/rate-limits.ts
 
-When backfilling at speed, refresh with `getServerTime()` if the state is unknown or older than a few seconds, read `x-mbx-used-weight-1m` from `getRateLimitStates()`, and sleep when usage crosses that safety threshold:
+When backfilling at speed, call `getServerTime()` before the first kline request so the weight counter is fresh, then read `x-mbx-used-weight-1m` from `getRateLimitStates()` and sleep when usage crosses that safety threshold:
 
 <<< @/../examples/rate-limits-backfill.ts
 
