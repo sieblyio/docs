@@ -1,6 +1,6 @@
 ---
 title: "Binance SDK production usage"
-description: "Handle Binance retries, uncertain order outcomes, stream recovery and shutdown."
+description: "Handle Binance rate limits, retries, uncertain order outcomes, stream recovery and shutdown."
 ---
 
 # Production usage
@@ -8,6 +8,31 @@ description: "Handle Binance retries, uncertain order outcomes, stream recovery 
 <!--@include: @/.vitepress/shared/production/account-state.md-->
 
 <!--@include: @/.vitepress/shared/production/request-policy.md-->
+
+## Stay within rate limits {#rate-limits}
+
+Binance limits REST traffic by request weight per IP address and order placement per account. Read the current limits from `getExchangeInfo()` rather than hard-coding them. On 27 November 2026 the values were:
+
+| Market | Request weight | Orders |
+| --- | --- | --- |
+| Spot (`MainClient`) | 6000 per minute | 100 per 10 seconds, 200000 per day |
+| USDⓈ-M futures (`USDMClient`) | 2400 per minute | 300 per 10 seconds, 1200 per minute |
+
+Each REST client keeps its own cache of Binance's usage headers, taken from the last response that client received. Call `getRateLimitStates()` to read those values, such as `x-mbx-used-weight-1m` and `x-mbx-order-count-10s`, and slow down before you hit the limit rather than waiting for an HTTP 429.
+
+The cache is only as fresh as that last response, so the figures can be stale. Until a response arrives, the counters sit at 0 and `lastUpdated` is unset, which does not mean the IP is unused. To refresh the cache, make the cheapest call available: [`getServerTime()`](/api/classes/MainClient#getservertime). It exists on every REST client (`MainClient`, `USDMClient` and `CoinMClient`) and updates the cached state when the reply comes in.
+
+Do not use `getExchangeInfo()` to refresh the usage cache. Its responses can be served from an edge cache, and the usage headers may not reflect your IP address. Keep using `getExchangeInfo()` for the limit values themselves.
+
+Aim to stay comfortably below the limit, for example around 80% of the request-weight budget, rather than running right up to it.
+
+<<< @/../examples/rate-limits.ts
+
+When backfilling at speed, call `getServerTime()` before the first kline request so the weight counter is fresh, then read `x-mbx-used-weight-1m` from `getRateLimitStates()` and sleep when usage crosses that safety threshold:
+
+<<< @/../examples/rate-limits-backfill.ts
+
+All processes on one IP address share the weight budget, so the value can be higher than your own client's requests. An HTTP 429 means a limit was hit. Repeatedly ignoring 429 responses leads to HTTP 418 and an automatic IP ban. Back off for the `Retry-After` period, and use WebSocket streams for data that changes continuously.
 
 ## Resolve uncertain order outcomes
 

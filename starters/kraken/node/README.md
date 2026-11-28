@@ -23,4 +23,10 @@ npm run stream
 
 For CommonJS instead, run `node price.cjs` or `node stream.cjs`.
 
+## Try it in the browser
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/kraken/node?title=Kraken%20Node.js%20%2F%20JavaScript%20starter)
+
+Keep API keys out of public sandboxes.
+
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/kraken/environments/node.html).

@@ -2,7 +2,7 @@ import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { catalogue, root } from './context.mjs';
-import { environments, environmentFiles, environmentTitles } from './environments.mjs';
+import { codesandboxIds, environments, environmentFiles, environmentTitles } from './environments.mjs';
 
 const localDirectories = new Set(['node_modules', 'dist', '.next', '.expo', '.vite', '.turbo', '.metro-cache', '.metro-file-map', 'native-dist-ios', 'native-dist-android', '.git']);
 const localFiles = new Set(['package-lock.json', 'npm-shrinkwrap.json', 'bun.lock', 'bun.lockb', 'deno.lock', 'yarn.lock', 'pnpm-lock.yaml', '.npmrc', 'next-env.d.ts']);
@@ -46,18 +46,61 @@ function readme(sdk, environment) {
         ? '\nThe WebSocket example requires `DecompressionStream` support in your runtime.\n'
         : '';
   // Browser sandboxes: enabled per SDK once each starter has been run there.
-  const stackblitz = sdk.id === 'hyperliquid' && ['node', 'typescript', 'vite', 'react'].includes(environment)
-    ? `\n## Try it in the browser\n\n[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)})\n\nOpens a copy of this folder in StackBlitz, installs dependencies and runs the start script. No account is needed. Keep API keys out of public sandboxes.\n`
+  const sandbox = codesandboxIds[`${sdk.id}/${environment}`];
+  const stackblitzButton = `[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${sdk.id}/${environment}?title=${encodeURIComponent(`${sdk.name} ${environmentTitles[environment]} starter`)})`;
+  const stackblitz = ['hyperliquid', 'binance', 'bitget', 'okx', 'kraken', 'kucoin', 'gateio', 'coinbase'].includes(sdk.id) && ['node', 'typescript', 'vite', 'react'].includes(environment)
+    ? `\n## Try it in the browser\n\n${sandbox ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${sandbox}) ` : ''}${stackblitzButton}\n\nKeep API keys out of public sandboxes.\n`
     : '';
   return `# ${sdk.name}: ${environmentTitles[environment]}\n\nRead public market prices with \`${sdk.packageName}\`. No API key is required for public prices.\n\n${prerequisite}\n\n## Run\n\nFrom this folder:\n\n\`\`\`sh\n${install}\n${start}\n\`\`\`\n${result}${native}${controls}${optionalStream}${commonjs}${browserNote}${coinbaseNote}${transportNote}${htxNote}${stackblitz}\n[Follow the complete step-by-step guide](https://sieblyio.github.io/docs/${sdk.id}/environments/${environment}.html).\n`;
 }
 
+function codesandboxEnabled(sdk, environment) {
+  return ['hyperliquid', 'binance', 'bitget', 'okx', 'kraken', 'kucoin', 'gateio', 'coinbase'].includes(sdk.id) && ['node', 'typescript', 'vite', 'react'].includes(environment);
+}
+
+function codesandboxTasks(environment) {
+  const browser = ['vite', 'react'].includes(environment);
+  const config = {
+    $schema: 'https://codesandbox.io/schemas/tasks.json',
+    setupTasks: ['npm install'],
+    tasks: browser
+      ? {
+        dev: {
+          name: 'Dev Server',
+          command: '__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.csb.app npm run dev -- --host 0.0.0.0 --port 5173 --strictPort',
+          runAtStart: true,
+          preview: { port: 5173 },
+        },
+      }
+      : {
+        start: {
+          name: 'Start',
+          command: 'npm start',
+          runAtStart: true,
+        },
+      },
+  };
+  return `${JSON.stringify(config, null, 2)}\n`;
+}
+
+function codesandboxDevcontainer() {
+  return `${JSON.stringify({
+    name: 'Node.js',
+    image: 'mcr.microsoft.com/devcontainers/javascript-node:24',
+  }, null, 2)}\n`;
+}
+
 export async function starterFiles(id, sdk, environment) {
-  return new Map([
+  const files = [
     ...await environmentFiles(id, sdk, environment),
     ['README.md', readme({ id, ...sdk }, environment)],
     ['.gitignore', ignoreFile + (environment === 'cloudflare-workers' ? '.dev.vars\n.dev.vars.*\n.wrangler/\n' : '')],
-  ]);
+  ];
+  if (codesandboxEnabled({ id, ...sdk }, environment)) {
+    files.push(['.codesandbox/tasks.json', codesandboxTasks(environment)]);
+    files.push(['.devcontainer/devcontainer.json', codesandboxDevcontainer()]);
+  }
+  return new Map(files);
 }
 
 async function expectedTree() {

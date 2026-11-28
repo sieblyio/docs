@@ -25,6 +25,6 @@ npm run stream
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/typescript?title=Hyperliquid%20Node.js%20%2F%20TypeScript%20starter)
 
-Opens a copy of this folder in StackBlitz, installs dependencies and runs the start script. No account is needed. Keep API keys out of public sandboxes.
+Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/hyperliquid/environments/typescript.html).

@@ -9,6 +9,19 @@ import { programFiles, screenFile } from '../shared/environments/direct/render.m
 import { exchanges } from '../shared/environments/direct/exchanges.mjs';
 import { guideFields } from './environment-guides.mjs';
 
+// CodeSandbox browser copies that run without an account (static template, created from these starters).
+export const codesandboxIds = {
+  'binance/vite': 'nlz23w',
+  'binance/react': 'nkntr8',
+  'hyperliquid/vite': 'w2x69d',
+  'hyperliquid/react': 'jkzr6t',
+  'kraken/vite': '8k5lmp',
+  'kraken/react': '583j3r',
+  'okx/vite': '6l8kf5',
+  'okx/react': 'zy3ypn',
+};
+
+
 export const environments = ['node', 'typescript', 'react', 'vite', 'next', 'expo', 'bun', 'deno', 'cloudflare-workers'];
 export const environmentTitles = { node: 'Node.js / JavaScript', typescript: 'Node.js / TypeScript', react: 'React', vite: 'Vite (plain JavaScript)', next: 'Next.js', expo: 'React Native / Expo', bun: 'Bun', deno: 'Deno', 'cloudflare-workers': 'Cloudflare Workers' };
 const reactPluginVersion = '4.7.0';
@@ -251,6 +264,11 @@ export async function generateEnvironments(ctx) {
         .replace('The script receives one update, closes the client in `finally` and exits.', 'The script keeps streaming until Ctrl+C. Exceptions and reconnections are logged; signal handlers close the client.');
       rendered = rendered
         .replace('If a request fails or no update arrives within 30 seconds,', 'If a request fails or no stream updates arrive,');
+    }
+    if (ctx.id === 'hyperliquid' && ['node', 'typescript', 'vite', 'react'].includes(environment)) {
+      const title = encodeURIComponent(`${ctx.sdk.name} ${environmentTitles[environment]} starter`);
+      const stackblitz = `## Try it in the browser\n\n${codesandboxIds[`${ctx.id}/${environment}`] ? `[![Run in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/${codesandboxIds[`${ctx.id}/${environment}`]}) ` : ''}[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/${ctx.id}/${environment}?title=${title})\n\nKeep API keys out of public sandboxes.\n\n`;
+      rendered = rendered.replace('## Create the project', stackblitz + '## Create the project');
     }
     if (ctx.id === 'coinbase' && environment !== 'cloudflare-workers') {
       const note = browser || environment === 'expo'

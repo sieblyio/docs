@@ -1,6 +1,6 @@
 ---
 title: Hyperliquid WebSocket subscriptions in Node.js
-description: Stream Hyperliquid prices with WebsocketClient, handle events and close connections cleanly. Compare streaming subscriptions with awaitable WebSocket API requests.
+description: Stream Hyperliquid prices and l2Book order books with WebsocketClient, handle events and close connections cleanly. Compare streaming subscriptions with awaitable WebSocket API requests.
 ---
 
 # Public streams (WebSocket) {#websocket-subscriptions}
@@ -27,6 +27,16 @@ Example payload fields; the full event also includes connection context:
 `subscribe()` resolves after sending locally. Subscription acknowledgements and WebSocket POST responses arrive through `response`; protocol and connection failures arrive through `exception`.
 
 [Subscription types](/api/type-aliases/WebsocketSubscription) · [Event map](/api/interfaces/WebsocketClientEventMap)
+
+## Stream the order book (l2Book) {#order-book}
+
+Subscribe to `l2Book` to stream an order book for one coin. Save this example as `stream-l2book.mjs` and run `node stream-l2book.mjs`. It prints the best bid, best ask and spread from each update for 30 seconds, then closes the connection.
+
+<<< @/../examples/stream-l2book.ts
+
+Each `l2Book` message carries a full snapshot of up to 20 levels per side, not a diff, so replace your local book with `event.data.levels` on every message. `levels[0]` holds bids from best to worst and `levels[1]` holds asks from best to worst. Each level has `px` (price), `sz` (size) and `n` (number of orders) as strings. After a reconnect the client resubscribes and the next message is a fresh snapshot, so no extra recovery step is needed.
+
+Set `nSigFigs` (2 to 5) to aggregate price levels, for example `{ type: 'l2Book', coin: 'BTC', nSigFigs: 4 }`. `mantissa` (1, 2 or 5) is accepted only when `nSigFigs` is 5. For only the top of the book, subscribe to `bbo` instead. For a one-off read without a stream, use [`getOrderBook()`](/guides/market-data#l2-order-book).
 
 ## Make a request over WebSocket
 

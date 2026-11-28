@@ -15,6 +15,7 @@ description: "Diagnose Binance installation, authentication, response and WebSoc
 | Timestamp outside receive window | Synchronize the host clock and inspect latency before adjusting `recvWindow`. |
 | HTTP 429 or IP-ban response | Respect the server's retry guidance and current rate limits; avoid immediate retry loops. |
 | No WebSocket ticker events | Register `message` before subscribing, use the Spot subscription helper and inspect `exception`. |
+| USD-M kline, miniTicker or markPrice stream connects but stays silent | Binance now routes USD-M market streams to `/market/ws` and `/market/stream`, and depth to `/public`; on the legacy `wss://fstream.binance.com/ws` path these subscriptions are acknowledged but never deliver. Subscribe through the SDK's `WebsocketClient` with the `usdm` key, which picks the route for you, or follow the [WebSocket change notice](https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Important-WebSocket-Change-Notice) for raw sockets. |
 | Local book diverges | Rebuild it using the documented snapshot/update-ID procedure. |
 | Process stays alive | Call `closeAll()` and clear application timers during shutdown. |
 

@@ -7,7 +7,7 @@ import { checkStarter, environmentFiles } from './environments.mjs';
 
 export async function checkPublic(directory) {
   const entries = await readdir(directory, { recursive: true });
-  const allowedRoots = new Set([...ids, 'brand', 'index.html', '404.html', 'favicon.svg', 'portal.css', 'analytics.js', searchConsoleFile, 'robots.txt', 'sitemap.xml', 'build-manifest.json', '.nojekyll']);
+  const allowedRoots = new Set([...ids, 'brand', 'index.html', '404.html', 'favicon.svg', 'portal.css', 'analytics.js', searchConsoleFile, 'robots.txt', 'llms.txt', 'sitemap.xml', 'build-manifest.json', '.nojekyll']);
   const allowedExtensions = new Set(['.html', '.js', '.css', '.json', '.xml', '.txt', '.svg', '.png', '.jpg', '.webp', '.woff', '.woff2', '.ico']);
   const privateDirectories = new Set(['node_modules', 'scripts', 'sdks', 'shared', 'compatibility', 'results', 'verification', 'tmp', 'src']);
   const allowedJson = new Set(['build-manifest.json', ...ids.map((id) => `${id}/hashmap.json`)]);
