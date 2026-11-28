@@ -70,7 +70,7 @@ Orders, cancels and leverage updates identify a market by a numeric asset ID. Or
 
 <<< @/../examples/asset-ids.ts
 
-A native perpetual uses its index in `meta.universe`, so `BTC` is `0`. A Spot pair is `10000` plus its spot index, so `HYPE/USDC` (`@107`) is `10107`. A HIP-3 market is `100000 + dexIndex * 10000 + index`, where `dexIndex` is the DEX's position in `perpDexs`. `xyz` is currently `110000` and `flx` is `120000`, so hard-coding one DEX's offset sends orders for other DEXs to the wrong market.
+A native perpetual uses its index in `meta.universe`, so `BTC` is `0`. A Spot pair is `10000` plus its spot index, so `HYPE/USDC` (`@107`) is `10107`. Take the spot index from the pair's `index` field in `spotMeta.universe`, not from its position in the array: the indices have gaps, so `universe[142]` is currently `@144`, not `@142`. A HIP-3 market is `100000 + dexIndex * 10000 + index`, where `dexIndex` is the DEX's position in `perpDexs`. `xyz` is currently `110000` and `flx` is `120000`, so hard-coding one DEX's offset sends orders for other DEXs to the wrong market.
 
 The resolver caches metadata. Call `refreshAssetMetadata` after a new listing or a new HIP-3 DEX.
 
