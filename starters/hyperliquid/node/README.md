@@ -25,8 +25,8 @@ For CommonJS instead, run `node price.cjs` or `node stream.cjs`.
 
 ## Try it in the browser
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/node?title=Hyperliquid%20Node.js%20%2F%20JavaScript%20starter) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/hyperliquid/node)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/hyperliquid/node?title=Hyperliquid%20Node.js%20%2F%20JavaScript%20starter)
 
-Quickest way to run it: Open in StackBlitz, no account needed, and the output appears in its terminal. CodeSandbox opens a read-only copy until you sign in (free) and fork it, because it only runs code in your own copy. After forking, run the Start task from the Devtools panel to see the output. Keep API keys out of public sandboxes.
+Open in StackBlitz runs it with no account, and the output appears in its terminal. Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/hyperliquid/environments/node.html).

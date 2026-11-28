@@ -21,8 +21,8 @@ Keep authenticated calls on your server. Keep the supplied Vite configuration an
 
 ## Try it in the browser
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/kucoin/react?title=KuCoin%20React%20starter) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/kucoin/react)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/kucoin/react?title=KuCoin%20React%20starter)
 
-Quickest way to run it: Open in StackBlitz, no account needed, and the output appears in its terminal. CodeSandbox opens a read-only copy until you sign in (free) and fork it, because it only runs code in your own copy. After forking, run the Dev Server task and open the preview on port 5173. Keep API keys out of public sandboxes.
+Open in StackBlitz runs the full Vite project with no account, and the output appears on the page. Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/kucoin/environments/react.html).
