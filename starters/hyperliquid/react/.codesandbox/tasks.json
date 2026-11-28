@@ -1,0 +1,16 @@
+{
+  "$schema": "https://codesandbox.io/schemas/tasks.json",
+  "setupTasks": [
+    "npm install"
+  ],
+  "tasks": {
+    "dev": {
+      "name": "Dev Server",
+      "command": "npm run dev -- --host 0.0.0.0",
+      "runAtStart": true,
+      "preview": {
+        "port": 5173
+      }
+    }
+  }
+}
