@@ -23,6 +23,6 @@ Keep authenticated calls on your server. Keep the supplied Vite configuration an
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/sieblyio/docs/tree/main/starters/okx/vite?title=OKX%20Vite%20(plain%20JavaScript)%20starter) [![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/sieblyio/docs/tree/main/starters/okx/vite)
 
-Opens a copy of this folder in StackBlitz or CodeSandbox, installs dependencies and runs the start script. StackBlitz does not need an account. In CodeSandbox, the running page appears in the preview pane on port 5173. Keep API keys out of public sandboxes.
+Opens a copy of this folder in StackBlitz or CodeSandbox. StackBlitz installs dependencies and runs the start script, and does not need an account. In CodeSandbox, run the Dev Server task and open the preview on port 5173. Keep API keys out of public sandboxes.
 
 [Follow the complete step-by-step guide](https://sieblyio.github.io/docs/okx/environments/vite.html).
